@@ -24,17 +24,19 @@ export default function Publication(){
     const [pressed, setPressed] = useState(false);
     const [post, setPost] = useState({
         linkShared: '',
-        text: '',
+        text: ''
       });
 
       async function publish(event){
         event.preventDefault();
 
         setPressed(true);
-
         setuserPosts(userPosts => [...userPosts, post]);
-
         setPressed(false);
+        setPost({
+            linkShared: '',
+            text: ''
+          });
     }
 
     return(
