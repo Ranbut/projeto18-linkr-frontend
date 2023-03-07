@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { AuthContext } from "../contexts/auth";
+import { AuthContext } from "../../contexts/auth.js";
 import axios from "axios";
 
 export default function SignIn() {
