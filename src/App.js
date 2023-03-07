@@ -13,7 +13,7 @@ function App() {
         <Routes>
           <Route path="/" element={<SignIn />} />
           <Route path="/signup" element={<SignUp />} />
-          <Route path="/post-publication" element={ <Publication /> } />
+          <Route path="/timeline" element={ <Publication /> } />
         </Routes>
       </BrowserRouter>
    </AuthProvider>
