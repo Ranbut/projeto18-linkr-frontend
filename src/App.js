@@ -3,10 +3,11 @@ import GlobalStyle from "./assets/styles/GlobalStyle.js";
 import SignIn from "./pages/SignIn";
 import SignUp from "./pages/SignUp";
 import Publication from "./pages/Publication/Publication.js";
+import { AuthProvider } from "./contexts/auth.js";
 
 function App() {
   return (
-    <>
+    <AuthProvider>
       <GlobalStyle />
       <BrowserRouter>
         <Routes>
@@ -15,7 +16,7 @@ function App() {
           <Route path="/post-publication" element={ <Publication /> } />
         </Routes>
       </BrowserRouter>
-   </>
+   </AuthProvider>
   );
 }
 

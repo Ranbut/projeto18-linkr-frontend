@@ -1,13 +1,13 @@
 import styled from "styled-components";
 import { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
-// import { AuthContext } from "../contexts/auth";
+import { AuthContext } from "../contexts/auth";
 import axios from "axios";
 
 export default function SignIn() {
   const URLPOST = ""
   const navigate = useNavigate();
-  // const { setToken, setUser } = useContext(AuthContext);
+  const { setToken } = useContext(AuthContext);
   const [loginUser, setLoginUser] = useState({ email: "", password: "" });
 
   function handleSignIn(e) {
