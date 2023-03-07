@@ -89,7 +89,7 @@ export default function SignUp() {
           />
           <button type="submit">Sign Up</button>
         </form>
-        <p onClick={() => navigate("/signin")}>
+        <p onClick={() => navigate("/")}>
           Switch back to log in
         </p>
       </SignInSty>
