@@ -76,6 +76,8 @@ export const Inputs = styled.div`
         border-radius: 5px;
         border: none;
 
+        padding-inline: 13px;
+
         ::-webkit-input-placeholder { /* Edge */
         margin-left: 13px;
         }
