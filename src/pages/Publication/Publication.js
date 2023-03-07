@@ -1,6 +1,6 @@
 import { useState } from "react";
 import Header from "../../components/Header/Header";
-import { Form, FormBody, Inputs, PublicationPageBody, PublicationCard, UserAvatar } from "./style";
+import { Form, FormBody, Inputs, PublicationPageBody, PublicationCard, UserAvatar, Body } from "./style";
 import test_image from "../../assets/test-user-avatar.png";
 import PostCard from "../../components/PostCard/PostCard";
 
@@ -38,7 +38,7 @@ export default function Publication(){
     }
 
     return(
-        <>
+        <Body>
             <Header />
             <PublicationPageBody>
                 <h4>timeline</h4>
@@ -59,6 +59,6 @@ export default function Publication(){
                     (postProp) => <PostCard userName={userName} userAvatar={test_image} userPost={postProp}/>
                 )}
             </PublicationPageBody>
-        </>
+        </Body>
     );
 }

@@ -1,5 +1,9 @@
 import styled from "styled-components";
 
+export const Body = styled.div`
+    background: #333333;
+`;
+
 export const PublicationPageBody = styled.div`
     padding: 20px 30%;
     h4{
