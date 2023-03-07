@@ -50,7 +50,7 @@ export default function Publication(){
                         <Inputs>
                             <input disabled={pressed} required type="text" placeholder="http://..." value={post.linkShared} onChange={e => setPost({...post, linkShared: e.target.value})}/>
                             <input disabled={pressed} required type="text" placeholder="Awesome article about #javascript" value={post.text} onChange={e => setPost({...post, text: e.target.value} )}/>
-                            <button disabled={pressed} type="submit">Publish</button>
+                            <button disabled={pressed} type="submit"> {pressed ? "Publishing..." : "Publish"}</button>
                         </Inputs>
                     </Form>
                     </FormBody>
