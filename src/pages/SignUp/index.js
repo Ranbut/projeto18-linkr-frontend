@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
 export default function SignUp() {
-  const URLPOST = ""
+  const URLPOST = "http://localhost:5000/"
   const navigate = useNavigate();
 
   let [form, setForm] = useState({
@@ -17,17 +17,16 @@ export default function SignUp() {
 
   function handleSignIn(e) {
     e.preventDefault();
-    alert("Sign up!")
 
-    // axios
-    //   .post(`${URLPOST}`, form)
-    //   .then((res) => {
-    //    alert("user criado")
-    //     navigate("/");
-    //   })
-    //   .catch((err) => {
-    //     alert(err.response.data.message);
-    //   });
+    axios
+      .post(`${URLPOST}sign-up`, form)
+      .then((res) => {
+       alert("Usuário criado!")
+        navigate("/");
+      })
+      .catch((err) => {
+        console.log(err.response.message);
+      });
   }
 
   return (
