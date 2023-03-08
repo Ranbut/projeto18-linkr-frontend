@@ -5,25 +5,23 @@ import { AuthContext } from "../../contexts/auth.js";
 import axios from "axios";
 
 export default function SignIn() {
-  const URLPOST = ""
+  const URLPOST = "http://localhost:5000/"
   const navigate = useNavigate();
   const { setToken } = useContext(AuthContext);
   const [loginUser, setLoginUser] = useState({ email: "", password: "" });
 
   function handleSignIn(e) {
     e.preventDefault();
-    alert("Sign in!")
 
-    // axios
-    //   .post(`${URLPOST}`, loginUser)
-    //   .then((res) => {
-    //     setToken(res.data.token);
-    //     setUser(res.data);
-    //     navigate("/home");
-    //   })
-    //   .catch((err) => {
-    //     alert(err.response.data.message);
-    //   });
+    axios
+      .post(`${URLPOST}sign-in`, loginUser)
+      .then((res) => {
+        setToken(res.data.token);
+        navigate("/home");
+      })
+      .catch((err) => {
+        console.log(err.response.message);
+      });
   }
 
   return (
