@@ -1,13 +1,19 @@
 import axios from "axios";
 
-export const pushPostAPI = async (postFormData) => {
+export const pushPostAPI = async (token ,postFormData) => {
   const res = {
     success: false,
     error: undefined
   };
 
   try {
-    await axios.post(`http://localhost:5000/posts`, postFormData);
+    const config = {
+      headers: {
+        Authorization: 'Bearer ' + token
+      }
+    };
+
+    await axios.post(`http://localhost:5000/posts`, postFormData, config);
 
     res.success = true;
     return res;
