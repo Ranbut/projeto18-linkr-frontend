@@ -46,6 +46,7 @@ export default function SignIn() {
               setLoginUser({ ...loginUser, email: email.target.value })
             }
             value={loginUser.email}
+            data-test="email"
           />
           <input
             name="password"
@@ -56,10 +57,11 @@ export default function SignIn() {
               setLoginUser({ ...loginUser, password: password.target.value })
             }
             value={loginUser.password}
+            data-test="password"
           />
-          <button type="submit">Log in</button>
+          <button type="submit" data-test="login-btn">Log in</button>
         </form>
-        <p onClick={() => navigate("/signup")}>
+        <p data-test="sign-up-link" onClick={() => navigate("/signup")}>
           First time? Create an account!
         </p>
       </SignInSty>

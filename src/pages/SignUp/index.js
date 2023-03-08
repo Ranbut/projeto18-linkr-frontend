@@ -21,7 +21,7 @@ export default function SignUp() {
     axios
       .post(`${URLPOST}sign-up`, form)
       .then((res) => {
-       alert("Usuário criado!")
+        alert("Usuário criado!")
         navigate("/");
       })
       .catch((err) => {
@@ -52,6 +52,7 @@ export default function SignUp() {
               setForm({ ...form, email: e.target.value })
             }
             value={form.email}
+            data-test="email"
           />
 
           <input
@@ -63,6 +64,7 @@ export default function SignUp() {
               setForm({ ...form, password: e.target.value })
             }
             value={form.password}
+            data-test="password"
           />
 
           <input
@@ -74,6 +76,7 @@ export default function SignUp() {
               setForm({ ...form, username: e.target.value })
             }
             value={form.username}
+            data-test="username"
           />
 
           <input
@@ -85,10 +88,14 @@ export default function SignUp() {
               setForm({ ...form, pictureUrl: e.target.value })
             }
             value={form.pictureUrl}
+            data-test="picture-url"
           />
-          <button type="submit">Sign Up</button>
+          <button
+            type="submit"
+            data-test="sign-up-btn">
+            Sign Up</button>
         </form>
-        <p onClick={() => navigate("/")}>
+        <p data-test="login-link" onClick={() => navigate("/")} >
           Switch back to log in
         </p>
       </SignInSty>
