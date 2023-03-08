@@ -1,32 +1,29 @@
 import { useEffect, useState } from "react";
 import Header from "../../components/Header/Header.js";
 import { getPostAPI } from "../../api/getPostAPI.js";
-//import { getUserByTokenAPI } from "../../api/getUserByTokenAPI.js";
+import { getUserByTokenAPI } from "../../api/getUserByTokenAPI.js";
 import { PublicationPageBody, Body } from "./style.js";
 import PostCard from "../../components/PostCard/PostCard.js";
 import PublishCard from "../../components/PublishCard/PublishCard.js";
-//import { AuthProvider } from "../../contexts/auth.js";
-//import { UserContext } from "../../contexts/user.js";
-//import { useContext } from "react";
+import { AuthContext } from "../../contexts/auth.js";
+import { UserContext } from "../../contexts/user.js";
+import { useContext } from "react";
 
 export default function Publication(){
 
-    //const { token } = useContext(AuthProvider);
+    const { token } = useContext(AuthContext);
 
-    //const { user, setUser } = useContext(UserContext);
+    const { user, setUser } = useContext(UserContext);
 
     const [userPosts, setUserPosts] = useState([]);
     
-    /*async function getUserInfo (){
-        const getUserRes = await getUserByTokenAPI(token);
+    async function getUserInfo (currentToken){
+        const getUserRes = await getUserByTokenAPI(currentToken);
         if (getUserRes.success) {
              setUser(getUserRes.userInfo); 
              return; 
         }
-        else{
-
-        }
-    }*/
+    }
 
     async function getPosts (){
         const getPostRes = await getPostAPI();
@@ -34,24 +31,19 @@ export default function Publication(){
             setUserPosts(getPostRes.postsRetrived); 
              return; 
         }
-        else{
-
-        }
     }
 
     useEffect(() => {
-        //getUserInfo();
+        getUserInfo(token);
         getPosts();
       }, []);
-
-    console.log(userPosts);
 
     return(
         <Body>
             <Header />
             <PublicationPageBody>
                 <h4>timeline</h4>
-                <PublishCard userPosts={userPosts} setuserPosts={setUserPosts}/>
+                <PublishCard userImage={user.pictureUrl} userPosts={userPosts} getPosts={getPosts}/>
                 {userPosts.map(
                     (postProp) => <PostCard userPost={postProp} key={postProp.id}/>
                 )}

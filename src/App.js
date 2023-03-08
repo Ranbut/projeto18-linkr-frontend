@@ -19,9 +19,9 @@ function App() {
         <Route path="/" element={ <SignIn /> } />
           <Route path="/signup" element={ <SignUp /> } />
           <Route path="/timeline" element={
-            <UserContext.Provider value={{ user, setUser }}>
-              <Timeline />
-            </UserContext.Provider>
+              <UserContext.Provider value={{ user, setUser }}>
+                <Timeline />
+              </UserContext.Provider>
         } />
         </Routes>
       </BrowserRouter>

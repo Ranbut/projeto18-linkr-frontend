@@ -1,5 +1,4 @@
 import { ImageLink, PreviewBody, TitleLink, DescriptionLink, URLLink, Items} from "./style";
-import preview_image from "../../assets/test-preview-image.png"
 
 export default function LinkPreview({ link }){
     return(
