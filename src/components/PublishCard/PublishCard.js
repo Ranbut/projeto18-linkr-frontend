@@ -1,3 +1,4 @@
+import { pushPostAPI } from "../../api/pushPostAPI.js";
 import { Form, FormBody, Inputs, PublicationCard, UserAvatar } from "./style";
 import { useState } from "react";
 import test_image from "../../assets/test-user-avatar.png";
@@ -15,6 +16,10 @@ export default function PublishCard({userPosts, setuserPosts}){
         event.preventDefault();
 
         setPressed(true);
+
+        const pushPostRes = await pushPostAPI(post);
+        if (!pushPostRes.success) { setPressed(false); alert("There was an error publishing your link"); return (pushPostRes.error); };
+
         setuserPosts(userPosts => [...userPosts, post]);
         setPressed(false);
         setPost({
