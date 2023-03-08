@@ -17,7 +17,7 @@ export default function SignIn() {
       .post(`${URLPOST}sign-in`, loginUser)
       .then((res) => {
         setToken(res.data.token);
-        navigate("/home");
+        navigate("/timeline");
       })
       .catch((err) => {
         console.log(err.response.message);

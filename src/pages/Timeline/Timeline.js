@@ -1,35 +1,59 @@
-import { useState } from "react";
-import Header from "../../components/Header/Header";
-import { PublicationPageBody, Body } from "./style";
-import PostCard from "../../components/PostCard/PostCard";
-import PublishCard from "../../components/PublishCard/PublishCard";
-import test_image from "../../assets/test-user-avatar.png";
+import { useEffect, useState } from "react";
+import Header from "../../components/Header/Header.js";
+import { getPostAPI } from "../../api/getPostAPI.js";
+//import { getUserByTokenAPI } from "../../api/getUserByTokenAPI.js";
+import { PublicationPageBody, Body } from "./style.js";
+import PostCard from "../../components/PostCard/PostCard.js";
+import PublishCard from "../../components/PublishCard/PublishCard.js";
+//import { AuthProvider } from "../../contexts/auth.js";
+//import { UserContext } from "../../contexts/user.js";
+//import { useContext } from "react";
 
 export default function Publication(){
 
+    //const { token } = useContext(AuthProvider);
 
-    //Temp
-    const userName = "Juvenal Juvêncio";
+    //const { user, setUser } = useContext(UserContext);
 
-    const [userPosts, setuserPosts] = useState([
-        {
-            linkShared: 'https://medium.com/@pshrmn/a-simple-react-router',
-            text: 'Muito maneiro esse tutorial de Material UI com React, deem uma olhada!'
-        },
-        {
-            linkShared: 'https://medium.com/@pshrmn/a-simple-react-router',
-            text: 'Muito maneiro esse tutorial de Material UI com React, deem uma olhada!'
+    const [userPosts, setUserPosts] = useState([]);
+    
+    /*async function getUserInfo (){
+        const getUserRes = await getUserByTokenAPI(token);
+        if (getUserRes.success) {
+             setUser(getUserRes.userInfo); 
+             return; 
         }
-    ]);
+        else{
+
+        }
+    }*/
+
+    async function getPosts (){
+        const getPostRes = await getPostAPI();
+        if (getPostRes.success) {
+            setUserPosts(getPostRes.postsRetrived); 
+             return; 
+        }
+        else{
+
+        }
+    }
+
+    useEffect(() => {
+        //getUserInfo();
+        getPosts();
+      }, []);
+
+    console.log(userPosts);
 
     return(
         <Body>
             <Header />
             <PublicationPageBody>
                 <h4>timeline</h4>
-                <PublishCard userPosts={userPosts} setuserPosts={setuserPosts}/>
+                <PublishCard userPosts={userPosts} setuserPosts={setUserPosts}/>
                 {userPosts.map(
-                    (postProp) => <PostCard userName={userName} userAvatar={test_image} userPost={postProp}/>
+                    (postProp) => <PostCard userPost={postProp} key={postProp.id}/>
                 )}
             </PublicationPageBody>
         </Body>

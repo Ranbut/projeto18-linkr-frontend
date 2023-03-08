@@ -1,4 +1,3 @@
-import axios from "axios";
 import { ImageLink, PreviewBody, TitleLink, DescriptionLink, URLLink, Items} from "./style";
 import preview_image from "../../assets/test-preview-image.png"
 
