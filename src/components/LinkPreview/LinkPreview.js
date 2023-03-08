@@ -5,11 +5,11 @@ export default function LinkPreview({ link }){
     return(
         <PreviewBody>
             <Items>
-                <TitleLink>Como aplicar o Material UI em um projeto React</TitleLink>
-                <DescriptionLink>Hey! I have moved this tutorial to my personal blog. Same content, new location. Sorry about making you click through to another page.</DescriptionLink>
-                <URLLink>{link}</URLLink>
+                <TitleLink>{link.linkTitle}</TitleLink>
+                <DescriptionLink>{link.linkDescription}</DescriptionLink>
+                <URLLink>{link.link}</URLLink>
             </Items>
-            <ImageLink><img src={preview_image} alt="img-link" /></ImageLink>
+            <ImageLink><img src={link.linkImage} alt="img-link" /></ImageLink>
         </PreviewBody>
     );
 }
