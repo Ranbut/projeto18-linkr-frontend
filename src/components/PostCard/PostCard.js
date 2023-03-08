@@ -9,7 +9,7 @@ export default function PostCard({ userPost }){
             <PostInfo>
                 <h6>{userPost.userName}</h6>
                 <p>{userPost.message}</p>
-                <Link to={userPost.linkShared} style={{ textDecoration: 'none' }}>
+                <Link to={userPost.link} style={{ textDecoration: 'none' }}>
                     <LinkPreview link={userPost}/>
                 </Link>
                 <SpacingMarging  />

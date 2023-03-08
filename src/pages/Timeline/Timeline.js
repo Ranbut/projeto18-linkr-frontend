@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import Header from "../../components/Header/Header.js";
 import { getPostAPI } from "../../api/getPostAPI.js";
 import { getUserByTokenAPI } from "../../api/getUserByTokenAPI.js";
-import { PublicationPageBody, Body } from "./style.js";
+import { PublicationPageBody, Body, Loading } from "./style.js";
 import PostCard from "../../components/PostCard/PostCard.js";
 import PublishCard from "../../components/PublishCard/PublishCard.js";
 import { AuthContext } from "../../contexts/auth.js";
@@ -12,9 +12,8 @@ import { useContext } from "react";
 export default function Publication(){
 
     const { token } = useContext(AuthContext);
-
+    const [ load, setLoad ] = useState(true);
     const { user, setUser } = useContext(UserContext);
-
     const [userPosts, setUserPosts] = useState([]);
     
     async function getUserInfo (currentToken){
@@ -29,7 +28,23 @@ export default function Publication(){
         const getPostRes = await getPostAPI();
         if (getPostRes.success) {
             setUserPosts(getPostRes.postsRetrived); 
-             return; 
+            setLoad(false);
+            return; 
+        }
+    }
+
+    function renderTimeline(){
+        if(userPosts.length > 0){
+            return(
+                <>
+                    {userPosts.map(
+                        (postProp) => <PostCard userPost={postProp} key={postProp.id}/>
+                    )}
+                </>
+            );
+        }
+        else{
+            return(<Loading>There are no posts yet</Loading>);
         }
     }
 
@@ -44,9 +59,7 @@ export default function Publication(){
             <PublicationPageBody>
                 <h4>timeline</h4>
                 <PublishCard userImage={user.pictureUrl} userPosts={userPosts} getPosts={getPosts}/>
-                {userPosts.map(
-                    (postProp) => <PostCard userPost={postProp} key={postProp.id}/>
-                )}
+                {load ? (<Loading>Loading...</Loading>) : renderTimeline()}
             </PublicationPageBody>
         </Body>
     );
