@@ -46,7 +46,10 @@ export const PublicationPageBody = styled.div`
     padding: 0px;
 
     h4{
-        margin-left: 1px 17px;
+        display: position;
+        position: relative;
+        top: 19px;
+        margin-left: 17px;
     }
   }
 `;
