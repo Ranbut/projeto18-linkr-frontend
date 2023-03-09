@@ -1,6 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { HeaderBody } from "./style";
 import { BsChevronDown } from 'react-icons/bs';
+import { BsChevronUp} from 'react-icons/bs';
 import { AiOutlineSearch } from "react-icons/ai";
 import { useState } from "react";
 import OutBtn from "./OutBtn";
@@ -8,6 +9,7 @@ import OutBtn from "./OutBtn";
 export default function Header({ userImage, token, setToken }) {
 
     const [isVisible, setIsVisible] = useState(false)
+    const [chevronSide, setChevronSide] = useState(true)
 
     const [form,setForm] = useState({
         username:'',
@@ -30,8 +32,10 @@ export default function Header({ userImage, token, setToken }) {
     })    
     }
     
-
-
+    function handleChevron(){
+        setIsVisible(!isVisible)
+        setChevronSide(!chevronSide)
+    }
 
     return (
         <>
@@ -59,7 +63,7 @@ export default function Header({ userImage, token, setToken }) {
                 </div>
 
                 <div className="right">
-                    <BsChevronDown onClick={()=> setIsVisible(!isVisible)}/>
+                    {chevronSide ?   <BsChevronDown onClick={()=> handleChevron()}/> :   <BsChevronUp onClick={()=> handleChevron()}/>}
                     <img alt="userIcon" src={userImage} />
                 </div>
 
