@@ -1,6 +1,9 @@
 import styled from "styled-components";
 
 export const HeaderBody = styled.header `
+display: flex;
+justify-content: space-between;
+align-items: center;
 width: 100%;
 height: 72px;
 background: #151515;
@@ -8,14 +11,10 @@ display:flex;
 justify-content: space-between;
 align-items: center;
 
-section{
-    min-height:45px;
-    background-color:#E7E7E7;
-    border-radius: 5px;
- 
-}
-    span{
-        padding: 10px 28px;
+    h4{
+        padding-left: 28px;
+        width: 108px;
+        height: 54px;
         font-family: 'Passion One';
         font-style: normal;
         font-weight: 700;
@@ -24,23 +23,53 @@ section{
         letter-spacing: 0.05em;
         color: #FFFFFF;
     }
-    input{
+
+    .middle{
+        height:45px;
+        background-color:#FFFFFF;
+        border-radius: 5px;
+
+        input{
         width: 563px;
         height:45px;
-        border-radius: 5px;
-        ::placeholder{
-            font-family: 'Lato';
-            font-size: 19px;
-            font-weight: 400;
-            line-height: 23px;
-            letter-spacing: 0em;
-            text-align: left;
-            color:#C6C6C6;
-            padding-left:17px;  
+        border: none;
+
+            ::placeholder{
+                font-family: 'Lato';
+                font-size: 19px;
+                font-weight: 400;
+                line-height: 23px;
+                letter-spacing: 0em;
+                text-align: left;
+                color:#C6C6C6;
+                padding-left:17px;  
+            }
         }
+
         button{
             background-color:transparent;
-           
+            border: none;
+            font-size: 20px;
+            color: #C6C6C6;        
+                
         }
     }
+
+    .right{
+        display: flex;
+        align-items: center;
+        color: #FFFFFF;
+        margin-right:18px;
+        font-size:26px;
+        
+        img{
+            height: 52px;
+            width: 52px;
+            border-radius: 100%;
+            margin-left: 14px;
+        }
+
+    }
+
+ 
 `;

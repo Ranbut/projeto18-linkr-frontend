@@ -12,8 +12,8 @@ import axios from "axios";
 
 export default function Publication() {
 
-    const { token } = useContext(AuthContext);
-    const [load, setLoad] = useState(true);
+    const { token, setToken } = useContext(AuthContext);
+    const [ load, setLoad ] = useState(true);
     const { user, setUser } = useContext(UserContext);
     const [userPosts, setUserPosts] = useState([]);
     const [trending, setTrending] = useState([]);
@@ -64,7 +64,7 @@ export default function Publication() {
 
     return (
         <Body>
-            <Header />
+            <Header userImage={user.pictureUrl} token={token} setToken={setToken}/>
             <PublicationPageBody>
                 <div>
                     <h4>timeline</h4>
