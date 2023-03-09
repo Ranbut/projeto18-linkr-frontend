@@ -13,6 +13,11 @@ export const PostBody = styled.div`
     border-radius: 16px;
 
     font-family: 'Lato';
+
+    @media (max-width: 428px) {
+    width: 430px;
+    border-radius: 0px;
+  }
 `;
 
 export const PostInfo = styled.div`
@@ -43,14 +48,33 @@ export const PostInfo = styled.div`
 
         color: #B7B7B7;
     }
+
+    @media (max-width: 428px) {
+
+    }
 `
 
 export const UserAvatar = styled.div`
+    display: flex;
+    flex-direction: column;
+
     img{
         margin: 18px 16px;
 
         width: 50px;
         height: 50px;
+        border-radius: 26.5px;
+    }
+
+    p{
+        margin-top: 4.01px
+        font-family: 'Lato';
+        font-style: normal;
+        font-weight: 400;
+        font-size: 11px;
+        line-height: 13px;
+        text-align: center;
+        color: #FFFFFF;
     }
 `
 
