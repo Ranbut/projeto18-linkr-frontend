@@ -1,15 +1,6 @@
 import styled from "styled-components";
 
-export const Body = styled.div`
-    width: 100%;
-    height: 100%;
-    background-color: #333333;
-    position: absolute;
-    top: 0;
-    left: 0;
-`;
-
-export const PublicationPageBody = styled.div`
+export const PageBody = styled.div`
     padding: 20px 30%;
 
     h4{
