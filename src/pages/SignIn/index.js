@@ -20,7 +20,7 @@ export default function SignIn() {
         navigate("/timeline");
       })
       .catch((err) => {
-        console.log(err.response.message);
+        alert(err.response.message);
       });
   }
 
