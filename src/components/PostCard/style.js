@@ -67,7 +67,7 @@ export const UserAvatar = styled.div`
     }
 
     p{
-        margin-top: 4.01px
+        margin-top: 4.01px;
         font-family: 'Lato';
         font-style: normal;
         font-weight: 400;
