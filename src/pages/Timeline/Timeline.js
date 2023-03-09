@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import Header from "../../components/Header/Header.js";
 import { getPostAPI } from "../../api/getPostAPI.js";
 import { getUserByTokenAPI } from "../../api/getUserByTokenAPI.js";
-import { PublicationPageBody, Body, Loading, TrendingBox, TrendingTitle, Hashtag } from "./style.js";
+import { PageBody, Loading, TrendingBox, TrendingTitle, Hashtag } from "./style.js";
 import PostCard from "../../components/PostCard/PostCard.js";
 import PublishCard from "../../components/PublishCard/PublishCard.js";
 import { AuthContext } from "../../contexts/auth.js";
@@ -11,7 +11,9 @@ import { useContext } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router";
 
-export default function Publication() {
+export default function Timeline(){
+
+    document.body.style.backgroundColor = '#333333';
 
     const { token, setToken } = useContext(AuthContext);
     const [load, setLoad] = useState(true);
@@ -65,9 +67,9 @@ export default function Publication() {
     }, [userPosts]);
 
     return (
-        <Body>
-            <Header userImage={user.pictureUrl} token={token} setToken={setToken} />
-            <PublicationPageBody>
+        <>
+            <Header userImage={user.pictureUrl} token={token} setToken={setToken}/>
+            <PageBody>
                 <div>
                     <h4>timeline</h4>
                     <PublishCard userImage={user.pictureUrl} userPosts={userPosts} getPosts={getPosts} />
@@ -87,8 +89,7 @@ export default function Publication() {
                         )}
                     </div>
                 </TrendingBox>
-            </PublicationPageBody>
-
-        </Body>
+            </PageBody>
+        </>
     );
 }

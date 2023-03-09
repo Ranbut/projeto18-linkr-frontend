@@ -71,5 +71,14 @@ align-items: center;
 
     }
 
+    @media (max-width: 375px) {
+
+        .middle{
+            display: none;
+        }
+
+
+    }
+
  
 `;
