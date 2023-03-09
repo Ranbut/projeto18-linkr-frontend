@@ -36,12 +36,11 @@ section{
             letter-spacing: 0em;
             text-align: left;
             color:#C6C6C6;
-            padding-left:17px;
-                   
+            padding-left:17px;  
         }
         button{
             background-color:transparent;
-            border:none;
+           
         }
     }
 `;

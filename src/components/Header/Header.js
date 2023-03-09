@@ -24,7 +24,6 @@ const [input, setInput] = useState('false')
     })    
     }
 
-    
     return (
         <HeaderBody>
     <span>linkr</span>
