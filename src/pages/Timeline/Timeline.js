@@ -11,7 +11,7 @@ import { useContext } from "react";
 
 export default function Publication(){
 
-    const { token } = useContext(AuthContext);
+    const { token, setToken } = useContext(AuthContext);
     const [ load, setLoad ] = useState(true);
     const { user, setUser } = useContext(UserContext);
     const [userPosts, setUserPosts] = useState([]);
@@ -55,7 +55,7 @@ export default function Publication(){
 
     return(
         <Body>
-            <Header />
+            <Header userImage={user.pictureUrl} token={token} setToken={setToken}/>
             <PublicationPageBody>
                 <h4>timeline</h4>
                 <PublishCard userImage={user.pictureUrl} userPosts={userPosts} getPosts={getPosts}/>
