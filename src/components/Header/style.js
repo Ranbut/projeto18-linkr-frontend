@@ -11,7 +11,7 @@ display:flex;
 justify-content: space-between;
 align-items: center;
 
-h4{
+    h4{
         padding-left: 28px;
         width: 108px;
         height: 54px;
@@ -23,11 +23,36 @@ h4{
         letter-spacing: 0.05em;
         color: #FFFFFF;
     }
+
     .middle{
-        min-height:45px;
-        background-color:#E7E7E7;
+        height:45px;
+        background-color:#FFFFFF;
         border-radius: 5px;
-    
+
+        input{
+        width: 563px;
+        height:45px;
+        border: none;
+
+            ::placeholder{
+                font-family: 'Lato';
+                font-size: 19px;
+                font-weight: 400;
+                line-height: 23px;
+                letter-spacing: 0em;
+                text-align: left;
+                color:#C6C6C6;
+                padding-left:17px;  
+            }
+        }
+
+        button{
+            background-color:transparent;
+            border: none;
+            font-size: 20px;
+            color: #C6C6C6;        
+                
+        }
     }
 
     .right{
@@ -46,23 +71,5 @@ h4{
 
     }
 
-    input{
-        width: 563px;
-        height:45px;
-        border-radius: 5px;
-        ::placeholder{
-            font-family: 'Lato';
-            font-size: 19px;
-            font-weight: 400;
-            line-height: 23px;
-            letter-spacing: 0em;
-            text-align: left;
-            color:#C6C6C6;
-            padding-left:17px;  
-        }
-        button{
-            background-color:transparent;
-           
-        }
-    }
+ 
 `;
