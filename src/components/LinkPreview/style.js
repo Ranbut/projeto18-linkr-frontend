@@ -12,6 +12,19 @@ export const PreviewBody = styled.div`
 
     border: 1px solid #4D4D4D;
     border-radius: 11px;
+
+    background: #171717;
+
+    transition: background 2s;
+
+    &:hover{
+        background: #262626;
+    }
+
+    @media (max-width: 428px) {
+        width: 278px;
+        height: 158px;
+    }
 `
 
 export const TitleLink = styled.div`
@@ -27,6 +40,15 @@ export const TitleLink = styled.div`
     line-height: 19px;
 
     color: #CECECE;
+
+    @media (max-width: 428px) {
+        margin-top: 7px;
+
+        width: 138.16px;
+        height: 26px;
+        font-size: 11px;
+        line-height: 13px;
+    }
 `
 
 export const DescriptionLink = styled.div`
@@ -42,6 +64,12 @@ export const DescriptionLink = styled.div`
     line-height: 13px;
 
     color: #9B9595;
+
+    @media (max-width: 428px) {
+        margin-top: 4px;
+        width: 175px;
+        height: 44px;
+    }
 `
 
 export const URLLink = styled.div`
@@ -57,10 +85,19 @@ export const URLLink = styled.div`
     line-height: 13px;
 
     color: #CECECE;
+
+    @media (max-width: 428px) {
+        margin-top: 4px;
+        width: 145.46px;
+        height: 22px;
+    }
 `
 
 export const Items = styled.div`
     margin-left: 19.31px;
+    @media (max-width: 428px) {
+        margin-left: 11px;
+    }
 `
 
 export const ImageLink = styled.div`
@@ -70,5 +107,13 @@ export const ImageLink = styled.div`
         width: 153.44px;
         height: 155px;
         border-radius: 0px 12px 13px 0px;
+    }
+
+    @media (max-width: 428px) {
+        margin-left: -5px;
+
+        img{
+            width: 95px;
+        }
     }
 `
