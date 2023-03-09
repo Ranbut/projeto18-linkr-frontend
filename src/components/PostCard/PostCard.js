@@ -7,7 +7,7 @@ export default function PostCard({ userPost }){
         <PostBody>
             <UserAvatar><img src={userPost.pictureUrl} alt="user-avatar" /></UserAvatar>
             <PostInfo>
-                <h6>{userPost.userName}</h6>
+                <h6>{userPost.username}</h6>
                 <p>{userPost.message}</p>
                 <Link to={userPost.link} style={{ textDecoration: 'none' }}>
                     <LinkPreview link={userPost}/>
