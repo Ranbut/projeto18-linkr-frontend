@@ -2,65 +2,83 @@ import { useEffect, useState } from "react";
 import Header from "../../components/Header/Header.js";
 import { getPostAPI } from "../../api/getPostAPI.js";
 import { getUserByTokenAPI } from "../../api/getUserByTokenAPI.js";
-import { PublicationPageBody, Body, Loading } from "./style.js";
+import { PublicationPageBody, Body, Loading, TrendingBox, TrendingTitle, Hashtag } from "./style.js";
 import PostCard from "../../components/PostCard/PostCard.js";
 import PublishCard from "../../components/PublishCard/PublishCard.js";
 import { AuthContext } from "../../contexts/auth.js";
 import { UserContext } from "../../contexts/user.js";
 import { useContext } from "react";
+import axios from "axios";
 
-export default function Publication(){
+export default function Publication() {
 
     const { token, setToken } = useContext(AuthContext);
     const [ load, setLoad ] = useState(true);
     const { user, setUser } = useContext(UserContext);
     const [userPosts, setUserPosts] = useState([]);
-    
-    async function getUserInfo (currentToken){
+    const [trending, setTrending] = useState([]);
+
+    async function getUserInfo(currentToken) {
         const getUserRes = await getUserByTokenAPI(currentToken);
         if (getUserRes.success) {
-             setUser(getUserRes.userInfo); 
-             return; 
+            setUser(getUserRes.userInfo);
+            return;
         }
     }
 
-    async function getPosts (){
+    async function getPosts() {
         const getPostRes = await getPostAPI();
         if (getPostRes.success) {
-            setUserPosts(getPostRes.postsRetrived); 
+            setUserPosts(getPostRes.postsRetrived);
             setLoad(false);
-            return; 
+            return;
         }
     }
 
-    function renderTimeline(){
-        if(userPosts.length > 0){
-            return(
+    function renderTimeline() {
+        if (userPosts.length > 0) {
+            return (
                 <>
                     {userPosts.map(
-                        (postProp) => <PostCard userPost={postProp} key={postProp.id}/>
+                        (postProp) => <PostCard userPost={postProp} key={postProp.id} />
                     )}
                 </>
             );
         }
-        else{
-            return(<Loading>There are no posts yet</Loading>);
+        else {
+            return (<Loading>There are no posts yet</Loading>);
         }
     }
 
     useEffect(() => {
         getUserInfo(token);
         getPosts();
-      }, []);
+        axios.get(`${process.env.REACT_APP_API_URL}/trending`)
+            .then((res) => {
+                setTrending(res.data);
+            })
+            .catch((err) => {
+                console.log(err.response.data);
+            })
+    }, []);
 
-    return(
+    return (
         <Body>
             <Header userImage={user.pictureUrl} token={token} setToken={setToken}/>
             <PublicationPageBody>
-                <h4>timeline</h4>
-                <PublishCard userImage={user.pictureUrl} userPosts={userPosts} getPosts={getPosts}/>
-                {load ? (<Loading>Loading...</Loading>) : renderTimeline()}
+                <div>
+                    <h4>timeline</h4>
+                    <PublishCard userImage={user.pictureUrl} userPosts={userPosts} getPosts={getPosts} />
+                    {load ? (<Loading>Loading...</Loading>) : renderTimeline()}
+                </div>
+                <TrendingBox>
+                    <TrendingTitle>trending</TrendingTitle>
+                    <div>
+                        {trending.map(e => <Hashtag>{e.hashtag}</Hashtag>)}
+                    </div>
+                </TrendingBox>
             </PublicationPageBody>
+
         </Body>
     );
 }
