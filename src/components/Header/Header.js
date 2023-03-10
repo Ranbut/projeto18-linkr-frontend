@@ -46,6 +46,7 @@ export default function SearchBar(token) {
 
     return (
         <ContainerHeader>
+            <Logo>Linkr</Logo>
             <SectionSearch>
                 <ContainerInput>
                     <DebounceInput
@@ -75,31 +76,27 @@ export default function SearchBar(token) {
                         })}
                 </ReturnSearch>
             </SectionSearch>
+            <Logo>sair</Logo>
         </ContainerHeader>
     )
 
 }
 
 const ContainerHeader = styled.div`
-position: absolute;
-top: 13px;
-right: 110px;
-left: 110px;
-display: flex;
-flex-direction: column;
-align-items: center;
-justify-content: center;
+width:100%;
+height: 72px;
+
 background-color: black;
+display: flex;
+justify-content: space-between;
+padding: 0 50px;
+align-items: center;
 `
 const SectionSearch = styled.div`
 max-width: 563px;
 width: 50%;
 min-width: 350px;
 
-display: flex;
-flex-direction: column;
-justify-content: flex-start;
-align-items: center;
 
 border-radius: 8px;
 background-color:#E7E7E7;
@@ -158,6 +155,13 @@ span{
     
     color: #515151;
 }
+`
+const Logo = styled.p`
+    font-family: 'Lato';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 26px;
+    color: white;
 `
 
 const IconImage = styled.img`
