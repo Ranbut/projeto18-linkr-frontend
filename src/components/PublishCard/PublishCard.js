@@ -3,7 +3,7 @@ import { Form, FormBody, Inputs, PublicationCard, UserAvatar } from "./style";
 import { useContext, useState } from "react";
 import { AuthContext } from "../../contexts/auth.js";
 
-export default function PublishCard({userImage, userPosts, getPosts}){
+export default function PublishCard({ userImage, userPosts, getPosts }) {
 
     const { token } = useContext(AuthContext);
 
@@ -12,9 +12,9 @@ export default function PublishCard({userImage, userPosts, getPosts}){
     const [post, setPost] = useState({
         link: '',
         message: ''
-      });
+    });
 
-      async function publish(event){
+    async function publish(event) {
         event.preventDefault();
 
         setPressed(true);
@@ -26,20 +26,40 @@ export default function PublishCard({userImage, userPosts, getPosts}){
         setPressed(false);
     }
 
-    return(
+    return (
         <PublicationCard data-test="publish-box">
-        <UserAvatar><img src={userImage} alt="user-avatar" /></UserAvatar>
-        <FormBody>
-        <h6>What are you going to share today?</h6>
-        <Form onSubmit={publish}>
-            <Inputs>
-                <input data-test="link" disabled={pressed} required type="text" placeholder="http://..." value={post.link} onChange={e => setPost({...post, link: e.target.value})}/>
-                <input data-test="description" disabled={pressed} required type="text" placeholder="Awesome article about #javascript" value={post.message} onChange={e => setPost({...post, message: e.target.value} )}/>
-                <button data-test="publish-btn" disabled={pressed} type="submit"> {pressed ? "Publishing..." : "Publish"}</button>
-            </Inputs>
-        </Form>
-        </FormBody>
-    </PublicationCard>
+            <UserAvatar><img src={userImage} alt="user-avatar" /></UserAvatar>
+            <FormBody>
+                <h6>What are you going to share today?</h6>
+                <Form onSubmit={publish}>
+                    <Inputs>
+                        <input
+                            data-test="link"
+                            disabled={pressed}
+                            required
+                            type="text"
+                            placeholder="http://..."
+                            value={post.link}
+                            onChange={e => setPost({ ...post, link: e.target.value })}
+                        />
+                        <input
+                            data-test="description"
+                            disabled={pressed}
+                            required
+                            type="text"
+                            placeholder="Awesome article about #javascript"
+                            value={post.message}
+                            onChange={e => setPost({ ...post, message: e.target.value })}
+                        />
+                        <button
+                            data-test="publish-btn"
+                            disabled={pressed}
+                            type="submit"
+                        > {pressed ? "Publishing..." : "Publish"}</button>
+                    </Inputs>
+                </Form>
+            </FormBody>
+        </PublicationCard>
     );
 
 }

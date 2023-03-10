@@ -3,7 +3,7 @@ import styled from "styled-components";
 import axios from "axios";
 
 
-export default function OutBtn({ token, setToken }){
+export default function OutBtn({ token, setToken }) {
 
     const navigate = useNavigate();
 
@@ -29,12 +29,12 @@ export default function OutBtn({ token, setToken }){
     }
 
     return (
-        <Container>
-            <div onClick={logOut}>
+        <Container data-test="menu" >
+            <div data-test="logout" onClick={logOut}>
                 Logout
             </div>
         </Container>
-        );
+    );
 }
 
 const Container = styled.div`

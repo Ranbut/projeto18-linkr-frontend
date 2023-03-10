@@ -73,7 +73,11 @@ export default function Timeline(){
             <PageBody>
                 <div>
                     <h4>timeline</h4>
-                    <PublishCard userImage={user.pictureUrl} userPosts={userPosts} getPosts={getPosts} />
+                    <PublishCard 
+                    userImage={user.pictureUrl} 
+                    userPosts={userPosts} 
+                    getPosts={getPosts} 
+                    />
                     {load ? (<Loading>Loading...</Loading>) : renderTimeline()}
                 </div>
                 <TrendingBox>
