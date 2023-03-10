@@ -7,7 +7,7 @@ import styled from 'styled-components';
 import { BsSearch } from 'react-icons/bs';
 
 export default function SearchBar (token){
- 
+ console.log(token);
       const [search, setSearch] = useState("");
     const [result, setResult] = useState([]);
     const [er, setEr]= useState("");
