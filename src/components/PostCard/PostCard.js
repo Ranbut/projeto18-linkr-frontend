@@ -8,6 +8,7 @@ import { useState, useRef, useEffect, useContext } from "react";
 import { putPostEditAPI } from "../../api/putPostEditAPI";
 import { AuthContext } from "../../contexts/auth";
 
+
 export default function PostCard({ currentUser ,userPost }){
 
     const { token } = useContext(AuthContext);
@@ -15,9 +16,11 @@ export default function PostCard({ currentUser ,userPost }){
     const [isEditing, setEditing] = useState(false);
     const [pressed, setPressed] = useState(false);
 
+
     //Aqui pode ser também ajustado para fazer as tags links com parâmetros, selecionando as hashtags
     const parts = message.split('#');
     const renderedText = parts.map((part, i) => {
+
       if (i % 2 === 1) {
         return <Link to="" style={{ textDecoration: 'none' }}>
             <MessageText key={i} style={{ color: 'white' }}>{`#${part}`}</MessageText>
@@ -109,9 +112,9 @@ export default function PostCard({ currentUser ,userPost }){
                 </Options>
                 {isEditing ? <EditField disabled={pressed} ref={inputRef} onKeyDown={handleKeyDown} /> : <p>{renderedText}</p>}
                 <Link to={userPost.link} style={{ textDecoration: 'none' }}>
-                    <LinkPreview link={userPost}/>
+                    <LinkPreview link={userPost} />
                 </Link>
-                <SpacingMarging  />
+                <SpacingMarging />
             </PostInfo>
         </PostBody>
     );

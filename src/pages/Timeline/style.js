@@ -82,12 +82,8 @@ export const TrendingBox = styled.div`
     background: #171717;
     border-radius: 16px;
 
-    @media (max-width: 764px) {
-        display: none;
-    }
-
-    @media (max-width: 428px) {
-    display: none;
+    @media (max-width: 1000px) {
+        display: none;   
     }
 `;
 
@@ -99,13 +95,9 @@ export const TrendingTitle = styled.h3`
     font-size: 27px;
     line-height: 40px;
     border-bottom: 1px solid #484848;
-
-    @media (max-width: 764px) {
-        display: none;
-    }
-
-    @media (max-width: 428px) {
-    display: none;
+    
+    :hover{
+        cursor: default;
     }
 `;
 
@@ -118,11 +110,7 @@ export const Hashtag = styled.p`
     line-height: 23px;
     letter-spacing: 0.05em;
 
-    @media (max-width: 764px) {
-        display: none;
-    }
-
-    @media (max-width: 428px) {
-    display: none;
+    :hover{
+        cursor: pointer;
     }
 `;
