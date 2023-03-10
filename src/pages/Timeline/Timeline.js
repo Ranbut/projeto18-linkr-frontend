@@ -44,7 +44,7 @@ export default function Timeline(){
             return (
                 <>
                     {userPosts.map(
-                        (postProp) => <PostCard userPost={postProp} key={postProp.id} />
+                        (postProp) => <PostCard currentUser={user.id} userPost={postProp} key={postProp.id} />
                     )}
                 </>
             );
