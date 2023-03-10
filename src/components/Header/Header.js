@@ -5,8 +5,10 @@ import {DebounceInput} from 'react-debounce-input';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { BsSearch } from 'react-icons/bs';
+import { UserContext } from "../../contexts/user.js";
 
-export default function SearchBar (token){
+export default function SearchBar (){
+    const { token} = useContext(AuthContext);
  console.log(token);
       const [search, setSearch] = useState("");
     const [result, setResult] = useState([]);
@@ -16,7 +18,7 @@ export default function SearchBar (token){
         async function getUsernameSearch(){
             if (search && search.length>=3){
                 try {
-                    const requisition = await axios.get(`http://localhost:5000/user/${search}`, {headers: {"Authorization":`Bearer ${token.token}`}});
+                    const requisition = await axios.get(`http://localhost:5000/user/${search}`, {headers: {"Authorization":`Bearer ${token}`}});
                     setResult(requisition.data);
                     setEr("")
                     console.log(requisition.data, "req");
