@@ -1,12 +1,13 @@
-import { HeaderBody } from "./style";
+import {
+    HeaderBody, SectionSearch, ContainerInput,
+    ReturnSearch, UsernameBox, IconImage
+} from "./style";
 import { BsChevronDown, BsChevronUp } from 'react-icons/bs';
-import { AiOutlineSearch } from "react-icons/ai";
 import OutBtn from "./OutBtn";
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { DebounceInput } from 'react-debounce-input';
 import { Link } from 'react-router-dom';
-import styled from 'styled-components';
 import { BsSearch } from 'react-icons/bs';
 
 export default function Header({ userImage, token, setToken }) {
@@ -58,7 +59,7 @@ export default function Header({ userImage, token, setToken }) {
 
     return (
         <>
-            <ContainerHeader>
+            <HeaderBody>
 
                 <div className="left">
                     <h4>linkr</h4>
@@ -99,7 +100,7 @@ export default function Header({ userImage, token, setToken }) {
                     <img alt="userIcon" src={userImage} />
                 </div>
 
-            </ContainerHeader >
+            </HeaderBody >
 
             {isVisible ? <OutBtn token={token} setToken={setToken} /> : ""}
 
@@ -107,77 +108,3 @@ export default function Header({ userImage, token, setToken }) {
 
     );
 }
-
-const ContainerHeader = styled.div`
-position: absolute;
-top: 13px;
-right: 110px;
-left: 110px;
-display: flex;
-flex-direction: column;
-align-items: center;
-justify-content: center;
-`
-const SectionSearch = styled.div`
-max-width: 563px;
-width: 50%;
-min-width: 350px;
-display: flex;
-flex-direction: column;
-justify-content: flex-start;
-align-items: center;
-border-radius: 8px;
-background-color:#E7E7E7;
-`
-const ContainerInput = styled.div`
-background-color: #FFFFFF;
-width: 99.8%;
-display: flex;
-justify-content: flex-start;
-align-items: center;
-border-radius: 8px;
-input{
-    width: 100%;
-    height: 32px;
-    border:none;
-    padding-left: 10px;
-}
-svg{
-    color: black;
-    
-    width: 21px;
-    height: 21px;
-    margin: 10px
-}
-`
-const ReturnSearch = styled.div`
-width: 100%;
-display: flex;
-flex-direction: column;
-margin-bottom: 10px;
-`
-const UsernameBox = styled.div`
-a{
-    display: flex;
-    justify-content: flex-start;
-    align-items: center;
-    text-decoration:none;
-    
-    margin: 8px;
-}
-span{
-    font-family: 'Lato';
-    font-style: normal;
-    font-weight: 400;
-    font-size: 19px;
-    line-height: 23px;
-    
-    color: #515151;
-}
-`;
-const IconImage = styled.img`
-width: 42px;
-height: 42px;
-border-radius: 26.5px;
-margin: 5px;
-`;
