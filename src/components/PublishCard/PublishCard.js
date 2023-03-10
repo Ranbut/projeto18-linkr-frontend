@@ -26,6 +26,7 @@ export default function PublishCard({userImage, userPosts, getPosts}){
             link: '',
             message: ''
           });
+          
         getPosts();
         setPressed(false);
     }
