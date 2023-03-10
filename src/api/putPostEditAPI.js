@@ -1,19 +1,23 @@
 import axios from "axios";
 
-export const pushPostAPI = async (token ,postFormData) => {
+export const putPostEditAPI = async (token, postTextData, hashtagsStored, postId) => {
   const res = {
     success: false,
     error: undefined
   };
 
   try {
+
+    const body = { message: postTextData + " " + hashtagsStored.join(' ')};
+
     const config = {
       headers: {
         Authorization: 'Bearer ' + token
       }
     };
-
-    await axios.post(`${process.env.REACT_APP_API_URL}/posts`, postFormData, config);
+    
+    console.log(hashtagsStored);
+    await axios.put(`${process.env.REACT_APP_API_URL}/${postId}`, body, config);
 
     res.success = true;
     return res;

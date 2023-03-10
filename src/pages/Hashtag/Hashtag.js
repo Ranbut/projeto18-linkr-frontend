@@ -1,62 +1,47 @@
 import { useEffect, useState } from "react";
 import Header from "../../components/Header/Header.js";
-import { getPostAPI } from "../../api/getPostAPI.js";
-import { getUserByTokenAPI } from "../../api/getUserByTokenAPI.js";
-import { PageBody, Loading, TrendingBox, TrendingTitle, Hashtag } from "./style.js";
+import { PageBody, Loading, TrendingBox, TrendingTitle, Hashtag } from "../Timeline/style.js";
 import PostCard from "../../components/PostCard/PostCard.js";
-import PublishCard from "../../components/PublishCard/PublishCard.js";
 import { AuthContext } from "../../contexts/auth.js";
 import { UserContext } from "../../contexts/user.js";
 import { useContext } from "react";
 import axios from "axios";
-import { useNavigate } from "react-router";
+import { useNavigate, useParams } from "react-router";
 
-export default function Timeline(){
-
-    document.body.style.backgroundColor = '#333333';
+export default function HashtagSearch() {
 
     const { token, setToken } = useContext(AuthContext);
     const [load, setLoad] = useState(true);
-    const { user, setUser } = useContext(UserContext);
-    const [userPosts, setUserPosts] = useState([]);
+    const { user } = useContext(UserContext);
+    const [posts, setPosts] = useState([]);
     const [trending, setTrending] = useState([]);
+    const { hashtag } = useParams();
     const navigate = useNavigate();
 
-    async function getUserInfo(currentToken) {
-        const getUserRes = await getUserByTokenAPI(currentToken);
-        if (getUserRes.success) {
-            setUser(getUserRes.userInfo);
-            return;
-        }
-    }
-
-    async function getPosts() {
-        const getPostRes = await getPostAPI();
-        if (getPostRes.success) {
-            setUserPosts(getPostRes.postsRetrived);
-            setLoad(false);
-            return;
-        }
-    }
-
     function renderTimeline() {
-        if (userPosts.length > 0) {
+        if (posts.length > 0) {
             return (
                 <>
-                    {userPosts.map(
-                        (postProp) => <PostCard currentUser={user.id} userPost={postProp} key={postProp.id} />
+                    {posts.map(
+                        (e) => <PostCard userPost={e} key={e.id} />
                     )}
                 </>
             );
         }
         else {
-            return (<Loading data-test="message">There are no posts yet</Loading>);
+            return (<Loading>There are no posts yet</Loading>);
         }
     }
 
     useEffect(() => {
-        getUserInfo(token);
-        getPosts();
+        axios.get(`${process.env.REACT_APP_API_URL}/hashtag/${hashtag}`)
+            .then((res) => {
+                setLoad(false);
+                setPosts(res.data);
+            })
+            .catch((err) => {
+                console.log(err.response.data);
+            })
         axios.get(`${process.env.REACT_APP_API_URL}/trending`)
             .then((res) => {
                 setTrending(res.data);
@@ -64,19 +49,19 @@ export default function Timeline(){
             .catch((err) => {
                 console.log(err.response.data);
             })
-    }, [userPosts]);
+    }, [hashtag]);
 
     return (
         <>
-            <Header userImage={user.pictureUrl} token={token} setToken={setToken}/>
+            <Header userImage={user.pictureUrl} token={token} setToken={setToken} />
+
             <PageBody>
                 <div>
-                    <h4>timeline</h4>
-                    <PublishCard userImage={user.pictureUrl} userPosts={userPosts} getPosts={getPosts} />
+                    <h4 data-test="hashtag-title">{'#'}{hashtag}</h4>
                     {load ? (<Loading>Loading...</Loading>) : renderTimeline()}
                 </div>
-                <TrendingBox>
-                    <TrendingTitle data-test="trending">trending</TrendingTitle>
+                <TrendingBox data-test="trending">
+                    <TrendingTitle>trending</TrendingTitle>
                     <div>
                         {trending.map(e =>
                             <Hashtag data-test="hashtag"

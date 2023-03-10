@@ -27,15 +27,15 @@ export default function PublishCard({userImage, userPosts, getPosts}){
     }
 
     return(
-        <PublicationCard>
+        <PublicationCard data-test="publish-box">
         <UserAvatar><img src={userImage} alt="user-avatar" /></UserAvatar>
         <FormBody>
         <h6>What are you going to share today?</h6>
         <Form onSubmit={publish}>
             <Inputs>
-                <input disabled={pressed} required type="text" placeholder="http://..." value={post.link} onChange={e => setPost({...post, link: e.target.value})}/>
-                <input disabled={pressed} required type="text" placeholder="Awesome article about #javascript" value={post.message} onChange={e => setPost({...post, message: e.target.value} )}/>
-                <button disabled={pressed} type="submit"> {pressed ? "Publishing..." : "Publish"}</button>
+                <input data-test="link" disabled={pressed} required type="text" placeholder="http://..." value={post.link} onChange={e => setPost({...post, link: e.target.value})}/>
+                <input data-test="description" disabled={pressed} required type="text" placeholder="Awesome article about #javascript" value={post.message} onChange={e => setPost({...post, message: e.target.value} )}/>
+                <button data-test="publish-btn" disabled={pressed} type="submit"> {pressed ? "Publishing..." : "Publish"}</button>
             </Inputs>
         </Form>
         </FormBody>

@@ -5,7 +5,7 @@ export const getUserByTokenAPI = async (tokenData) => {
   try {
     const objSend = { "token": tokenData };
 
-    const { data: userInfo } = await axios.post(`http://localhost:5000/get-user`, objSend);
+    const { data: userInfo } = await axios.post(`${process.env.REACT_APP_API_URL}/get-user`, objSend);
 
     return { success: true, error: undefined, userInfo };
 

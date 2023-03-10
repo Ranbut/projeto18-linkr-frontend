@@ -53,6 +53,11 @@ export const FormBody = styled.div`
             margin-left: 9%;
         }
   }
+  @media (max-width: 370px) {
+        h6{
+            margin-left: 15%;
+        }
+    }
 `;
 
 
@@ -73,18 +78,6 @@ export const Inputs = styled.div`
         border: none;
 
         padding-inline: 13px;
-
-        ::-webkit-input-placeholder { /* Edge */
-        margin-left: 13px;
-        }
-
-        :-ms-input-placeholder { /* Internet Explorer 10-11 */
-        margin-left: 13px;
-        }
-
-        ::placeholder {
-        margin-left: 13px;
-        }
     }
 
     button{
@@ -126,4 +119,14 @@ export const Inputs = styled.div`
             margin-left: 55%;
         }
   }
+
+  @media (max-width: 370px) {
+        input{
+            margin-left: 9.5%;
+        }
+
+        button{
+            margin-left: 62%;
+        }
+    }
 `;

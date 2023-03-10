@@ -50,9 +50,9 @@ export const PostInfo = styled.div`
     }
 
     @media (max-width: 428px) {
-
+        width: 275px;
     }
-`
+`;
 
 export const UserAvatar = styled.div`
     display: flex;
@@ -67,7 +67,7 @@ export const UserAvatar = styled.div`
     }
 
     p{
-        margin-top: 4.01px
+        margin-top: 4.01px;
         font-family: 'Lato';
         font-style: normal;
         font-weight: 400;
@@ -76,10 +76,36 @@ export const UserAvatar = styled.div`
         text-align: center;
         color: #FFFFFF;
     }
-`
+
+    @media (max-width: 428px) {
+        margin-left: 25px;
+    }
+`;
 
 export const SpacingMarging = styled.div`
 
     margin-top: 30px;
 
+`;
+
+export const Options = styled.div`
+    display: flex;
+    flex-direction: row;
+`;
+
+export const EditField = styled.textarea`
+    margin-top: 7px;
+    width: 503px;
+    height: 44px;
+    background: #E9E9E9;
+    border-radius: 5px;
+    border: none;
+    resize: none;
+`;
+
+export const MessageText = styled.span`
+    width: 300px;
+    @media (max-width: 428px) {
+        display: inline-block;
+    }
 `

@@ -7,8 +7,9 @@ import { AuthProvider } from "./contexts/auth.js";
 import { UserContext } from "./contexts/user.js";
 import { useState } from "react";
 import Header from "./components/Header/Header.js";
-
 import Page from "./pages/UserPage/pageUser.js";
+import HashtagSearch from "./pages/Hashtag/Hashtag.js";
+
 
 function App() {
 
@@ -16,22 +17,20 @@ function App() {
 
   return (
     <AuthProvider>
-      <GlobalStyle />
-      <BrowserRouter>
-        <Routes>
-        <Route path="/" element={ <SignIn /> } />
-          <Route path="/signup" element={ <SignUp /> } />
-          <Route path="/timeline" element={
-            <UserContext.Provider value={{ user, setUser }}>
-                <Timeline />
-              </UserContext.Provider>
-        } />
-        <Route path="/user/:username" element={ <Header/> } />
-        <Route path="/user/:id" element={ <Page/> } />
-
-        </Routes>
-      </BrowserRouter>
-   </AuthProvider>
+      <UserContext.Provider value={{ user, setUser }}>
+        <GlobalStyle />
+        <BrowserRouter>
+          <Routes>
+            <Route path="/" element={<SignIn />} />
+            <Route path="/signup" element={<SignUp />} />
+            <Route path="/hashtag/:hashtag" element={<HashtagSearch />} />
+            <Route path="/timeline" element={<Timeline />} />
+            <Route path="/user/:username" element={<Header />} />
+            <Route path="/user/:id" element={<Page />} />
+          </Routes>
+        </BrowserRouter>
+      </UserContext.Provider>
+    </AuthProvider>
   );
 }
 

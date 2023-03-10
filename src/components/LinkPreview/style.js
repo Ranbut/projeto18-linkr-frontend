@@ -8,7 +8,6 @@ export const PreviewBody = styled.div`
     box-sizing: border-box;
 
     width: 503px;
-    height: 155px;
 
     border: 1px solid #4D4D4D;
     border-radius: 11px;
@@ -23,7 +22,6 @@ export const PreviewBody = styled.div`
 
     @media (max-width: 428px) {
         width: 278px;
-        height: 158px;
     }
 `
 
@@ -31,7 +29,6 @@ export const TitleLink = styled.div`
     margin-top: 24px;
 
     width: 249.98px;
-    height: 38px;
 
     font-family: 'Lato';
     font-style: normal;
@@ -45,7 +42,6 @@ export const TitleLink = styled.div`
         margin-top: 7px;
 
         width: 138.16px;
-        height: 26px;
         font-size: 11px;
         line-height: 13px;
     }
@@ -55,7 +51,6 @@ export const DescriptionLink = styled.div`
     margin-top: 5px;
 
     width: 302.82px;
-    height: 39px;
 
     font-family: 'Lato';
     font-style: normal;
@@ -68,7 +63,6 @@ export const DescriptionLink = styled.div`
     @media (max-width: 428px) {
         margin-top: 4px;
         width: 175px;
-        height: 44px;
     }
 `
 
@@ -76,7 +70,6 @@ export const URLLink = styled.div`
     margin-top: 13px;
 
     width: 263.19px;
-    height: 13px;
 
     font-family: 'Lato';
     font-style: normal;
@@ -89,7 +82,6 @@ export const URLLink = styled.div`
     @media (max-width: 428px) {
         margin-top: 4px;
         width: 145.46px;
-        height: 22px;
     }
 `
 
@@ -102,6 +94,10 @@ export const Items = styled.div`
 
 export const ImageLink = styled.div`
     margin-left: 27.44px;
+
+    justify-content: center;
+    display: flex;
+    flex-direction: column;
 
     img{
         width: 153.44px;
@@ -116,4 +112,8 @@ export const ImageLink = styled.div`
             width: 95px;
         }
     }
-`
+`;
+
+export const SpacingMarging = styled.div`
+    margin-top: 23px;
+`;
