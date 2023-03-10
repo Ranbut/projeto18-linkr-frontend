@@ -1,27 +1,27 @@
 import { AuthContext } from '../../contexts/auth';
 import axios from 'axios';
-import { useEffect, useState , useContext} from 'react';
-import {DebounceInput} from 'react-debounce-input';
+import { useEffect, useState, useContext } from 'react';
+import { DebounceInput } from 'react-debounce-input';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { BsSearch } from 'react-icons/bs';
 
-export default function SearchBar (token){
- 
-      const [search, setSearch] = useState("");
+export default function SearchBar(token) {
+
+    const [search, setSearch] = useState("");
     const [result, setResult] = useState([]);
-    const [er, setEr]= useState("");
-    
-    useEffect(()=>{
-        async function getUsernameSearch(){
-            if (search && search.length>=3){
+    const [er, setEr] = useState("");
+
+    useEffect(() => {
+        async function getUsernameSearch() {
+            if (search && search.length >= 3) {
                 try {
-                    const requisition = await axios.get(`http://localhost:5000/user/${search}`, {headers: {"Authorization":`Bearer ${token.token}`}});
+                    const requisition = await axios.get(`http://localhost:5000/user/${search}`, { headers: { "Authorization": `Bearer ${token.token}` } });
                     setResult(requisition.data);
                     setEr("")
                     console.log(requisition.data, "req");
                 } catch (error) {
-                    if(error.response.status === 404){
+                    if (error.response.status === 404) {
                         setEr(error.response.data);
                         setResult([])
                     }
@@ -32,53 +32,53 @@ export default function SearchBar (token){
             }
         }
         getUsernameSearch();
-    },[search]);
-    function RenderUsernameResults({user_id, picture_url, username}){
+    }, [search]);
+    function RenderUsernameResults({ user_id, picture_url, username }) {
         return (
             <UsernameBox key={user_id}>
-                <Link key={user_id} to={`/user/${user_id}`} onClick={()=> setSearch([])}>
+                <Link key={user_id} to={`/user/${user_id}`} onClick={() => setSearch([])}>
                     <IconImage src={picture_url} alt={`picture of ${username}`}></IconImage>
                     <span className='username'>{username}</span>
                 </Link>
             </UsernameBox>
-            )
+        )
     }
 
-return(
-    <ContainerHeader>
-        <SectionSearch>
-            <ContainerInput>
-                <DebounceInput
-                    placeholder="Search for people and friends"
-                    minLength={3}
-                    debounceTimeout={300}
-                    onChange={event => setSearch(event.target.value)} 
-                    value={search}
-                />
-                <BsSearch/>
-            </ContainerInput>
-            <ReturnSearch> 
-                {er ?
-                    <UsernameBox>
-                        <span>{"Person was not found!"}</span>
-                    </UsernameBox>
-                    :
-                    result.map(value=>{                       
-                        const {id, picture_url, username} = value
+    return (
+        <ContainerHeader>
+            <SectionSearch>
+                <ContainerInput>
+                    <DebounceInput
+                        placeholder="Search for people and friends"
+                        minLength={3}
+                        debounceTimeout={300}
+                        onChange={event => setSearch(event.target.value)}
+                        value={search}
+                    />
+                    <BsSearch />
+                </ContainerInput>
+                <ReturnSearch>
+                    {er ?
+                        <UsernameBox>
+                            <span>{"Person was not found!"}</span>
+                        </UsernameBox>
+                        :
+                        result.map(value => {
+                            const { id, picture_url, username } = value
 
-                        return(
-                            <RenderUsernameResults  key={id}
-                                                    user_id={id}
-                                                    picture_url={picture_url}
-                                                    username={username}
-                                                    />)
-                                                })}
-            </ReturnSearch>
-        </SectionSearch>
-    </ContainerHeader>
-)
+                            return (
+                                <RenderUsernameResults key={id}
+                                    user_id={id}
+                                    picture_url={picture_url}
+                                    username={username}
+                                />)
+                        })}
+                </ReturnSearch>
+            </SectionSearch>
+        </ContainerHeader>
+    )
 
-                                            }                                          
+}
 
 const ContainerHeader = styled.div`
 position: absolute;
@@ -89,6 +89,7 @@ display: flex;
 flex-direction: column;
 align-items: center;
 justify-content: center;
+background-color: black;
 `
 const SectionSearch = styled.div`
 max-width: 563px;
