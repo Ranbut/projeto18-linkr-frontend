@@ -10,7 +10,7 @@ import Context from "../../contexts/auth.js";
 import axios from "axios";
 import { useNavigate } from "react-router";
 
-export default function Timeline(){
+export default function Timeline() {
 
     const { user } = useContext(Context);
     const [load, setLoad] = useState(true);
@@ -33,7 +33,8 @@ export default function Timeline(){
             return (
                 <>
                     {userPosts.map(
-                        (postProp) => <PostCard currentUser={user.id} userPost={postProp} key={postProp.id} />
+                        (postProp) => <PostCard
+                            getPosts={getPosts} currentUser={user.id} userPost={postProp} key={postProp.id} />
                     )}
                 </>
             );
@@ -56,14 +57,14 @@ export default function Timeline(){
 
     return (
         <>
-            <Header userImage={user.pictureUrl}/>
+            <Header userImage={user.pictureUrl} />
             <PageBody>
                 <div>
 
-                    <PublishCard 
-                    userImage={user.pictureUrl} 
-                    userPosts={userPosts} 
-                    getPosts={getPosts} 
+                    <PublishCard
+                        userImage={user.pictureUrl}
+                        userPosts={userPosts}
+                        getPosts={getPosts}
                     />
 
                     {load ? (<Loading>Loading...</Loading>) : renderTimeline()}
