@@ -65,7 +65,7 @@ export default function Timeline(){
             .catch((err) => {
                 console.log(err.response.data);
             })
-    }, [userPosts]);
+    }, []);
 
     return (
         <>
