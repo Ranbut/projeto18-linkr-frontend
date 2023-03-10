@@ -1,36 +1,25 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import Header from "../../components/Header/Header.js";
 import { getPostUserAPI } from "../../api/getPostAPI.js";
 import { getUserByIdAPI } from "../../api/getUserByTokenAPI.js";
 import { PageBody, Loading, TrendingBox, TrendingTitle, Hashtag, UserInfo } from "./style.js";
 import PostCard from "../../components/PostCard/PostCard.js";
-import { AuthContext } from "../../contexts/auth.js";
-import { UserContext } from "../../contexts/user.js";
+import PublishCard from "../../components/PublishCard/PublishCard.js";
+import axios from "axios";
+import { useParams } from "react-router-dom";
+import Context from "../../contexts/auth.js";
 import { useContext } from "react";
 import axios from "axios";
 import { useNavigate, useParams } from "react-router";
 
-export default function UserPage(){
+export default function UserPage() {
 
     const { id } = useParams();
-
-    document.body.style.backgroundColor = '#333333';
-
-    const { token, setToken } = useContext(AuthContext);
+    const { user, setUser } = useContext(Context);
     const [load, setLoad] = useState(true);
-    const { user, setUser } = useContext(UserContext);
     const [userPosts, setUserPosts] = useState([]);
     const [trending, setTrending] = useState([]);
     const navigate = useNavigate();
-
-    async function getUserInfo() {
-        const getUserRes = await getUserByIdAPI(id);
-        if (getUserRes.success) {
-            setUser(getUserRes.userRetrived);
-            console.log(getUserRes.userRetrived);
-            return;
-        }
-    }
 
     async function getPosts() {
         const getPostRes = await getPostUserAPI(id);
@@ -57,8 +46,12 @@ export default function UserPage(){
     }
 
     useEffect(() => {
-        getUserInfo();
         getPosts();
+        axios.get(`${process.env.REACT_APP_API_URL}/user/${id}/post`, {
+            headers: {
+                "Authorization": `Bearer ${user.token}`
+            }
+        })
         axios.get(`${process.env.REACT_APP_API_URL}/trending`)
             .then((res) => {
                 setTrending(res.data);
@@ -70,7 +63,7 @@ export default function UserPage(){
 
     return (
         <>
-            <Header userImage={user.pictureUrl} token={token} setToken={setToken}/>
+            <Header />
             <PageBody>
                 <div>
                     <UserInfo>

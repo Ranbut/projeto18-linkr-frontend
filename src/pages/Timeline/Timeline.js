@@ -5,31 +5,19 @@ import { getUserByTokenAPI } from "../../api/getUserByTokenAPI.js";
 import { PageBody, Loading, TrendingBox, TrendingTitle, Hashtag } from "./style.js";
 import PostCard from "../../components/PostCard/PostCard.js";
 import PublishCard from "../../components/PublishCard/PublishCard.js";
-import { AuthContext } from "../../contexts/auth.js";
-import { UserContext } from "../../contexts/user.js";
 import { useContext } from "react";
+import Context from "../../contexts/auth.js";
 import axios from "axios";
 import { useNavigate } from "react-router";
 
 export default function Timeline(){
 
-    document.body.style.backgroundColor = '#333333';
-
-    const { token, setToken } = useContext(AuthContext);
+    const { user } = useContext(Context);
     const [load, setLoad] = useState(true);
-    const { user, setUser } = useContext(UserContext);
     const [userPosts, setUserPosts] = useState([]);
     const [trending, setTrending] = useState([]);
     const navigate = useNavigate();
 
-    async function getUserInfo(currentToken) {
-        const getUserRes = await getUserByTokenAPI(currentToken);
-        if (getUserRes.success) {
-            setUser(getUserRes.userInfo);
-            console.log(getUserRes.userInfo);
-            return;
-        }
-    }
 
     async function getPosts() {
         const getPostRes = await getPostAPI();
@@ -56,7 +44,6 @@ export default function Timeline(){
     }
 
     useEffect(() => {
-        getUserInfo(token);
         getPosts();
         axios.get(`${process.env.REACT_APP_API_URL}/trending`)
             .then((res) => {
@@ -69,15 +56,16 @@ export default function Timeline(){
 
     return (
         <>
-            <Header userImage={user.pictureUrl} token={token} setToken={setToken}/>
+            <Header userImage={user.pictureUrl}/>
             <PageBody>
                 <div>
-                    <h4>timeline</h4>
+
                     <PublishCard 
                     userImage={user.pictureUrl} 
                     userPosts={userPosts} 
                     getPosts={getPosts} 
                     />
+
                     {load ? (<Loading>Loading...</Loading>) : renderTimeline()}
                 </div>
                 <TrendingBox>

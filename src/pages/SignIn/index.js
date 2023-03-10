@@ -1,16 +1,14 @@
 import styled from "styled-components";
 import { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { AuthContext } from "../../contexts/auth.js";
-
+import Context from "../../contexts/auth.js";
 import axios from "axios";
 
 export default function SignIn() {
-  const URLPOST = `${process.env.REACT_APP_API_URL}/`
+  const URLPOST = `${process.env.REACT_APP_API_URL}/`;
   const navigate = useNavigate();
-  const { setToken } = useContext(AuthContext);
   const [loginUser, setLoginUser] = useState({ email: "", password: "" });
-  const {setUser} = useContext(AuthContext)
+  const { setUser } = useContext(Context);
 
   function handleSignIn(e) {
     e.preventDefault();
@@ -18,7 +16,7 @@ export default function SignIn() {
     axios
       .post(`${URLPOST}sign-in`, loginUser)
       .then((res) => {localStorage.setItem('user', JSON.stringify(res.data));     
-        setToken(res.data.token);
+        setUser(res.data);
         navigate("/timeline");
       })
       .catch((err) => {

@@ -4,28 +4,26 @@ import {
 } from "./style.js";
 import OutBtn from "./OutBtn";
 import axios from 'axios';
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { DebounceInput } from 'react-debounce-input';
 import { Link } from 'react-router-dom';
 import { BsSearch } from 'react-icons/bs';
 import { BsChevronDown } from 'react-icons/bs';
 import { BsChevronUp } from 'react-icons/bs';
+import Context from "../../contexts/auth.js";
 
-export default function SearchBar({ userImage, token, setToken }) {
 
+export default function SearchBar() {
 
+    const { user, setUser } = useContext(Context);
     const [search, setSearch] = useState("");
     const [result, setResult] = useState([]);
     const [er, setEr] = useState("");
     const [isVisible, setIsVisible] = useState(false)
     const [chevronSide, setChevronSide] = useState(true)
-
     const [form, setForm] = useState({
         username: '',
     })
-
-
-
     const [input, setInput] = useState('false')
 
     function handleFilter(e) {
@@ -51,7 +49,11 @@ export default function SearchBar({ userImage, token, setToken }) {
         async function getUsernameSearch() {
             if (search && search.length >= 3) {
                 try {
-                    const requisition = await axios.get(`http://localhost:5000/user/${search}`, { headers: { "Authorization": `Bearer ${token.token}` } });
+                    const requisition = await axios.get(`http://localhost:5000/user/${search}`, {
+                        headers: {
+                            "Authorization": `Bearer ${user.token}`
+                        }
+                    });
                     setResult(requisition.data);
                     setEr("")
                     console.log(requisition.data, "req");
@@ -116,11 +118,11 @@ export default function SearchBar({ userImage, token, setToken }) {
 
                 <div className="right">
                     {chevronSide ? <BsChevronDown onClick={() => handleChevron()} /> : <BsChevronUp onClick={() => handleChevron()} />}
-                    <img data-test="avatar"  alt="userIcon" src={userImage} />
+                    <img data-test="avatar" alt="userIcon" src={user.pictureUrl} />
                 </div>
 
             </HeaderBody>
-            {isVisible ? <OutBtn token={token} setToken={setToken} /> : ""}
+            {isVisible ? <OutBtn token={user.token} setToken={setUser} /> : ""}
         </>
     )
 
