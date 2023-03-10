@@ -1,5 +1,4 @@
 
-
 import { useEffect, useState } from "react";
 import Header from "../../components/Header/Header.js";
 import { getPostAPI } from "../../api/getPostAPI.js";
@@ -59,7 +58,7 @@ export default function Timeline(){
     useEffect(() => {
         getUserInfo(token);
         getPosts();
-        axios.get(`${process.env.REACT_APP_API_URL}/user/${id}/posts`)
+        axios.get(`${process.env.REACT_APP_API_URL}/user/${id}/post`, {headers: {"Authorization":`Bearer ${token.token}`}})
             .then((res) => {
                 setTrending(res.data);
                 console.log(trending, "trending");
@@ -81,12 +80,10 @@ export default function Timeline(){
                 <TrendingBox>
                     <TrendingTitle>trending</TrendingTitle>
                     <div>
-                        {trending.map(e => <Hashtag>{e.hashtag}</Hashtag>)}
+                        {trending?.map(e => <Hashtag>{e.hashtag}</Hashtag>)}
                     </div>
                 </TrendingBox>
             </PageBody>
         </>
     );
 }
-
-
