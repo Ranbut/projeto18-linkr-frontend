@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
 export default function SignUp() {
-  const URLPOST = "http://localhost:5000/"
+  const URLPOST = `${process.env.REACT_APP_API_URL}/`;
   const navigate = useNavigate();
 
   let [form, setForm] = useState({
