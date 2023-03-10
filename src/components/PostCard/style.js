@@ -108,4 +108,27 @@ export const MessageText = styled.span`
     @media (max-width: 428px) {
         display: inline-block;
     }
-`
+`;
+
+export const ModalBox = styled.div`
+    display: flex;
+    flex-direction: column;
+    font-family: 'Lato';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 21px;
+    line-height: 13px;
+    align-items: flex-end;
+
+    div {
+        display: flex;
+        gap: 10px;
+    }
+
+    button{
+        margin-top: 20px;
+        width: 70px;
+        display: flex;
+        justify-content: center;
+    }
+`;
