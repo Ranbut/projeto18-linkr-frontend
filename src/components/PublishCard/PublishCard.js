@@ -22,6 +22,10 @@ export default function PublishCard({ userImage, userPosts, getPosts }) {
 
         const pushPostRes = await pushPostAPI(user.token, post);
         if (!pushPostRes.success) {
+            setPost({
+                link: '',
+                message: ''
+            });
             setPressed(false);
             alert("There was an error publishing your link");
             return (pushPostRes.error);
