@@ -150,3 +150,11 @@ height: 42px;
 border-radius: 26.5px;
 margin: 5px;
 `;
+
+export const Logo = styled.p`
+    font-family: 'Lato';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 26px;
+    color: white;
+`;
