@@ -73,6 +73,9 @@ export const TrendingBox = styled.div`
 
     background: #171717;
     border-radius: 16px;
+    @media (max-width: 1000px) {
+        display: none;   
+    }
 `;
 
 export const TrendingTitle = styled.h3`
@@ -83,6 +86,9 @@ export const TrendingTitle = styled.h3`
     font-size: 27px;
     line-height: 40px;
     border-bottom: 1px solid #484848;
+    :hover{
+        cursor: default;
+    }
 `;
 
 export const Hashtag = styled.p`
@@ -93,4 +99,7 @@ export const Hashtag = styled.p`
     font-size: 19px;
     line-height: 23px;
     letter-spacing: 0.05em;
+    :hover{
+        cursor: pointer;
+    }
 `;
