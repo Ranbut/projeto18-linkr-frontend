@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import Header from "../../components/Header/Header.js";
-import { PublicationPageBody, Body, Loading, TrendingBox, TrendingTitle, Hashtag } from "../Timeline/style.js";
+import { PageBody, Loading, TrendingBox, TrendingTitle, Hashtag } from "../Timeline/style.js";
 import PostCard from "../../components/PostCard/PostCard.js";
 import { AuthContext } from "../../contexts/auth.js";
 import { UserContext } from "../../contexts/user.js";
@@ -52,9 +52,9 @@ export default function HashtagSearch() {
     }, [hashtag]);
 
     return (
-        <Body>
+        <>
             <Header userImage={user.pictureUrl} token={token} setToken={setToken} />
-            <PublicationPageBody>
+            <PageBody>
                 <div>
                     <h4>{'#'}{hashtag}</h4>
                     {load ? (<Loading>Loading...</Loading>) : renderTimeline()}
@@ -73,8 +73,7 @@ export default function HashtagSearch() {
                         )}
                     </div>
                 </TrendingBox>
-            </PublicationPageBody>
-
-        </Body>
+            </PageBody>
+        </>
     );
 }

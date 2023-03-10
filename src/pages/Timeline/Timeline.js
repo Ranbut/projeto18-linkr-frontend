@@ -50,7 +50,7 @@ export default function Timeline(){
             );
         }
         else {
-            return (<Loading>There are no posts yet</Loading>);
+            return (<Loading data-test="message">There are no posts yet</Loading>);
         }
     }
 
