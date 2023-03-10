@@ -29,8 +29,8 @@ export default function OutBtn({ token, setToken }){
     }
 
     return (
-        <Container>
-            <div onClick={logOut}>
+        <Container data-test="menu">
+            <div data-test="logout" onClick={logOut}>
                 Logout
             </div>
         </Container>
