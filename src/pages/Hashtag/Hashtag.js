@@ -54,6 +54,7 @@ export default function HashtagSearch() {
     return (
         <>
             <Header userImage={user.pictureUrl} token={token} setToken={setToken} />
+
             <PageBody>
                 <div>
                     <h4 data-test="hashtag-title">{'#'}{hashtag}</h4>

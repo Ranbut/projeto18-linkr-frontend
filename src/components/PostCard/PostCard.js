@@ -1,51 +1,55 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import LinkPreview from "../LinkPreview/LinkPreview";
-import { PostBody, PostInfo, UserAvatar, SpacingMarging, Options, EditField, MessageText } from "./style";
+import { PostBody, PostInfo, UserAvatar, SpacingMarging, Options, EditField } from "./style";
 import { AiOutlineHeart } from "react-icons/ai";
 import { TbTrashFilled } from "react-icons/tb";
 import { TiPencil } from "react-icons/ti";
 import { useState, useRef, useEffect, useContext } from "react";
 import { putPostEditAPI } from "../../api/putPostEditAPI";
 import { AuthContext } from "../../contexts/auth";
+import { ReactTagify } from "react-tagify";
 
 
-export default function PostCard({ currentUser ,userPost }){
+export default function PostCard({ currentUser, userPost }) {
 
     const { token } = useContext(AuthContext);
     const [message, setMessage] = useState(userPost.message);
     const [isEditing, setEditing] = useState(false);
     const [pressed, setPressed] = useState(false);
+    const navigate = useNavigate();
 
 
     //Aqui pode ser também ajustado para fazer as tags links com parâmetros, selecionando as hashtags
-    const parts = message.split('#');
-    const renderedText = parts.map((part, i) => {
 
-      if (i % 2 === 1) {
-        return <Link to="" style={{ textDecoration: 'none' }}>
-            <MessageText data-test="description" key={i} style={{ color: 'white' }}>{`#${part}`}</MessageText>
-        </Link>
-      } else {
-        return <MessageText data-test="description" key={i}>{part}</MessageText>;
-      }
-    });
+    const renderedText =
+        <ReactTagify
+            tagStyle={{
+                color: "#FFFFFF",
+                cursor: "pointer"
+            }}
+            tagClicked={(tag) => navigate(`/hashtag/${tag.replace("#", "")}`)}
+            data-test="description"
+        >
+            {message}
+        </ReactTagify>
+
 
     function getHashTags(string) {
         const words = string.split(' ');
         const hashtags = [];
         for (let i = 0; i < words.length; i++) {
-          if (words[i].startsWith('#')) {
-            hashtags.push(words[i]);
-          }
+            if (words[i].startsWith('#')) {
+                hashtags.push(words[i]);
+            }
         }
         return hashtags;
-      }
+    }
 
-    async function edit(messageData){
+    async function edit(messageData) {
 
         const checkMessage = getHashTags(messageData);
 
-        if(checkMessage.length !== 0){
+        if (checkMessage.length !== 0) {
             setPressed(false);
             return alert("You can't edit or add hashtags of the post.\nOnly the main message are allowed.");
         }
@@ -53,13 +57,12 @@ export default function PostCard({ currentUser ,userPost }){
         const hashtagsMessage = getHashTags(message);
 
         const pushPostRes = await putPostEditAPI(token, messageData, hashtagsMessage, userPost.id);
-        if (!pushPostRes.success) 
-        {   
-            alert("There was an error editing your post message"); 
+        if (!pushPostRes.success) {
+            alert("There was an error editing your post message");
             setPressed(false);
             return (pushPostRes.error);
         }
-        else{
+        else {
             setMessage(messageData + " " + hashtagsMessage.join(' '));
             setEditing(false);
             setPressed(false);
@@ -67,36 +70,38 @@ export default function PostCard({ currentUser ,userPost }){
         }
     }
 
-    function renderPostOptions(){
+    function renderPostOptions() {
 
         const isFromUser = currentUser === userPost.userId;
 
-        if(isFromUser){
-            return(
+        if (isFromUser) {
+            return (
                 <>
+
                     <TiPencil data-test="edit-btn" onClick={() => setEditing(!isEditing)} title="Editar Post" style={{ marginLeft: '-50px' ,marginTop: '23px'}} color='white' size= '20px'/>
                     <TbTrashFilled data-test="delete-btn" title="Deletar Post" style={{ marginLeft: '12.53px' ,marginTop: '23px'}} color='white' size= '20px'/>
+
                 </>
             );
         }
     }
 
     const handleKeyDown = (event) => {
-        if (event.key === 'Enter'){
+        if (event.key === 'Enter') {
             setPressed(true);
             edit(event.target.value);
         }
         if (event.key === 'Escape')
             setEditing(false);
-      };
+    };
 
     const inputRef = useRef(null);
 
     useEffect(() => {
         if (isEditing) {
-          inputRef.current.focus();
+            inputRef.current.focus();
         }
-      }, [isEditing]);
+    }, [isEditing]);
 
     return(
         <PostBody data-test="post">
