@@ -1,22 +1,51 @@
 import {
     HeaderBody, SectionSearch, ContainerInput,
-    ReturnSearch, UsernameBox, IconImage
-} from "./style";
-import { BsChevronDown, BsChevronUp } from 'react-icons/bs';
+    ReturnSearch, UsernameBox, IconImage, Logo
+} from "./style.js";
 import OutBtn from "./OutBtn";
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { DebounceInput } from 'react-debounce-input';
 import { Link } from 'react-router-dom';
 import { BsSearch } from 'react-icons/bs';
+import { BsChevronDown } from 'react-icons/bs';
+import { BsChevronUp } from 'react-icons/bs';
 
-export default function Header({ userImage, token, setToken }) {
+export default function SearchBar({ userImage, token, setToken }) {
+
 
     const [search, setSearch] = useState("");
     const [result, setResult] = useState([]);
     const [er, setEr] = useState("");
     const [isVisible, setIsVisible] = useState(false)
     const [chevronSide, setChevronSide] = useState(true)
+
+    const [form, setForm] = useState({
+        username: '',
+    })
+
+
+
+    const [input, setInput] = useState('false')
+
+    function handleFilter(e) {
+        e.preventDefault()
+
+    }
+
+
+    function handleForm(e) {
+        setForm({
+            ...form,
+            [e.target.name]: e.target.value
+        })
+    }
+
+    function handleChevron() {
+        setIsVisible(!isVisible)
+        setChevronSide(!chevronSide)
+    }
+
 
     useEffect(() => {
         async function getUsernameSearch() {
@@ -40,12 +69,6 @@ export default function Header({ userImage, token, setToken }) {
         getUsernameSearch();
     }, [search]);
 
-
-    function handleChevron() {
-        setIsVisible(!isVisible)
-        setChevronSide(!chevronSide)
-    }
-
     function RenderUsernameResults({ user_id, picture_url, username }) {
         return (
             <UsernameBox key={user_id}>
@@ -60,11 +83,7 @@ export default function Header({ userImage, token, setToken }) {
     return (
         <>
             <HeaderBody>
-
-                <div className="left">
-                    <h4>linkr</h4>
-                </div>
-
+                <Logo>Linkr</Logo>
                 <SectionSearch>
                     <ContainerInput>
                         <DebounceInput
@@ -97,14 +116,12 @@ export default function Header({ userImage, token, setToken }) {
 
                 <div className="right">
                     {chevronSide ? <BsChevronDown onClick={() => handleChevron()} /> : <BsChevronUp onClick={() => handleChevron()} />}
-                    <img alt="userIcon" src={userImage} />
+                    <img data-test="avatar"  alt="userIcon" src={userImage} />
                 </div>
 
-            </HeaderBody >
-
+            </HeaderBody>
             {isVisible ? <OutBtn token={token} setToken={setToken} /> : ""}
-
         </>
+    )
 
-    );
 }

@@ -26,6 +26,7 @@ export default function Timeline(){
         const getUserRes = await getUserByTokenAPI(currentToken);
         if (getUserRes.success) {
             setUser(getUserRes.userInfo);
+            console.log(getUserRes.userInfo);
             return;
         }
     }
@@ -64,7 +65,7 @@ export default function Timeline(){
             .catch((err) => {
                 console.log(err.response.data);
             })
-    }, [userPosts]);
+    }, []);
 
     return (
         <>

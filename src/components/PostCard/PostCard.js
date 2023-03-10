@@ -1,7 +1,8 @@
 import { Link, useNavigate } from "react-router-dom";
 import LinkPreview from "../LinkPreview/LinkPreview";
 import { PostBody, PostInfo, UserAvatar, SpacingMarging, Options, EditField } from "./style";
-// import { AiOutlineHeart } from "react-icons/ai";
+import { PostBody, PostInfo, UserAvatar, SpacingMarging, Options, EditField, ModalBox } from "./style";
+import { AiOutlineHeart } from "react-icons/ai";
 import { TbTrashFilled } from "react-icons/tb";
 import { TiPencil } from "react-icons/ti";
 import { useState, useRef, useEffect, useContext } from "react";
@@ -9,6 +10,8 @@ import { putPostEditAPI } from "../../api/putPostEditAPI";
 import { AuthContext } from "../../contexts/auth";
 import { ReactTagify } from "react-tagify";
 import LikeButton from "./LikeButton";
+import axios from "axios";
+import Modal from "react-modal";
 
 
 export default function PostCard({ currentUser, userPost }) {
@@ -18,6 +21,32 @@ export default function PostCard({ currentUser, userPost }) {
     const [isEditing, setEditing] = useState(false);
     const [pressed, setPressed] = useState(false);
     const navigate = useNavigate();
+    const [deleteModal, setDeleteModal] = useState(false);
+
+    const customStyles = {
+        content: {
+            top: '50%',
+            left: '50%',
+            right: 'auto',
+            bottom: 'auto',
+            marginRight: '-50%',
+            transform: 'translate(-50%, -50%)'
+        },
+    };
+
+    function handleDeleteModal() {
+        setDeleteModal(!deleteModal);
+    }
+
+    function deletePost() {
+        axios.delete(`${process.env.REACT_APP_API_URL}/posts/delete/${userPost.id}`)
+            .then(() => {
+                handleDeleteModal()
+            })
+            .catch((err) => {
+                alert(err.response.data);
+            })
+    }
 
 
     //Aqui pode ser também ajustado para fazer as tags links com parâmetros, selecionando as hashtags
@@ -79,8 +108,14 @@ export default function PostCard({ currentUser, userPost }) {
             return (
                 <>
 
-                    <TiPencil data-test="edit-btn" onClick={() => setEditing(!isEditing)} title="Editar Post" style={{ marginLeft: '-50px' ,marginTop: '23px'}} color='white' size= '20px'/>
-                    <TbTrashFilled data-test="delete-btn" title="Deletar Post" style={{ marginLeft: '12.53px' ,marginTop: '23px'}} color='white' size= '20px'/>
+                    <TiPencil data-test="edit-btn" onClick={() => setEditing(!isEditing)} title="Editar Post" style={{ marginLeft: '-50px', marginTop: '23px' }} color='white' size='20px' />
+                    <TbTrashFilled
+                        data-test="delete-btn"
+                        title="Deletar Post"
+                        style={{ marginLeft: '12.53px', marginTop: '23px' }}
+                        color='white' size='20px'
+                        onClick={handleDeleteModal}
+                    />
 
                 </>
             );
@@ -104,14 +139,16 @@ export default function PostCard({ currentUser, userPost }) {
         }
     }, [isEditing]);
 
-    return(
+    return (
         <PostBody data-test="post">
             <UserAvatar>
                 <img title={userPost.username} src={userPost.pictureUrl} alt="user-avatar" />
-
                 <LikeButton postId = {userPost.id}/>
                 {/* <AiOutlineHeart data-test="like-btn" title="Like Post" style={{marginLeft: '33px'}} color='white' size= '14px'/>
                 <p data-test="counter">0 likes</p> */}
+
+                <AiOutlineHeart data-test="like-btn" title="Like Post" style={{ marginLeft: '33px' }} color='white' size='14px' />
+                <p data-test="counter">0 likes</p>
             </UserAvatar>
             <PostInfo>
                 <Options>
@@ -124,6 +161,19 @@ export default function PostCard({ currentUser, userPost }) {
                 </Link>
                 <SpacingMarging />
             </PostInfo>
+            <Modal
+                isOpen={deleteModal}
+                style={customStyles}
+                contentLabel="Example Modal"
+            >
+                <ModalBox>
+                    <h2>Deseja realmente apagar o post?</h2>
+                    <div>
+                        <button onClick={handleDeleteModal}>Cancelar</button>
+                        <button onClick={deletePost}>Apagar</button>
+                    </div>
+                </ModalBox>
+            </Modal>
         </PostBody>
     );
 }
