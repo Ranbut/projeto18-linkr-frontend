@@ -1,5 +1,6 @@
 import { Link, useNavigate } from "react-router-dom";
 import LinkPreview from "../LinkPreview/LinkPreview";
+import { PostBody, PostInfo, UserAvatar, SpacingMarging, Options, EditField } from "./style";
 import { PostBody, PostInfo, UserAvatar, SpacingMarging, Options, EditField, ModalBox } from "./style";
 import { AiOutlineHeart } from "react-icons/ai";
 import { TbTrashFilled } from "react-icons/tb";
@@ -8,6 +9,7 @@ import { useState, useRef, useEffect, useContext } from "react";
 import { putPostEditAPI } from "../../api/putPostEditAPI";
 import { AuthContext } from "../../contexts/auth";
 import { ReactTagify } from "react-tagify";
+import LikeButton from "./LikeButton";
 import axios from "axios";
 import Modal from "react-modal";
 
@@ -140,8 +142,14 @@ export default function PostCard({ currentUser, userPost }) {
     return (
         <PostBody data-test="post">
             <UserAvatar>
+
                 <img title={userPost.username} src={userPost.pictureUrl} alt="user-avatar" />
+                <LikeButton postId = {userPost.id}/>
+                {/* <AiOutlineHeart data-test="like-btn" title="Like Post" style={{marginLeft: '33px'}} color='white' size= '14px'/>
+                <p data-test="counter">0 likes</p> */}
+
                 <AiOutlineHeart data-test="like-btn" title="Like Post" style={{ marginLeft: '33px' }} color='white' size='14px' />
+
                 <p data-test="counter">0 likes</p>
             </UserAvatar>
             <PostInfo>

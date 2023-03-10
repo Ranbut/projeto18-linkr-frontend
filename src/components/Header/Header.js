@@ -75,7 +75,7 @@ export default function SearchBar() {
         return (
             <UsernameBox key={user_id}>
                 <Link key={user_id} to={`/user/${user_id}`} onClick={() => setSearch([])}>
-                    <IconImage src={picture_url} alt={`picture of ${username}`}></IconImage>
+                    <IconImage data-test="avatar" src={picture_url} alt={`picture of ${username}`}></IconImage>
                     <span className='username'>{username}</span>
                 </Link>
             </UsernameBox>
