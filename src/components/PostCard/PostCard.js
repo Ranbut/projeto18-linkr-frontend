@@ -142,12 +142,14 @@ export default function PostCard({ currentUser, userPost }) {
     return (
         <PostBody data-test="post">
             <UserAvatar>
+
                 <img title={userPost.username} src={userPost.pictureUrl} alt="user-avatar" />
                 <LikeButton postId = {userPost.id}/>
                 {/* <AiOutlineHeart data-test="like-btn" title="Like Post" style={{marginLeft: '33px'}} color='white' size= '14px'/>
                 <p data-test="counter">0 likes</p> */}
 
                 <AiOutlineHeart data-test="like-btn" title="Like Post" style={{ marginLeft: '33px' }} color='white' size='14px' />
+
                 <p data-test="counter">0 likes</p>
             </UserAvatar>
             <PostInfo>
