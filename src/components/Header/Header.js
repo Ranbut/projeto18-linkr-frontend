@@ -104,12 +104,12 @@ export default function SearchBar() {
                             </UsernameBox>
                             :
                             result.map(value => {
-                                const { id, picture_url, username } = value
+                                const { id, pictureUrl, username } = value
 
                                 return (
                                     <RenderUsernameResults key={id}
                                         user_id={id}
-                                        picture_url={picture_url}
+                                        picture_url={pictureUrl}
                                         username={username}
                                     />)
                             })}
