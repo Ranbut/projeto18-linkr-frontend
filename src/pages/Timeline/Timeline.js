@@ -9,16 +9,18 @@ import { AuthContext } from "../../contexts/auth.js";
 import { UserContext } from "../../contexts/user.js";
 import { useContext } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router";
 
 export default function Timeline(){
 
     document.body.style.backgroundColor = '#333333';
 
     const { token, setToken } = useContext(AuthContext);
-    const [ load, setLoad ] = useState(true);
+    const [load, setLoad] = useState(true);
     const { user, setUser } = useContext(UserContext);
     const [userPosts, setUserPosts] = useState([]);
     const [trending, setTrending] = useState([]);
+    const navigate = useNavigate();
 
     async function getUserInfo(currentToken) {
         const getUserRes = await getUserByTokenAPI(currentToken);
@@ -43,13 +45,13 @@ export default function Timeline(){
             return (
                 <>
                     {userPosts.map(
-                        (postProp) => <PostCard userPost={postProp} key={postProp.id} />
+                        (postProp) => <PostCard currentUser={user.id} userPost={postProp} key={postProp.id} />
                     )}
                 </>
             );
         }
         else {
-            return (<Loading>There are no posts yet</Loading>);
+            return (<Loading data-test="message">There are no posts yet</Loading>);
         }
     }
 
@@ -63,7 +65,7 @@ export default function Timeline(){
             .catch((err) => {
                 console.log(err.response.data);
             })
-    }, []);
+    }, [userPosts]);
 
     return (
         <>
@@ -75,9 +77,17 @@ export default function Timeline(){
                     {load ? (<Loading>Loading...</Loading>) : renderTimeline()}
                 </div>
                 <TrendingBox>
-                    <TrendingTitle>trending</TrendingTitle>
+                    <TrendingTitle data-test="trending">trending</TrendingTitle>
                     <div>
-                        {trending.map(e => <Hashtag>{e.hashtag}</Hashtag>)}
+                        {trending.map(e =>
+                            <Hashtag data-test="hashtag"
+                                key={e.hashtag}
+                                onClick={() =>
+                                    navigate(`/hashtag/${e.hashtag.replace("#", "")}`)}
+                            >
+                                {e.hashtag}
+                            </Hashtag>
+                        )}
                     </div>
                 </TrendingBox>
             </PageBody>

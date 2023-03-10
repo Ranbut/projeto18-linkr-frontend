@@ -18,7 +18,6 @@ export const PageBody = styled.div`
 
     color: #FFFFFF;
     }
-
     
     @media (max-width: 1024px) {
         padding: 20px 20%;
@@ -38,6 +37,7 @@ export const PageBody = styled.div`
 
     @media (max-width: 428px) {
     padding: 0px;
+    }
 
     h4{
         display: position;
@@ -45,7 +45,15 @@ export const PageBody = styled.div`
         top: 19px;
         margin-left: 17px;
     }
-  }
+
+    @media (max-width: 370px) {
+            h4{
+            display: position;
+            position: relative;
+            top: 19px;
+            margin-left: 50px;
+        }
+    }
 `;
 
 export const Loading = styled.div`
@@ -73,6 +81,10 @@ export const TrendingBox = styled.div`
 
     background: #171717;
     border-radius: 16px;
+
+    @media (max-width: 1000px) {
+        display: none;   
+    }
 `;
 
 export const TrendingTitle = styled.h3`
@@ -83,6 +95,10 @@ export const TrendingTitle = styled.h3`
     font-size: 27px;
     line-height: 40px;
     border-bottom: 1px solid #484848;
+    
+    :hover{
+        cursor: default;
+    }
 `;
 
 export const Hashtag = styled.p`
@@ -93,4 +109,8 @@ export const Hashtag = styled.p`
     font-size: 19px;
     line-height: 23px;
     letter-spacing: 0.05em;
+
+    :hover{
+        cursor: pointer;
+    }
 `;

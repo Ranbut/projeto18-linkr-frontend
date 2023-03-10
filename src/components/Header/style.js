@@ -82,3 +82,71 @@ align-items: center;
 
  
 `;
+
+export const SectionSearch = styled.div`
+max-width: 563px;
+width: 50%;
+min-width: 350px;
+display: flex;
+flex-direction: column;
+justify-content: flex-start;
+align-items: center;
+border-radius: 8px;
+background-color:#E7E7E7;
+`;
+
+export const ContainerInput = styled.div`
+background-color: #FFFFFF;
+width: 99.8%;
+display: flex;
+justify-content: flex-start;
+align-items: center;
+border-radius: 8px;
+input{
+    width: 100%;
+    height: 32px;
+    border:none;
+    padding-left: 10px;
+}
+svg{
+    color: black;
+    
+    width: 21px;
+    height: 21px;
+    margin: 10px
+}
+`;
+
+export const ReturnSearch = styled.div`
+width: 100%;
+display: flex;
+flex-direction: column;
+margin-bottom: 10px;
+`;
+
+export const UsernameBox = styled.div`
+a{
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    text-decoration:none;
+    
+    margin: 8px;
+}
+span{
+    font-family: 'Lato';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 19px;
+    line-height: 23px;
+    
+    color: #515151;
+}
+`;
+
+export const IconImage = styled.img`
+width: 42px;
+height: 42px;
+border-radius: 26.5px;
+margin: 5px;
+`;

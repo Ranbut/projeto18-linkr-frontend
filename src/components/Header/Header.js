@@ -1,16 +1,24 @@
-import { AuthContext } from '../../contexts/auth';
+import {
+    HeaderBody, SectionSearch, ContainerInput,
+    ReturnSearch, UsernameBox, IconImage
+} from "./style";
+import { BsChevronDown, BsChevronUp } from 'react-icons/bs';
+import OutBtn from "./OutBtn";
 import axios from 'axios';
+
 import { useEffect, useState, useContext } from 'react';
+
 import { DebounceInput } from 'react-debounce-input';
 import { Link } from 'react-router-dom';
-import styled from 'styled-components';
 import { BsSearch } from 'react-icons/bs';
 
 export default function SearchBar(token) {
 
+
     const [search, setSearch] = useState("");
     const [result, setResult] = useState([]);
     const [er, setEr] = useState("");
+
 
     useEffect(() => {
         async function getUsernameSearch() {
@@ -98,18 +106,7 @@ width: 50%;
 min-width: 350px;
 
 
-border-radius: 8px;
-background-color:#E7E7E7;
-
-`
-const ContainerInput = styled.div`
-background-color: #FFFFFF;
-width: 99.8%;
-display: flex;
-justify-content: flex-start;
-align-items: center;
-
-border-radius: 8px;
+        
 
 input{
     width: 100%;
