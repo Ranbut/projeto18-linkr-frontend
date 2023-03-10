@@ -13,23 +13,19 @@ import HashtagSearch from "./pages/Hashtag/Hashtag.js";
 function App() {
 
   const [user, setUser] = useState(JSON.parse(localStorage.getItem("user")));
-
   return (
-    <Context>
-
-      <Context.Provider value={{ user, setUser }}>
-        <GlobalStyle />
-        <BrowserRouter>
-          <Routes>
-            <Route path="/" element={<SignIn />} />
-            <Route path="/sign-up" element={<SignUp />} />
-            <Route path="/hashtag/:hashtag" element={<HashtagSearch />} />
-            <Route path="/timeline" element={<Timeline />} />
-            <Route path="/user/:id" element={<UserPage />} />
-          </Routes>
-        </BrowserRouter>
-      </Context.Provider>
-    </Context>
+    <Context.Provider value={{ user, setUser }}>
+      <GlobalStyle />
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<SignIn />} />
+          <Route path="/sign-up" element={<SignUp />} />
+          <Route path="/hashtag/:hashtag" element={<HashtagSearch />} />
+          <Route path="/timeline" element={<Timeline />} />
+          <Route path="/user/:id" element={<UserPage />} />
+        </Routes>
+      </BrowserRouter>
+    </Context.Provider>
   );
 }
 

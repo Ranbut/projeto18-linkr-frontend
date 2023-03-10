@@ -4,18 +4,19 @@ import styled from 'styled-components';
 import { Tooltip } from 'react-tooltip'
 import 'react-tooltip/dist/react-tooltip.css'
 import axios from 'axios';
-import { AuthContext } from '../../contexts/auth.js';
+import Context from "../../contexts/auth.js";
+
 
 export default function LikeButton(props){
     const [liked, isLiked] = useState(false);
     const [listLikes, setListLikes] = useState([]);
     const [userId, setUserId] = useState(0);
-    const { token } = useContext(AuthContext)
+    const { user } = useContext(Context);
     
     function likeVerify(){
         const promise = axios.get(`${process.env.REACT_APP_API_URL}/like/list/${props.postId}`,
         {headers: {
-            "Authorization": `Bearer ${token}`
+            "Authorization": `Bearer ${user.token}`
         }});
         promise.then((r) => {
             isLiked(r.data.userLikedThisPost)
@@ -33,7 +34,7 @@ export default function LikeButton(props){
        
             const promise = axios.post(`${process.env.REACT_APP_API_URL}/like/${props.postId}`, 
             {}, {headers: {
-                Authorization: `Bearer ${token}`
+                Authorization: `Bearer ${user.token}`
             }})
             promise.then(() => {likeVerify();
             return});

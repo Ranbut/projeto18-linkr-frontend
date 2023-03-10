@@ -1,11 +1,12 @@
 import { pushPostAPI } from "../../api/pushPostAPI.js";
 import { Form, FormBody, Inputs, PublicationCard, UserAvatar } from "./style";
 import { useContext, useState } from "react";
-import { AuthContext } from "../../contexts/auth.js";
+import Context from "../../contexts/auth.js";
 
 export default function PublishCard({ userImage, userPosts, getPosts }) {
 
-    const { token } = useContext(AuthContext);
+    const { user } = useContext(Context);
+
 
     const [pressed, setPressed] = useState(false);
 
@@ -19,7 +20,7 @@ export default function PublishCard({ userImage, userPosts, getPosts }) {
 
         setPressed(true);
 
-        const pushPostRes = await pushPostAPI(token, post);
+        const pushPostRes = await pushPostAPI(user.token, post);
         if (!pushPostRes.success) { setPressed(false); alert("There was an error publishing your link"); return (pushPostRes.error); };
 
         setPost({

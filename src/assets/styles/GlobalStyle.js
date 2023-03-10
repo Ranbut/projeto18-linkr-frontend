@@ -31,6 +31,7 @@ import { createGlobalStyle } from "styled-components"
 			body {
 				line-height: 1;
 				box-sizing: border-box;
+				background-color: #333333;
 			}
 			ol, ul {
 				list-style: none;

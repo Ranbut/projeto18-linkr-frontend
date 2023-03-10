@@ -1,21 +1,16 @@
 import { useEffect, useState, useContext } from "react";
 import Header from "../../components/Header/Header.js";
 import { getPostUserAPI } from "../../api/getPostAPI.js";
-import { getUserByIdAPI } from "../../api/getUserByTokenAPI.js";
 import { PageBody, Loading, TrendingBox, TrendingTitle, Hashtag, UserInfo } from "./style.js";
 import PostCard from "../../components/PostCard/PostCard.js";
-import PublishCard from "../../components/PublishCard/PublishCard.js";
 import axios from "axios";
-import { useParams } from "react-router-dom";
 import Context from "../../contexts/auth.js";
-import { useContext } from "react";
-import axios from "axios";
 import { useNavigate, useParams } from "react-router";
 
 export default function UserPage() {
 
     const { id } = useParams();
-    const { user, setUser } = useContext(Context);
+    const { user, } = useContext(Context);
     const [load, setLoad] = useState(true);
     const [userPosts, setUserPosts] = useState([]);
     const [trending, setTrending] = useState([]);

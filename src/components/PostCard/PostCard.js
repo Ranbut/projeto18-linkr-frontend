@@ -1,22 +1,21 @@
 import { Link, useNavigate } from "react-router-dom";
 import LinkPreview from "../LinkPreview/LinkPreview";
-import { PostBody, PostInfo, UserAvatar, SpacingMarging, Options, EditField } from "./style";
 import { PostBody, PostInfo, UserAvatar, SpacingMarging, Options, EditField, ModalBox } from "./style";
 import { AiOutlineHeart } from "react-icons/ai";
 import { TbTrashFilled } from "react-icons/tb";
 import { TiPencil } from "react-icons/ti";
 import { useState, useRef, useEffect, useContext } from "react";
 import { putPostEditAPI } from "../../api/putPostEditAPI";
-import { AuthContext } from "../../contexts/auth";
 import { ReactTagify } from "react-tagify";
 import LikeButton from "./LikeButton";
 import axios from "axios";
 import Modal from "react-modal";
+import Context from "../../contexts/auth.js";
 
 
 export default function PostCard({ currentUser, userPost }) {
 
-    const { token } = useContext(AuthContext);
+    const { user, setUser } = useContext(Context);
     const [message, setMessage] = useState(userPost.message);
     const [isEditing, setEditing] = useState(false);
     const [pressed, setPressed] = useState(false);
@@ -86,7 +85,7 @@ export default function PostCard({ currentUser, userPost }) {
 
         const hashtagsMessage = getHashTags(message);
 
-        const pushPostRes = await putPostEditAPI(token, messageData, hashtagsMessage, userPost.id);
+        const pushPostRes = await putPostEditAPI(user.token, messageData, hashtagsMessage, userPost.id);
         if (!pushPostRes.success) {
             alert("There was an error editing your post message");
             setPressed(false);
@@ -142,15 +141,8 @@ export default function PostCard({ currentUser, userPost }) {
     return (
         <PostBody data-test="post">
             <UserAvatar>
-
                 <img title={userPost.username} src={userPost.pictureUrl} alt="user-avatar" />
-                <LikeButton postId = {userPost.id}/>
-                {/* <AiOutlineHeart data-test="like-btn" title="Like Post" style={{marginLeft: '33px'}} color='white' size= '14px'/>
-                <p data-test="counter">0 likes</p> */}
-
-                <AiOutlineHeart data-test="like-btn" title="Like Post" style={{ marginLeft: '33px' }} color='white' size='14px' />
-
-                <p data-test="counter">0 likes</p>
+                <LikeButton postId={userPost.id} />
             </UserAvatar>
             <PostInfo>
                 <Options>

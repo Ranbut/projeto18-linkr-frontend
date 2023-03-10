@@ -2,8 +2,6 @@ import { useEffect, useState } from "react";
 import Header from "../../components/Header/Header.js";
 import { PageBody, Loading, TrendingBox, TrendingTitle, Hashtag } from "../Timeline/style.js";
 import PostCard from "../../components/PostCard/PostCard.js";
-import { AuthContext } from "../../contexts/auth.js";
-import { UserContext } from "../../contexts/user.js";
 import { useContext } from "react";
 import axios from "axios";
 import { useNavigate, useParams } from "react-router";
