@@ -27,7 +27,6 @@ export default function LikeButton(props){
 
     useEffect(() =>{
         likeVerify()
-        console.log(listLikes)
     }, [])
 
     function like(){
