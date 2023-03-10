@@ -6,6 +6,9 @@ import Timeline from "./pages/Timeline/Timeline.js";
 import { AuthProvider } from "./contexts/auth.js";
 import { UserContext } from "./contexts/user.js";
 import { useState } from "react";
+import Header from "./components/Header/Header.js";
+
+import Page from "./pages/UserPage/pageUser.js";
 
 function App() {
 
@@ -19,10 +22,13 @@ function App() {
         <Route path="/" element={ <SignIn /> } />
           <Route path="/signup" element={ <SignUp /> } />
           <Route path="/timeline" element={
-              <UserContext.Provider value={{ user, setUser }}>
+            <UserContext.Provider value={{ user, setUser }}>
                 <Timeline />
               </UserContext.Provider>
         } />
+        <Route path="/user/:username" element={ <Header/> } />
+        <Route path="/user/:id" element={ <Page/> } />
+
         </Routes>
       </BrowserRouter>
    </AuthProvider>

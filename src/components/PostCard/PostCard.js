@@ -16,6 +16,7 @@ export default function PostCard({ userPost }){
         return <span key={i}>{part}</span>;
       }
     });
+    console.log(userPost, "userPost");
 
     return(
         <PostBody>
