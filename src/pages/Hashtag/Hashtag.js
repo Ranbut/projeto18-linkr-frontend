@@ -7,12 +7,12 @@ import { UserContext } from "../../contexts/user.js";
 import { useContext } from "react";
 import axios from "axios";
 import { useNavigate, useParams } from "react-router";
+import Context from "../../contexts/auth.js";
 
 export default function HashtagSearch() {
 
-    const { token, setToken } = useContext(AuthContext);
+    const { user } = useContext(Context);
     const [load, setLoad] = useState(true);
-    const { user } = useContext(UserContext);
     const [posts, setPosts] = useState([]);
     const [trending, setTrending] = useState([]);
     const { hashtag } = useParams();
@@ -53,7 +53,7 @@ export default function HashtagSearch() {
 
     return (
         <>
-            <Header userImage={user.pictureUrl} token={token} setToken={setToken} />
+            <Header userImage={user.pictureUrl} />
 
             <PageBody>
                 <div>

@@ -1,32 +1,9 @@
-import React, {useEffect, useState} from "react"
+import { createContext } from "react"
 
-export const AuthContext = React.createContext({})
+const Context = createContext({
+    username:'',
+    token:'',
+    pictureUrl:''
+});
 
-export const AuthProvider = (props) =>{
-
-    let [token, setToken] = useState({})
-    const [user, setUser] =React.useState({
-        username:'',
-        token:'',
-        pictureUrl:''
-    })
-
-
-useEffect(()=>{
-
-    const userStorage = localStorage.getItem('user');
-    if(userStorage){
-        setUser(JSON.parse(userStorage))
-    }
-},[])
-
-
-    return(
-
-        <AuthContext.Provider value={{user, setUser, token, setToken}}>
-            {props.children}
-        </AuthContext.Provider>
-
-    )
-    
-}
+export default Context;

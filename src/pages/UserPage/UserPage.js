@@ -1,28 +1,23 @@
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import Header from "../../components/Header/Header.js";
 import { getPostAPI } from "../../api/getPostAPI.js";
 import { getUserByTokenAPI } from "../../api/getUserByTokenAPI.js";
 import { PageBody, Loading, TrendingBox, TrendingTitle, Hashtag } from "./style.js";
 import PostCard from "../../components/PostCard/PostCard.js";
 import PublishCard from "../../components/PublishCard/PublishCard.js";
-import { AuthContext } from "../../contexts/auth.js";
-import { UserContext } from "../../contexts/user.js";
-import { useContext } from "react";
 import axios from "axios";
 import { useParams } from "react-router-dom";
+import Context from "../../contexts/auth.js";
 
-export default function UserPage(){
+export default function UserPage() {
     const { id } = useParams();
 
-    document.body.style.backgroundColor = '#333333';
-
-    const { token, setToken } = useContext(AuthContext);
-    const [ load, setLoad ] = useState(true);
-    const { user, setUser } = useContext(UserContext);
+    const { user, setUser } = useContext(Context);
+    const [load, setLoad] = useState(true);
     const [userPosts, setUserPosts] = useState([]);
     const [trending, setTrending] = useState([]);
-console.log(user, "user", token, "token");
+
     async function getUserInfo(currentToken) {
         const getUserRes = await getUserByTokenAPI(currentToken);
         if (getUserRes.success) {
@@ -56,13 +51,17 @@ console.log(user, "user", token, "token");
     }
 
     useEffect(() => {
-        getUserInfo(token);
+        getUserInfo(user.token);
         getPosts();
-        axios.get(`${process.env.REACT_APP_API_URL}/user/${id}/post`, {headers: {"Authorization":`Bearer ${token}`}})
+        axios.get(`${process.env.REACT_APP_API_URL}/user/${id}/post`, {
+            headers: {
+                "Authorization": `Bearer ${user.token}`
+            }
+        })
             .then((res) => {
                 setTrending(res.data);
                 console.log(`${process.env.REACT_APP_API_URL}/user/${id}/post`);
-                console.log(res.data,"res");
+                console.log(res.data, "res");
             })
             .catch((err) => {
                 console.log(err.response.data);
@@ -71,7 +70,7 @@ console.log(user, "user", token, "token");
 
     return (
         <>
-            <Header userImage={user.pictureUrl} token={token} setToken={setToken}/>
+            <Header userImage={user.pictureUrl} token={user.token} setToken={user.setToken} />
             <PageBody>
                 <div>
                     <h4>timeline</h4>
