@@ -56,14 +56,14 @@ export default function HashtagSearch() {
             <Header userImage={user.pictureUrl} token={token} setToken={setToken} />
             <PageBody>
                 <div>
-                    <h4>{'#'}{hashtag}</h4>
+                    <h4 data-test="hashtag-title">{'#'}{hashtag}</h4>
                     {load ? (<Loading>Loading...</Loading>) : renderTimeline()}
                 </div>
-                <TrendingBox>
+                <TrendingBox data-test="trending">
                     <TrendingTitle>trending</TrendingTitle>
                     <div>
                         {trending.map(e =>
-                            <Hashtag
+                            <Hashtag data-test="hashtag"
                                 key={e.hashtag}
                                 onClick={() =>
                                     navigate(`/hashtag/${e.hashtag.replace("#", "")}`)}

@@ -2,7 +2,7 @@ import axios from "axios";
 
 export const getPostAPI = async () => {
   try {
-    const { data: postsRetrived } = await axios.get(`http://localhost:5000/posts`);
+    const { data: postsRetrived } = await axios.get(`${process.env.REACT_APP_API_URL}/posts`);
 
     return { success: true, error: undefined, postsRetrived };
 

@@ -76,10 +76,10 @@ export default function Timeline(){
                     {load ? (<Loading>Loading...</Loading>) : renderTimeline()}
                 </div>
                 <TrendingBox>
-                    <TrendingTitle>trending</TrendingTitle>
+                    <TrendingTitle data-test="trending">trending</TrendingTitle>
                     <div>
                         {trending.map(e =>
-                            <Hashtag
+                            <Hashtag data-test="hashtag"
                                 key={e.hashtag}
                                 onClick={() =>
                                     navigate(`/hashtag/${e.hashtag.replace("#", "")}`)}

@@ -13,7 +13,7 @@ export const pushPostAPI = async (token ,postFormData) => {
       }
     };
 
-    await axios.post(`http://localhost:5000/posts`, postFormData, config);
+    await axios.post(`${process.env.REACT_APP_API_URL}/posts`, postFormData, config);
 
     res.success = true;
     return res;

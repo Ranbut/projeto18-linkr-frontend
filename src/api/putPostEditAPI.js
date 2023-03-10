@@ -17,7 +17,7 @@ export const putPostEditAPI = async (token, postTextData, hashtagsStored, postId
     };
     
     console.log(hashtagsStored);
-    await axios.put(`http://localhost:5000/posts/${postId}`, body, config);
+    await axios.put(`${process.env.REACT_APP_API_URL}/${postId}`, body, config);
 
     res.success = true;
     return res;
