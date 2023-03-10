@@ -50,7 +50,7 @@ export default function Timeline(){
             );
         }
         else {
-            return (<Loading>There are no posts yet</Loading>);
+            return (<Loading data-test="message">There are no posts yet</Loading>);
         }
     }
 
@@ -76,10 +76,10 @@ export default function Timeline(){
                     {load ? (<Loading>Loading...</Loading>) : renderTimeline()}
                 </div>
                 <TrendingBox>
-                    <TrendingTitle>trending</TrendingTitle>
+                    <TrendingTitle data-test="trending">trending</TrendingTitle>
                     <div>
                         {trending.map(e =>
-                            <Hashtag
+                            <Hashtag data-test="hashtag"
                                 key={e.hashtag}
                                 onClick={() =>
                                     navigate(`/hashtag/${e.hashtag.replace("#", "")}`)}

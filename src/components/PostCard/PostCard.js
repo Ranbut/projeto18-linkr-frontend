@@ -20,6 +20,7 @@ export default function PostCard({ currentUser, userPost }) {
 
 
     //Aqui pode ser também ajustado para fazer as tags links com parâmetros, selecionando as hashtags
+
     const renderedText =
         <ReactTagify
             tagStyle={{
@@ -27,9 +28,11 @@ export default function PostCard({ currentUser, userPost }) {
                 cursor: "pointer"
             }}
             tagClicked={(tag) => navigate(`/hashtag/${tag.replace("#", "")}`)}
+            data-test="description"
         >
             {message}
         </ReactTagify>
+
 
     function getHashTags(string) {
         const words = string.split(' ');
@@ -74,8 +77,10 @@ export default function PostCard({ currentUser, userPost }) {
         if (isFromUser) {
             return (
                 <>
-                    <TiPencil onClick={() => setEditing(!isEditing)} title="Editar Post" style={{ marginLeft: '-50px', marginTop: '23px' }} color='white' size='20px' />
-                    <TbTrashFilled title="Deletar Post" style={{ marginLeft: '12.53px', marginTop: '23px' }} color='white' size='20px' />
+
+                    <TiPencil data-test="edit-btn" onClick={() => setEditing(!isEditing)} title="Editar Post" style={{ marginLeft: '-50px' ,marginTop: '23px'}} color='white' size= '20px'/>
+                    <TbTrashFilled data-test="delete-btn" title="Deletar Post" style={{ marginLeft: '12.53px' ,marginTop: '23px'}} color='white' size= '20px'/>
+
                 </>
             );
         }
@@ -98,21 +103,21 @@ export default function PostCard({ currentUser, userPost }) {
         }
     }, [isEditing]);
 
-    return (
-        <PostBody>
+    return(
+        <PostBody data-test="post">
             <UserAvatar>
                 <img title={userPost.username} src={userPost.pictureUrl} alt="user-avatar" />
-                <AiOutlineHeart title="Like Post" style={{ marginLeft: '33px' }} color='white' size='14px' />
-                <p>0 likes</p>
+                <AiOutlineHeart data-test="like-btn" title="Like Post" style={{marginLeft: '33px'}} color='white' size= '14px'/>
+                <p data-test="counter">0 likes</p>
             </UserAvatar>
             <PostInfo>
                 <Options>
-                    <h6>{userPost.username}</h6>
+                    <h6 data-test="username">{userPost.username}</h6>
                     <>{renderPostOptions()}</>
                 </Options>
-                {isEditing ? <EditField disabled={pressed} ref={inputRef} onKeyDown={handleKeyDown} /> : <p>{renderedText}</p>}
+                {isEditing ? <EditField data-test="edit-input" disabled={pressed} ref={inputRef} onKeyDown={handleKeyDown} /> : <p>{renderedText}</p>}
                 <Link to={userPost.link} style={{ textDecoration: 'none' }}>
-                    <LinkPreview link={userPost} />
+                    <LinkPreview data-test="link" link={userPost} />
                 </Link>
                 <SpacingMarging />
             </PostInfo>

@@ -45,7 +45,7 @@ export default function Header({ userImage, token, setToken }) {
                     <h4>linkr</h4>
                 </div>
 
-                <div className="middle">
+                <div data-test="search" className="middle">
                 { input === true ?
                 <></>:
 
