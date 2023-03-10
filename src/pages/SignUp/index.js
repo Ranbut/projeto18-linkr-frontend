@@ -14,18 +14,23 @@ export default function SignUp() {
     pictureUrl: "",
   });
 
+  const [isDisabled, setIsDisabled] = useState(false)
+
 
   function handleSignIn(e) {
     e.preventDefault();
+    setIsDisabled(true)
 
     axios
       .post(`${URLPOST}sign-up`, form)
       .then((res) => {
         alert("Usuário criado!")
         navigate("/");
+        setIsDisabled(false)
       })
       .catch((err) => {
         alert(err.response.message);
+        setIsDisabled(false)
       });
   }
 
@@ -92,7 +97,9 @@ export default function SignUp() {
           />
           <button
             type="submit"
-            data-test="sign-up-btn">
+            data-test="sign-up-btn"
+            disabled={isDisabled}
+            >
             Sign Up</button>
         </form>
         <p data-test="login-link" onClick={() => navigate("/")} >
