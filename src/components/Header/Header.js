@@ -116,7 +116,7 @@ export default function SearchBar({ userImage, token, setToken }) {
 
                 <div className="right">
                     {chevronSide ? <BsChevronDown onClick={() => handleChevron()} /> : <BsChevronUp onClick={() => handleChevron()} />}
-                    <img alt="userIcon" src={userImage} />
+                    <img data-test="avatar"  alt="userIcon" src={userImage} />
                 </div>
 
             </HeaderBody>
