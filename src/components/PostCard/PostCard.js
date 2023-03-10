@@ -13,7 +13,7 @@ import Modal from "react-modal";
 import Context from "../../contexts/auth.js";
 
 
-export default function PostCard({ currentUser, userPost }) {
+export default function PostCard({ getPosts, currentUser, userPost }) {
 
     const { user, setUser } = useContext(Context);
     const [message, setMessage] = useState(userPost.message);
@@ -41,6 +41,7 @@ export default function PostCard({ currentUser, userPost }) {
         axios.delete(`${process.env.REACT_APP_API_URL}/posts/delete/${userPost.id}`)
             .then(() => {
                 handleDeleteModal()
+                getPosts()
             })
             .catch((err) => {
                 alert(err.response.data);

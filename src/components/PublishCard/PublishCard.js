@@ -21,13 +21,17 @@ export default function PublishCard({ userImage, userPosts, getPosts }) {
         setPressed(true);
 
         const pushPostRes = await pushPostAPI(user.token, post);
-        if (!pushPostRes.success) { setPressed(false); alert("There was an error publishing your link"); return (pushPostRes.error); };
+        if (!pushPostRes.success) {
+            setPressed(false);
+            alert("There was an error publishing your link");
+            return (pushPostRes.error);
+        };
 
         setPost({
             link: '',
             message: ''
-          });
-          
+        });
+
         getPosts();
         setPressed(false);
     }
