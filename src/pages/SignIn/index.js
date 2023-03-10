@@ -2,6 +2,7 @@ import styled from "styled-components";
 import { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../../contexts/auth.js";
+
 import axios from "axios";
 
 export default function SignIn() {
@@ -9,18 +10,19 @@ export default function SignIn() {
   const navigate = useNavigate();
   const { setToken } = useContext(AuthContext);
   const [loginUser, setLoginUser] = useState({ email: "", password: "" });
+  const {setUser} = useContext(AuthContext)
 
   function handleSignIn(e) {
     e.preventDefault();
 
     axios
       .post(`${URLPOST}sign-in`, loginUser)
-      .then((res) => {
+      .then((res) => {localStorage.setItem('user', JSON.stringify(res.data));     
         setToken(res.data.token);
         navigate("/timeline");
       })
       .catch((err) => {
-        console.log(err.response.message);
+        alert(err.response.message);
       });
   }
 

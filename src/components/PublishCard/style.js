@@ -12,6 +12,13 @@ export const PublicationCard = styled.div`
     background: #FFFFFF;
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
     border-radius: 16px;
+
+    @media (max-width: 428px) {
+    width: 430px;
+    height: 164px;
+    border-radius: 0px;
+    padding: 0px;
+  }
 `;
 
 export const UserAvatar = styled.div`
@@ -20,6 +27,10 @@ export const UserAvatar = styled.div`
 
         width: 50px;
         height: 50px;
+        border-radius: 26.5px;
+    }
+    @media (max-width: 428px) {
+        display: none;
     }
 `;
 
@@ -37,6 +48,11 @@ export const FormBody = styled.div`
         line-height: 24px;
         color: #707070;
     }
+    @media (max-width: 428px) {
+        h6{
+            margin-left: 9%;
+        }
+  }
 `;
 
 
@@ -90,4 +106,24 @@ export const Inputs = styled.div`
 
         color: #FFFFFF;
     }
+
+    @media (max-width: 428px) {
+
+        input{
+            width: 345px;
+            height: 30px;
+            margin-left: 3%;
+        }
+
+        button{
+            font-size: 13px;
+            line-height: 16px;
+            text-align: center;
+
+            color: #FFFFFF;
+            width: 112px;
+            height: 22px;
+            margin-left: 55%;
+        }
+  }
 `;
