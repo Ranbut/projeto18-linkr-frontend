@@ -26,6 +26,7 @@ export default function Timeline(){
         const getUserRes = await getUserByTokenAPI(currentToken);
         if (getUserRes.success) {
             setUser(getUserRes.userInfo);
+            console.log(getUserRes.userInfo);
             return;
         }
     }

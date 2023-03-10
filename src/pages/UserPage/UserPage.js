@@ -1,5 +1,4 @@
 
-
 import { useEffect, useState } from "react";
 import Header from "../../components/Header/Header.js";
 import { getPostAPI } from "../../api/getPostAPI.js";
@@ -13,7 +12,7 @@ import { useContext } from "react";
 import axios from "axios";
 import { useParams } from "react-router-dom";
 
-export default function Timeline(){
+export default function UserPage(){
     const { id } = useParams();
 
     document.body.style.backgroundColor = '#333333';
@@ -23,7 +22,7 @@ export default function Timeline(){
     const { user, setUser } = useContext(UserContext);
     const [userPosts, setUserPosts] = useState([]);
     const [trending, setTrending] = useState([]);
-
+console.log(user, "user", token, "token");
     async function getUserInfo(currentToken) {
         const getUserRes = await getUserByTokenAPI(currentToken);
         if (getUserRes.success) {
@@ -42,10 +41,10 @@ export default function Timeline(){
     }
 
     function renderTimeline() {
-        if (userPosts.length > 0) {
+        if (trending.length > 0) {
             return (
                 <>
-                    {userPosts.map(
+                    {trending?.map(
                         (postProp) => <PostCard userPost={postProp} key={postProp.id} />
                     )}
                 </>
@@ -59,10 +58,11 @@ export default function Timeline(){
     useEffect(() => {
         getUserInfo(token);
         getPosts();
-        axios.get(`${process.env.REACT_APP_API_URL}/user/${id}/posts`)
+        axios.get(`${process.env.REACT_APP_API_URL}/user/${id}/post`, {headers: {"Authorization":`Bearer ${token}`}})
             .then((res) => {
                 setTrending(res.data);
-                console.log(trending, "trending");
+                console.log(`${process.env.REACT_APP_API_URL}/user/${id}/post`);
+                console.log(res.data,"res");
             })
             .catch((err) => {
                 console.log(err.response.data);
@@ -81,12 +81,10 @@ export default function Timeline(){
                 <TrendingBox>
                     <TrendingTitle>trending</TrendingTitle>
                     <div>
-                        {trending.map(e => <Hashtag>{e.hashtag}</Hashtag>)}
+                        {trending?.map(e => <Hashtag>{e.hashtag}</Hashtag>)}
                     </div>
                 </TrendingBox>
             </PageBody>
         </>
     );
 }
-
-
