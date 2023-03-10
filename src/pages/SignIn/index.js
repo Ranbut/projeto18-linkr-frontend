@@ -9,18 +9,22 @@ export default function SignIn() {
   const navigate = useNavigate();
   const [loginUser, setLoginUser] = useState({ email: "", password: "" });
   const { setUser } = useContext(Context);
+  const [isDisabled, setIsDisabled] = useState(false)
 
   function handleSignIn(e) {
     e.preventDefault();
+    setIsDisabled(true)
 
     axios
       .post(`${URLPOST}sign-in`, loginUser)
       .then((res) => {localStorage.setItem('user', JSON.stringify(res.data));     
         setUser(res.data);
         navigate("/timeline");
+        setIsDisabled(false)
       })
       .catch((err) => {
         alert(err.response.message);
+        setIsDisabled(false)
       });
   }
 
@@ -59,7 +63,7 @@ export default function SignIn() {
             value={loginUser.password}
             data-test="password"
           />
-          <button type="submit" data-test="login-btn">Log in</button>
+          <button type="submit" data-test="login-btn" disabled={isDisabled}>Log in</button>
         </form>
         <p data-test="sign-up-link" onClick={() => navigate("/sign-up")}>
           First time? Create an account!
