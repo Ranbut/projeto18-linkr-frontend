@@ -36,7 +36,7 @@ export default function UserPage() {
             );
         }
         else {
-            return (<Loading data-test="message">There are no posts yet</Loading>);
+            return (<Loading data-test="message">You don't follow anyone yet. Search for new friends!</Loading>);
         }
     }
 
