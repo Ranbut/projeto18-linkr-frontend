@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import Header from "../../components/Header/Header.js";
 import { getPostAPI } from "../../api/getPostAPI.js";
-import { getUserByTokenAPI } from "../../api/getUserByTokenAPI.js";
 import { PageBody, Loading, TrendingBox, TrendingTitle, Hashtag } from "./style.js";
 import PostCard from "../../components/PostCard/PostCard.js";
 import PublishCard from "../../components/PublishCard/PublishCard.js";
