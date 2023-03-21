@@ -21,13 +21,14 @@ export default function HashtagSearch() {
             return (
                 <>
                     {posts.map(
-                        (e) => <PostCard userPost={e} key={e.id} />
+                        (postProp) => <PostCard
+                            getPosts={posts} currentUser={user.id} userPost={postProp} key={postProp.id} />
                     )}
                 </>
             );
         }
         else {
-            return (<Loading>There are no posts yet</Loading>);
+            return (<Loading data-test="message">There are no posts yet</Loading>);
         }
     }
 
@@ -51,7 +52,7 @@ export default function HashtagSearch() {
 
     return (
         <>
-            <Header userImage={user.pictureUrl} />
+            <Header/>
 
             <PageBody>
                 <div>

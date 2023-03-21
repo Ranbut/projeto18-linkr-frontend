@@ -69,8 +69,8 @@ export default function Timeline() {
 
                     {load ? (<Loading>Loading...</Loading>) : renderTimeline()}
                 </div>
-                <TrendingBox>
-                    <TrendingTitle data-test="trending">trending</TrendingTitle>
+                <TrendingBox data-test="trending">
+                    <TrendingTitle>trending</TrendingTitle>
                     <div>
                         {trending.map(e =>
                             <Hashtag data-test="hashtag"
