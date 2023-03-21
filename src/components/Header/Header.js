@@ -94,8 +94,7 @@ export default function SearchBar() {
                             debounceTimeout={300}
                             onChange={event => setSearch(event.target.value)}
                             value={search}
-                        />
-                        
+                        />                        
                         <BsSearch />
                     </ContainerInput>
                     <ReturnSearch>
