@@ -58,7 +58,6 @@ export default function PostCard({ getPosts, currentUser, userPost }) {
                 cursor: "pointer"
             }}
             tagClicked={(tag) => navigate(`/hashtag/${tag.replace("#", "")}`)}
-            data-test="description"
         >
             {message}
         </ReactTagify>
@@ -160,7 +159,7 @@ export default function PostCard({ getPosts, currentUser, userPost }) {
                         ref={inputRef}
                         onKeyDown={handleKeyDown}
                     /> :
-                    <p>{renderedText}</p>
+                    <p data-test="description">{renderedText}</p>
                 }
                 <Link data-test="link" to={userPost.link} style={{ textDecoration: 'none' }}>
                     <LinkPreview link={userPost} />
