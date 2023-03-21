@@ -73,7 +73,7 @@ export default function SearchBar() {
 
     function RenderUsernameResults({ user_id, picture_url, username }) {
         return (
-            <UsernameBox key={user_id}>
+            <UsernameBox data-test="user-search" key={user_id}>
                 <Link key={user_id} to={`/user/${user_id}`} onClick={() => setSearch([])}>
                     <IconImage data-test="avatar" src={picture_url} alt={`picture of ${username}`}></IconImage>
                     <span className='username'>{username}</span>
@@ -94,6 +94,7 @@ export default function SearchBar() {
                             debounceTimeout={300}
                             onChange={event => setSearch(event.target.value)}
                             value={search}
+                            data-test="search"
                         />                        
                         <BsSearch />
                     </ContainerInput>
