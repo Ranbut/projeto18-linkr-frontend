@@ -142,7 +142,10 @@ export default function PostCard({ getPosts, currentUser, userPost }) {
     return (
         <PostBody data-test="post">
             <UserAvatar>
-                <img title={userPost.username} src={userPost.pictureUrl} alt="user-avatar" />
+                <img
+                    title={userPost.username}
+                    src={userPost.pictureUrl}
+                    alt="user-avatar" />
                 <LikeButton postId={userPost.id} />
             </UserAvatar>
             <PostInfo>
@@ -150,9 +153,17 @@ export default function PostCard({ getPosts, currentUser, userPost }) {
                     <h6 data-test="username">{userPost.username}</h6>
                     <>{renderPostOptions()}</>
                 </Options>
-                {isEditing ? <EditField data-test="edit-input" disabled={pressed} ref={inputRef} onKeyDown={handleKeyDown} /> : <p>{renderedText}</p>}
-                <Link to={userPost.link} style={{ textDecoration: 'none' }}>
-                    <LinkPreview data-test="link" link={userPost} />
+                {isEditing ?
+                    <EditField
+                        data-test="edit-input"
+                        disabled={pressed}
+                        ref={inputRef}
+                        onKeyDown={handleKeyDown}
+                    /> :
+                    <p>{renderedText}</p>
+                }
+                <Link data-test="link" to={userPost.link} style={{ textDecoration: 'none' }}>
+                    <LinkPreview link={userPost} />
                 </Link>
                 <SpacingMarging />
             </PostInfo>
