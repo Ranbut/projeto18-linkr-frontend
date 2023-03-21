@@ -174,8 +174,8 @@ export default function PostCard({ getPosts, currentUser, userPost }) {
                 <ModalBox>
                     <h2>Deseja realmente apagar o post?</h2>
                     <div>
-                        <button onClick={handleDeleteModal}>Cancelar</button>
-                        <button onClick={deletePost}>Apagar</button>
+                        <button data-test="cancel" onClick={handleDeleteModal}>Cancelar</button>
+                        <button data-test="confirm" onClick={deletePost}>Apagar</button>
                     </div>
                 </ModalBox>
             </Modal>

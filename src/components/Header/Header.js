@@ -78,7 +78,7 @@ export default function SearchBar() {
                             onChange={event => setSearch(event.target.value)}
                             value={search}
                             data-test="search"
-                        />                        
+                        />
                         <BsSearch />
                     </ContainerInput>
                     <ReturnSearch>
@@ -101,8 +101,13 @@ export default function SearchBar() {
                 </SectionSearch>
 
                 <div className="right">
-                    {chevronSide ? <BsChevronDown onClick={() => handleChevron()} /> : <BsChevronUp onClick={() => handleChevron()} />}
-                    <img data-test="avatar" alt="userIcon" src={user.pictureUrl} />
+                    {chevronSide ? <BsChevronDown /> : <BsChevronUp />}
+                    <img
+                        data-test="avatar"
+                        onClick={() => handleChevron()}
+                        alt="userIcon"
+                        src={user.pictureUrl}
+                    />
                 </div>
 
             </HeaderBody>

@@ -7,17 +7,19 @@ import axios from 'axios';
 import Context from "../../contexts/auth.js";
 
 
-export default function LikeButton(props){
+export default function LikeButton(props) {
     const [liked, isLiked] = useState(false);
     const [listLikes, setListLikes] = useState([]);
     const [userId, setUserId] = useState(0);
     const { user } = useContext(Context);
-    
-    function likeVerify(){
+
+    function likeVerify() {
         const promise = axios.get(`${process.env.REACT_APP_API_URL}/like/list/${props.postId}`,
-        {headers: {
-            "Authorization": `Bearer ${user.token}`
-        }});
+            {
+                headers: {
+                    "Authorization": `Bearer ${user.token}`
+                }
+            });
         promise.then((r) => {
             isLiked(r.data.userLikedThisPost)
             setListLikes(r.data.likes)
@@ -25,23 +27,27 @@ export default function LikeButton(props){
         })
     }
 
-    useEffect(() =>{
+    useEffect(() => {
         likeVerify()
     }, [])
 
-    function like(){
-       
-            const promise = axios.post(`${process.env.REACT_APP_API_URL}/like/${props.postId}`, 
-            {}, {headers: {
+    function like() {
+
+        const promise = axios.post(`${process.env.REACT_APP_API_URL}/like/${props.postId}`,
+            {}, {
+            headers: {
                 Authorization: `Bearer ${user.token}`
-            }})
-            promise.then(() => {likeVerify();
-            return});
-            promise.catch((err) => console.log(err))
+            }
+        })
+        promise.then(() => {
+            likeVerify();
+            return
+        });
+        promise.catch((err) => console.log(err))
 
     };
 
-    function tooltipMessage(){
+    function tooltipMessage() {
         if (liked) {
             if (listLikes.length !== 0) {
                 const newArray = listLikes.filter(i => i.id !== userId)
@@ -56,8 +62,8 @@ export default function LikeButton(props){
                         return `Você, ${newArray[0].username} e outras ${newArray.length - 1} pessoas`
                 }
             }
-            
-        } else{
+
+        } else {
             if (listLikes.length !== 0) {
                 switch (listLikes.length) {
                     case 0:
@@ -75,18 +81,25 @@ export default function LikeButton(props){
         }
     }
 
-    return(
+    return (
         <Content>
-            <LikeDiv onClick={() => like()} liked={liked}>
-                {liked 
-                ? 
-                <AiFillHeart /> 
-                : 
-                <AiOutlineHeart />}    
+            <LikeDiv
+                data-test="like-btn"
+                onClick={() => like()} liked={liked}>
+                {liked
+                    ?
+                    <AiFillHeart />
+                    :
+                    <AiOutlineHeart />}
             </LikeDiv>
             <div>
-                <a id={`like-box `+props.postId}>{listLikes.length} likes</a>
-                <Tooltip anchorId={`like-box `+props.postId} content={()=> tooltipMessage()} />  
+                <a
+                    data-test="counter"
+                    id={`like-box ${props.postId}`}
+                >
+                    {listLikes.length} likes
+                </a>
+                <Tooltip data-test="tooltip" anchorId={`like-box ` + props.postId} content={() => tooltipMessage()} />
             </div>
         </Content>
     )
