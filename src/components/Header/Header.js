@@ -21,23 +21,6 @@ export default function SearchBar() {
     const [er, setEr] = useState("");
     const [isVisible, setIsVisible] = useState(false)
     const [chevronSide, setChevronSide] = useState(true)
-    const [form, setForm] = useState({
-        username: '',
-    })
-    const [input, setInput] = useState('false')
-
-    function handleFilter(e) {
-        e.preventDefault()
-
-    }
-
-
-    function handleForm(e) {
-        setForm({
-            ...form,
-            [e.target.name]: e.target.value
-        })
-    }
 
     function handleChevron() {
         setIsVisible(!isVisible)
@@ -49,7 +32,7 @@ export default function SearchBar() {
         async function getUsernameSearch() {
             if (search && search.length >= 3) {
                 try {
-                    const requisition = await axios.get(`http://localhost:5000/user/${search}`, {
+                    const requisition = await axios.get(`${process.env.REACT_APP_API_URL}/user/${search}`, {
                         headers: {
                             "Authorization": `Bearer ${user.token}`
                         }
