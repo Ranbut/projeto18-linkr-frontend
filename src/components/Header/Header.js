@@ -88,7 +88,7 @@ export default function SearchBar() {
                 <Logo>Linkr</Logo>
                 <SectionSearch>
                     <ContainerInput>
-                        <DebounceInput
+                        <DebounceInput data-test='search'
                             placeholder="Search for people and friends"
                             minLength={3}
                             debounceTimeout={300}
