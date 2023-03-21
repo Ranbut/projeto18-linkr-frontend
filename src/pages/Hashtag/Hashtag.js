@@ -52,18 +52,19 @@ export default function HashtagSearch() {
 
     return (
         <>
-            <Header/>
+            <Header />
 
             <PageBody>
                 <div>
-                    <h4 data-test="hashtag-title">{'#'}{hashtag}</h4>
+                    <h4 data-test="hashtag-title">{`#${hashtag}`}</h4>
                     {load ? (<Loading>Loading...</Loading>) : renderTimeline()}
                 </div>
                 <TrendingBox data-test="trending">
                     <TrendingTitle>trending</TrendingTitle>
                     <div>
                         {trending.map(e =>
-                            <Hashtag data-test="hashtag"
+                            <Hashtag
+                                data-test="hashtag"
                                 key={e.hashtag}
                                 onClick={() =>
                                     navigate(`/hashtag/${e.hashtag.replace("#", "")}`)}
