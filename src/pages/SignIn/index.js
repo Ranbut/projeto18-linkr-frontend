@@ -23,7 +23,7 @@ export default function SignIn() {
         setIsDisabled(false)
       })
       .catch((err) => {
-        alert(err.response.message);
+        alert(err);
         setIsDisabled(false)
       });
   }
