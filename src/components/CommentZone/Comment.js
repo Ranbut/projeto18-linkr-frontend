@@ -1,7 +1,15 @@
 import styled from 'styled-components';
 
+import { useContext } from "react";
+import Context from "../../contexts/auth.js";
 
-export default function Comment(){
+
+export default function Comment(props){
+    const { user } = useContext(Context);
+    const {postId} = props
+
+
+
     return(
         <Container data-test="comment" >
 
