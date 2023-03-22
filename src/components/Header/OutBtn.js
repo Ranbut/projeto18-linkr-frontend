@@ -22,7 +22,7 @@ export default function OutBtn({ token, setToken }) {
             .then((res) => {
                 localStorage.removeItem("user");
                 setToken("");
-                navigate("/sign-in");
+                navigate("/");
             })
             .catch((err) => {
                 alert(err.response.message);
