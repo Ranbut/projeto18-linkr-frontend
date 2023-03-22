@@ -1,4 +1,4 @@
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useRouteLoaderData } from "react-router-dom";
 import LinkPreview from "../LinkPreview/LinkPreview";
 import { PostBody, PostInfo, UserAvatar, SpacingMarging, Options, EditField, ModalBox, PostContainer } from "./style";
 import { AiOutlineHeart } from "react-icons/ai";
@@ -118,6 +118,12 @@ export default function PostCard({ getPosts, currentUser, userPost }) {
         }
     }, [isEditing]);
 
+
+    function toggleCommentZone(){
+        console.log(userPost)
+        setOpenComment(!openComment)
+    }
+
     return (
         <PostContainer>
         <PostBody data-test="post">
@@ -127,7 +133,11 @@ export default function PostCard({ getPosts, currentUser, userPost }) {
                     src={userPost.pictureUrl}
                     alt="user-avatar" />
                 <LikeButton postId={userPost.id} />
-                <CommentButton />
+
+                <div onClick={toggleCommentZone}> 
+                 <CommentButton />
+                </div>
+
             </UserAvatar>
             <PostInfo>
                 <Options>
@@ -162,7 +172,7 @@ export default function PostCard({ getPosts, currentUser, userPost }) {
                 </ModalBox>
             </Modal>
         </PostBody>
-        {openComment ?  <CommentZone /> : ""}
+        {openComment ?  <CommentZone postId={userPost.id} userId={user.id}  /> : ""}
         </PostContainer>
     );
 }
