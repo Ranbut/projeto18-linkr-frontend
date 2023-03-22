@@ -1,6 +1,6 @@
 import { Link, useNavigate } from "react-router-dom";
 import LinkPreview from "../LinkPreview/LinkPreview";
-import { PostBody, PostInfo, UserAvatar, SpacingMarging, Options, EditField, ModalBox } from "./style";
+import { PostBody, PostInfo, UserAvatar, SpacingMarging, Options, EditField, ModalBox, PostContainer } from "./style";
 import { AiOutlineHeart } from "react-icons/ai";
 import { TbTrashFilled } from "react-icons/tb";
 import { TiPencil } from "react-icons/ti";
@@ -9,10 +9,10 @@ import { putPostEditAPI } from "../../api/putPostEditAPI";
 import { ReactTagify } from "react-tagify";
 import LikeButton from "./LikeButton";
 import CommentButton from "./CommentButton";
+import CommentZone from "../CommentZone/CommentZone";
 import axios from "axios";
 import Modal from "react-modal";
 import Context from "../../contexts/auth.js";
-
 
 export default function PostCard({ getPosts, currentUser, userPost }) {
 
@@ -119,6 +119,7 @@ export default function PostCard({ getPosts, currentUser, userPost }) {
     }, [isEditing]);
 
     return (
+        <PostContainer>
         <PostBody data-test="post">
             <UserAvatar>
                 <img
@@ -161,5 +162,7 @@ export default function PostCard({ getPosts, currentUser, userPost }) {
                 </ModalBox>
             </Modal>
         </PostBody>
+        {openComment ?  <CommentZone /> : ""}
+        </PostContainer>
     );
 }
