@@ -68,7 +68,7 @@ export default function SearchBar() {
     return (
         <>
             <HeaderBody>
-                <Logo>Linkr</Logo>
+                <h4>Linkr</h4>
                 <SectionSearch>
                     <ContainerInput>
                         <DebounceInput
