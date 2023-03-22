@@ -1,4 +1,4 @@
-import { useNavigate, useContext } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import axios from "axios";
 
@@ -20,8 +20,9 @@ export default function OutBtn({ token, setToken }) {
         axios
             .delete(`${URLPOST}logout`, config)
             .then((res) => {
+                localStorage.removeItem("user");
                 setToken("");
-                navigate("/");
+                navigate("/sign-in");
             })
             .catch((err) => {
                 alert(err.response.message);

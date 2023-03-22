@@ -99,7 +99,11 @@ export default function LikeButton(props) {
                 >
                     {listLikes.length} likes
                 </a>
-                <Tooltip data-test="tooltip" anchorId={`like-box ` + props.postId} content={() => tooltipMessage()} />
+                <Tooltip
+                    data-test="tooltip"
+                    anchorId={`like-box ${props.postId}`}
+                    content={() => tooltipMessage()}
+                />
             </div>
         </Content>
     )
