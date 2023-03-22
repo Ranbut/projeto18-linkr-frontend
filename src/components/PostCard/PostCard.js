@@ -8,6 +8,7 @@ import { useState, useRef, useEffect, useContext } from "react";
 import { putPostEditAPI } from "../../api/putPostEditAPI";
 import { ReactTagify } from "react-tagify";
 import LikeButton from "./LikeButton";
+import CommentButton from "./CommentButton";
 import axios from "axios";
 import Modal from "react-modal";
 import Context from "../../contexts/auth.js";
@@ -21,6 +22,7 @@ export default function PostCard({ getPosts, currentUser, userPost }) {
     const [pressed, setPressed] = useState(false);
     const navigate = useNavigate();
     const [deleteModal, setDeleteModal] = useState(false);
+    const [openComment, setOpenComment] = useState(false);
 
     const customStyles = {
         content: {
@@ -146,6 +148,7 @@ export default function PostCard({ getPosts, currentUser, userPost }) {
                     src={userPost.pictureUrl}
                     alt="user-avatar" />
                 <LikeButton postId={userPost.id} />
+                <CommentButton />
             </UserAvatar>
             <PostInfo>
                 <Options>
