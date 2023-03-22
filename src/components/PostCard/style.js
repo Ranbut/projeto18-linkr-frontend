@@ -117,14 +117,23 @@ export const MessageText = styled.span`
 `;
 
 export const ModalBox = styled.div`
+    box-sizing: border-box;
     display: flex;
     flex-direction: column;
-    font-family: 'Lato';
-    font-style: normal;
-    font-weight: 400;
-    font-size: 21px;
-    line-height: 13px;
-    align-items: flex-end;
+    justify-content: center;
+    align-items: center;
+    width: 350px;
+    height: 150px;
+    
+    h2 {
+        font-family: 'Lato';
+        font-style: normal;
+        font-weight: 700;
+        font-size: 21px;
+        line-height: 31px;
+        text-align: center;
+        color: #FFFFFF;
+    }
 
     div {
         display: flex;
@@ -133,9 +142,35 @@ export const ModalBox = styled.div`
 
     button{
         margin-top: 20px;
-        width: 70px;
+        width: 110px;
+        height: 30px;
         display: flex;
         justify-content: center;
+        align-items: center;
+        border: none;
     }
 `;
 
+export const ModalButton = styled.button`
+    font-family: 'Lato';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 15px;
+    line-height: 13px;
+    border-radius: 5px;
+    color: ${props => props.type === "cancel" ? "#1877F2" : "#FFFFFF"};
+    background: ${props => props.type === "cancel" ? "#FFFFFF" : "#1877F2"};
+`;
+
+export const customStyles = {
+    content: {
+        top: '50%',
+        left: '50%',
+        right: 'auto',
+        bottom: 'auto',
+        marginRight: '-50%',
+        transform: 'translate(-50%, -50%)',
+        background: '#333333',
+        'borderRadius': '30px'
+    },
+};

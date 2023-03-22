@@ -1,7 +1,10 @@
 import { Link, useNavigate, useRouteLoaderData } from "react-router-dom";
 import LinkPreview from "../LinkPreview/LinkPreview";
-import { PostBody, PostInfo, UserAvatar, SpacingMarging, Options, EditField, ModalBox, PostContainer } from "./style";
-import { AiOutlineHeart } from "react-icons/ai";
+import {
+    PostBody, PostInfo, UserAvatar,
+    SpacingMarging, Options, EditField,
+    ModalBox, customStyles, ModalButton
+} from "./style";
 import { TbTrashFilled } from "react-icons/tb";
 import { TiPencil } from "react-icons/ti";
 import { useState, useRef, useEffect, useContext } from "react";
@@ -16,7 +19,7 @@ import Context from "../../contexts/auth.js";
 
 export default function PostCard({ getPosts, currentUser, userPost }) {
 
-    const { user, setUser } = useContext(Context);
+    const { user } = useContext(Context);
     const [message, setMessage] = useState(userPost.message);
     const [isEditing, setEditing] = useState(false);
     const [pressed, setPressed] = useState(false);
@@ -24,16 +27,7 @@ export default function PostCard({ getPosts, currentUser, userPost }) {
     const [deleteModal, setDeleteModal] = useState(false);
     const [openComment, setOpenComment] = useState(false);
 
-    const customStyles = {
-        content: {
-            top: '50%',
-            left: '50%',
-            right: 'auto',
-            bottom: 'auto',
-            marginRight: '-50%',
-            transform: 'translate(-50%, -50%)'
-        },
-    };
+
 
     function handleDeleteModal() {
         setDeleteModal(!deleteModal);
@@ -164,10 +158,21 @@ export default function PostCard({ getPosts, currentUser, userPost }) {
                 contentLabel="Example Modal"
             >
                 <ModalBox>
-                    <h2>Deseja realmente apagar o post?</h2>
+                    <h2>Are you sure you want
+                        <br /> to delete this post?</h2>
                     <div>
-                        <button data-test="cancel" onClick={handleDeleteModal}>Cancelar</button>
-                        <button data-test="confirm" onClick={deletePost}>Apagar</button>
+                        <ModalButton
+                            type="cancel"
+                            data-test="cancel"
+                            onClick={handleDeleteModal}>
+                            No, go back
+                        </ModalButton>
+                        <ModalButton
+                            type="confirm"
+                            data-test="confirm"
+                            onClick={deletePost}>
+                            Yes, delete it
+                        </ModalButton>
                     </div>
                 </ModalBox>
             </Modal>
