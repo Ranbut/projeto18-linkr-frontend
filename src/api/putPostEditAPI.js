@@ -1,6 +1,6 @@
 import axios from "axios";
 
-export const putPostEditAPI = async (token, postTextData, hashtagsStored, postId) => {
+export const putPostEditAPI = async (token, postTextData, postId) => {
   const res = {
     success: false,
     error: undefined
@@ -8,7 +8,7 @@ export const putPostEditAPI = async (token, postTextData, hashtagsStored, postId
 
   try {
 
-    const body = { message: postTextData + " " + hashtagsStored.join(' ')};
+    const body = { message: postTextData };
 
     const config = {
       headers: {
@@ -16,8 +16,7 @@ export const putPostEditAPI = async (token, postTextData, hashtagsStored, postId
       }
     };
     
-    console.log(hashtagsStored);
-    await axios.put(`${process.env.REACT_APP_API_URL}/${postId}`, body, config);
+    await axios.put(`${process.env.REACT_APP_API_URL}/posts/${postId}`, body, config);
 
     res.success = true;
     return res;

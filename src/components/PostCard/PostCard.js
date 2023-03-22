@@ -1,4 +1,4 @@
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useRouteLoaderData } from "react-router-dom";
 import LinkPreview from "../LinkPreview/LinkPreview";
 import {
     PostBody, PostInfo, UserAvatar,
@@ -12,10 +12,10 @@ import { putPostEditAPI } from "../../api/putPostEditAPI";
 import { ReactTagify } from "react-tagify";
 import LikeButton from "./LikeButton";
 import CommentButton from "./CommentButton";
+import CommentZone from "../CommentZone/CommentZone";
 import axios from "axios";
 import Modal from "react-modal";
 import Context from "../../contexts/auth.js";
-
 
 export default function PostCard({ getPosts, currentUser, userPost }) {
 
@@ -58,37 +58,15 @@ export default function PostCard({ getPosts, currentUser, userPost }) {
             {message}
         </ReactTagify>
 
-
-    function getHashTags(string) {
-        const words = string.split(' ');
-        const hashtags = [];
-        for (let i = 0; i < words.length; i++) {
-            if (words[i].startsWith('#')) {
-                hashtags.push(words[i]);
-            }
-        }
-        return hashtags;
-    }
-
     async function edit(messageData) {
-
-        const checkMessage = getHashTags(messageData);
-
-        if (checkMessage.length !== 0) {
-            setPressed(false);
-            return alert("You can't edit or add hashtags of the post.\nOnly the main message are allowed.");
-        }
-
-        const hashtagsMessage = getHashTags(message);
-
-        const pushPostRes = await putPostEditAPI(user.token, messageData, hashtagsMessage, userPost.id);
+        const pushPostRes = await putPostEditAPI(user.token, messageData, userPost.id);
         if (!pushPostRes.success) {
             alert("There was an error editing your post message");
             setPressed(false);
             return (pushPostRes.error);
         }
         else {
-            setMessage(messageData + " " + hashtagsMessage.join(' '));
+            setMessage(messageData);
             setEditing(false);
             setPressed(false);
             return;
@@ -134,7 +112,14 @@ export default function PostCard({ getPosts, currentUser, userPost }) {
         }
     }, [isEditing]);
 
+
+    function toggleCommentZone(){
+        console.log(userPost)
+        setOpenComment(!openComment)
+    }
+
     return (
+        <PostContainer>
         <PostBody data-test="post">
             <UserAvatar>
                 <img
@@ -142,7 +127,11 @@ export default function PostCard({ getPosts, currentUser, userPost }) {
                     src={userPost.pictureUrl}
                     alt="user-avatar" />
                 <LikeButton postId={userPost.id} />
-                <CommentButton />
+
+                <div onClick={toggleCommentZone}> 
+                 <CommentButton />
+                </div>
+
             </UserAvatar>
             <PostInfo>
                 <Options>
@@ -188,5 +177,7 @@ export default function PostCard({ getPosts, currentUser, userPost }) {
                 </ModalBox>
             </Modal>
         </PostBody>
+        {openComment ?  <CommentZone postId={userPost.id} userId={user.id}  /> : ""}
+        </PostContainer>
     );
 }
