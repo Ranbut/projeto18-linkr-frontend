@@ -1,20 +1,59 @@
 import styled from 'styled-components';
-import { SlPaperPlane} from "react-icons/sl";
+import axios from 'axios';
+import { SlPaperPlane } from "react-icons/sl";
 
-export default function InputBox(){
-    return(
+import { useContext, useState } from "react";
+import Context from "../../contexts/auth.js";
+
+export default function InputBox(props) {
+    const { postId } = props
+
+    const { user } = useContext(Context);
+
+    const [comment, setComment] = useState("")
+
+    const config = {
+        headers: {
+            Authorization: 'Bearer ' + user.token
+        }
+    };
+
+    function handleComment() {
+        axios
+            .post(`${process.env.REACT_APP_API_URL}/post-comment`, {
+                postId,
+                message: comment
+            } , config)
+            .then((res) => {
+                alert("Comentário postado")
+                setComment("");
+            })
+            .catch((err) => {
+                console.log(err);
+            });
+    }
+
+
+    return (
         <Container data-test="comment" >
 
-            <img alt='userPicture' src='https://www.thedigitalfix.com/wp-content/sites/thedigitalfix/2023/01/the-last-of-us-tv-series-zombies-infected-explained-1.jpg' />
+            <img alt='userPicture' src={user.pictureUrl} />
 
-            <input type='text' placeholder='write a comment...' data-test="comment-input"/>
+            <input
+                type='text'
+                placeholder='write a comment...'
+                data-test="comment-input"
+                onChange={event => setComment(event.target.value)}
+                value={comment}
+            />
 
-            <div className='planeIcon'  data-test="comment-submit">
-             <SlPaperPlane />
+
+            <div className='planeIcon' data-test="comment-submit" onClick={handleComment}>
+                <SlPaperPlane />
             </div>
 
         </Container>
-        
+
     )
 }
 

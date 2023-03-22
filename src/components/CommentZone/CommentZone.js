@@ -2,12 +2,17 @@ import styled from "styled-components"
 import Comment from "./Comment"
 import InputBox from "./InputBox"
 
+import { useContext } from "react";
+import Context from "../../contexts/auth.js";
 
-export default function CommentZone(){
+
+export default function CommentZone(props){
+    const { user } = useContext(Context);
+    const {postId} = props
     return(
         <Container data-test="comment-box">
-         <Comment />
-         <InputBox />
+         <Comment postId={postId} />
+         <InputBox  postId={postId} />
         </Container>
     )
 }

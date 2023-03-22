@@ -114,7 +114,6 @@ export default function PostCard({ getPosts, currentUser, userPost }) {
 
 
     function toggleCommentZone(){
-        console.log(userPost)
         setOpenComment(!openComment)
     }
 
@@ -177,7 +176,7 @@ export default function PostCard({ getPosts, currentUser, userPost }) {
                 </ModalBox>
             </Modal>
         </PostBody>
-        {openComment ?  <CommentZone postId={userPost.id} userId={user.id}  /> : ""}
+        {openComment ?  <CommentZone postId={userPost.id} /> : ""}
         </PostContainer>
     );
 }
