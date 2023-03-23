@@ -114,3 +114,31 @@ export const Hashtag = styled.p`
         cursor: pointer;
     }
 `;
+
+export const LoadPost = styled.div`
+    display: flex;  
+    margin-top: 40px;
+    width: 611px;
+    height: 61px;
+
+    background: #1877F2;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 16px;
+
+    text-align: center;
+    font-family: 'Lato';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 19px;
+
+    color: #FFFFFF;
+
+    div{
+        margin: auto auto;
+    }
+
+    :hover{
+        cursor: pointer;
+    }
+`;

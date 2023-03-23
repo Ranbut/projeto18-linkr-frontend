@@ -1,7 +1,7 @@
 import { Link, useNavigate, useRouteLoaderData } from "react-router-dom";
 import LinkPreview from "../LinkPreview/LinkPreview";
 import {
-    PostBody, PostInfo, UserAvatar,
+    PostBody, PostContainer, PostInfo, UserAvatar,
     SpacingMarging, Options, EditField,
     ModalBox, customStyles, ModalButton, PostContainer
 } from "./style";
@@ -45,9 +45,6 @@ export default function PostCard({ getPosts, currentUser, userPost }) {
                 alert(err.response.data);
             })
     }
-
-
-    //Aqui pode ser também ajustado para fazer as tags links com parâmetros, selecionando as hashtags
 
     const renderedText =
         <ReactTagify
