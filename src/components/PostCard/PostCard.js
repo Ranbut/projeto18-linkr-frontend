@@ -1,7 +1,7 @@
 import { Link, useNavigate, useRouteLoaderData } from "react-router-dom";
 import LinkPreview from "../LinkPreview/LinkPreview";
 import {
-    PostBody, PostContainer, PostInfo, UserAvatar,
+    PostBody, PostInfo, UserAvatar,
     SpacingMarging, Options, EditField,
     ModalBox, customStyles, ModalButton, PostContainer
 } from "./style";
