@@ -1,7 +1,9 @@
 import styled from 'styled-components';
 import { AiOutlineComment } from 'react-icons/ai/index.js';
 
-export default function CommentButton(){
+export default function CommentButton(props){
+    const {commentCount} = props
+
     return(
         <Container>
 
@@ -9,7 +11,7 @@ export default function CommentButton(){
                 <AiOutlineComment />
             </div>
             
-            <p data-test="comment-counter">x comments</p>
+            <p data-test="comment-counter">{commentCount} comments</p>
 
         </Container>
         

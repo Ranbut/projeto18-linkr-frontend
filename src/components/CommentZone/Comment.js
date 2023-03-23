@@ -6,25 +6,26 @@ import Context from "../../contexts/auth.js";
 
 export default function Comment(props){
     const { user } = useContext(Context);
-    const {postId} = props
+    const {postId, postOwnerId, commentId, userId, username, message, pictureUrl} = props
 
+
+   
 
 
     return(
         <Container data-test="comment" >
 
-            <img alt='userPicture' src='https://www.thedigitalfix.com/wp-content/sites/thedigitalfix/2023/01/the-last-of-us-tv-series-zombies-infected-explained-1.jpg' />
+            <img alt='userPicture' src={pictureUrl} />
 
             <div className='right'>
 
                 <div className='top'>
-                    <h1>Name of the user </h1>
-                    <h2> - Relationship</h2>
+                    <h1> {username} </h1>
+                    <h2> {postOwnerId===userId ? "• post’s author" : "• follows?"}</h2>
                 </div>
 
-            <h3>Message itself</h3>
+            <h3>{message}</h3>
             </div>
-           
 
         </Container>
         

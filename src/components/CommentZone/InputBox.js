@@ -6,7 +6,7 @@ import { useContext, useState } from "react";
 import Context from "../../contexts/auth.js";
 
 export default function InputBox(props) {
-    const { postId } = props
+    const { postId, countTrigger, setCountTrigger } = props
 
     const { user } = useContext(Context);
 
@@ -27,6 +27,7 @@ export default function InputBox(props) {
             .then((res) => {
                 alert("Comentário postado")
                 setComment("");
+                setCountTrigger(countTrigger+1)
             })
             .catch((err) => {
                 console.log(err);
