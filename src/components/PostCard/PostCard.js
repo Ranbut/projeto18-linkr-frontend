@@ -3,7 +3,7 @@ import LinkPreview from "../LinkPreview/LinkPreview";
 import {
     PostBody, PostInfo, UserAvatar,
     SpacingMarging, Options, EditField,
-    ModalBox, customStyles, ModalButton
+    ModalBox, customStyles, ModalButton, PostContainer
 } from "./style";
 import { TbTrashFilled } from "react-icons/tb";
 import { TiPencil } from "react-icons/ti";
@@ -26,6 +26,8 @@ export default function PostCard({ getPosts, currentUser, userPost }) {
     const navigate = useNavigate();
     const [deleteModal, setDeleteModal] = useState(false);
     const [openComment, setOpenComment] = useState(false);
+    const [commentCount, setCommentCount] = useState(0)
+    const [countTrigger, setCountTrigger] = useState(0)
 
 
 
@@ -110,12 +112,29 @@ export default function PostCard({ getPosts, currentUser, userPost }) {
         if (isEditing) {
             inputRef.current.focus();
         }
+
     }, [isEditing]);
+
+    useEffect(() => {
+        axios.get(`${process.env.REACT_APP_API_URL}/get-comments/${userPost.id}`)
+        .then((res) => {
+            setCommentCount(res.data.length)
+        ;
+        })
+        .catch((err) => {
+            console.log(err);
+        });
+    }, [countTrigger]);
 
 
     function toggleCommentZone(){
-        setOpenComment(!openComment)
+        if(user.token){
+            setOpenComment(!openComment)
+        }else{
+            alert("Faça login para acessar os comentários.")
+        }        
     }
+
 
     return (
         <PostContainer>
@@ -128,7 +147,7 @@ export default function PostCard({ getPosts, currentUser, userPost }) {
                 <LikeButton postId={userPost.id} />
 
                 <div onClick={toggleCommentZone}> 
-                 <CommentButton />
+                 <CommentButton commentCount={commentCount} setCommentCount={setCommentCount}/>
                 </div>
 
             </UserAvatar>
@@ -176,7 +195,7 @@ export default function PostCard({ getPosts, currentUser, userPost }) {
                 </ModalBox>
             </Modal>
         </PostBody>
-        {openComment ?  <CommentZone postId={userPost.id} /> : ""}
+        {openComment ?  <CommentZone postId={userPost.id} countTrigger={countTrigger} setCountTrigger={setCountTrigger}/> : ""}
         </PostContainer>
     );
 }
