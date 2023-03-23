@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import Header from "../../components/Header/Header.js";
-import { getPostAPI } from "../../api/getPostAPI.js";
+import { getPostAPI, getPostRecentsAPI } from "../../api/getPostAPI.js";
 import { PageBody, Loading, TrendingBox, TrendingTitle, Hashtag, LoadPost } from "./style.js";
 import PostCard from "../../components/PostCard/PostCard.js";
 import PublishCard from "../../components/PublishCard/PublishCard.js";
@@ -34,11 +34,11 @@ export default function Timeline() {
       }, 15000);
 
     async function checkNewPosts(){
-        const getPostRes = await getPostAPI();
+        const getPostRes = await getPostRecentsAPI(Math.max(...userPosts.map(o => o.id)));
         if (getPostRes.success) {
             const newPosts = getPostRes.postsRetrived;
 
-            setUserNewPosts(userPosts.filter(o1 => !newPosts.some(o2 => o1.id === o2.id)));
+            setUserNewPosts(newPosts);
             return;
         }
     }
