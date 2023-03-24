@@ -21,7 +21,7 @@ export default function Timeline() {
     const navigate = useNavigate();
 
     async function getPosts() {
-        const getPostRes = await getPostAPI();
+        const getPostRes = await getPostAPI(user);
         if (getPostRes.success) {
             setUserPosts(getPostRes.postsRetrived);
             setLoad(false);
@@ -56,8 +56,8 @@ export default function Timeline() {
                             getPosts={getPosts}
                             currentUser={user.id}
                             userPost={postProp}
-                            key={((postProp.repostUserId) ?
-                                "Repost" + postProp.repostUserId + postProp.id
+                            key={((postProp.repostUserName) ?
+                                "Repost" + postProp.repostUserName + postProp.id
                                 : postProp.id)}
                         />
                     )}

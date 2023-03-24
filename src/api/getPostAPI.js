@@ -1,8 +1,12 @@
 import axios from "axios";
 
-export const getPostAPI = async () => {
+export const getPostAPI = async (user) => {
   try {
-    const { data: postsRetrived } = await axios.get(`${process.env.REACT_APP_API_URL}/posts`);
+    const { data: postsRetrived } = await axios.get(`${process.env.REACT_APP_API_URL}/posts`, {
+      headers: {
+        Authorization: `Bearer ${user.token}`
+      }
+    });
 
     return { success: true, error: undefined, postsRetrived };
 
