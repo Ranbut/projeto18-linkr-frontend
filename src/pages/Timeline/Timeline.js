@@ -21,19 +21,19 @@ export default function Timeline() {
     const navigate = useNavigate();
 
     async function getPosts() {
-        const getPostRes = await getPostAPI();
+        const getPostRes = await getPostAPI(user);
         if (getPostRes.success) {
             setUserPosts(getPostRes.postsRetrived);
             setLoad(false);
             return;
         }
     }
-    
+
     useInterval(() => {
         checkNewPosts();
-      }, 15000);
+    }, 15000);
 
-    async function checkNewPosts(){
+    async function checkNewPosts() {
         const getPostRes = await getPostRecentsAPI(Math.max(...userPosts.map(o => o.id)));
         if (getPostRes.success) {
             const newPosts = getPostRes.postsRetrived;
@@ -43,7 +43,7 @@ export default function Timeline() {
         }
     }
 
-    function addNewPosts(){
+    function addNewPosts() {
         setUserPosts(...userNewPosts, ...userPosts);
     }
 
@@ -53,7 +53,13 @@ export default function Timeline() {
                 <>
                     {userPosts.map(
                         (postProp) => <PostCard
-                            getPosts={getPosts} currentUser={user.id} userPost={postProp} key={postProp.id} />
+                            getPosts={getPosts}
+                            currentUser={user.id}
+                            userPost={postProp}
+                            key={((postProp.repostUserName) ?
+                                "Repost" + postProp.repostUserName + postProp.id
+                                : postProp.id)}
+                        />
                     )}
                 </>
             );
@@ -72,7 +78,7 @@ export default function Timeline() {
             .catch((err) => {
                 console.log(err.response.data);
             })
-    }, [userPosts]);
+    }, []);
 
     return (
         <>
@@ -86,16 +92,16 @@ export default function Timeline() {
                         getPosts={getPosts}
                     />
 
-                {userNewPosts.length !== 0 ?
-                <LoadPost onClick={addNewPosts} data-test="load-btn">
-                    <div>
-                    {userNewPosts.length} new posts, load more!
-                    <GoSync style={{margin: "0px 20px"}} color="white" size='16'/>
-                    </div>
-                </LoadPost>
-                :
-                <></>
-                }
+                    {userNewPosts.length !== 0 ?
+                        <LoadPost onClick={addNewPosts} data-test="load-btn">
+                            <div>
+                                {userNewPosts.length} new posts, load more!
+                                <GoSync style={{ margin: "0px 20px" }} color="white" size='16' />
+                            </div>
+                        </LoadPost>
+                        :
+                        <></>
+                    }
                     {load ? (<Loading>Loading...</Loading>) : renderTimeline()}
                 </div>
                 <TrendingBox data-test="trending">

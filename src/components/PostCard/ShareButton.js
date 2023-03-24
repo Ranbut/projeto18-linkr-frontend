@@ -22,17 +22,16 @@ export default function ShareButton(props) {
         })
         .catch((err) => {
             console.log(err)
-        })
+        });
     }
 
     useEffect(() => {
         ShareVerify()
-    }, [])
+    }, []);
 
     function share() {
 
-        axios.post(`${process.env.REACT_APP_API_URL}/share/${props.postId}`,
-            {}, {
+        axios.post(`${process.env.REACT_APP_API_URL}/share/${props.postId}`,{
             headers: {
                 Authorization: `Bearer ${user.token}`
             }
