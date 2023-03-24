@@ -29,7 +29,7 @@ export default function PostCard({ getPosts, currentUser, userPost }) {
     const [deleteModal, setDeleteModal] = useState(false);
     const [openComment, setOpenComment] = useState(false);
     const [commentCount, setCommentCount] = useState(0)
-    const [countTrigger, setCountTrigger] = useState(0)
+    const [countTrigger, setCountTrigger] = useState(commentCount)
 
 
     function handleDeleteModal() {
@@ -121,7 +121,7 @@ export default function PostCard({ getPosts, currentUser, userPost }) {
             .catch((err) => {
                 console.log('get-comments retornou ' + err.message);
             });
-    }, []);
+    }, [countTrigger]);
 
 
     function toggleCommentZone() {

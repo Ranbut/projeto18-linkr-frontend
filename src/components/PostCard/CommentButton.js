@@ -11,8 +11,10 @@ export default function CommentButton(props){
                 <AiOutlineComment />
             </div>
             
-            <p data-test="comment-counter">{commentCount} comments</p>
-
+            <div data-test="comment-counter">
+                <p>{commentCount} comments</p>
+            </div>
+            
         </Container>
         
     )
