@@ -4,15 +4,25 @@ import styled from "styled-components";
 export const PostContainer = styled.div`
     display: flex;
     flex-direction: column;
+    width: 611px;
+
+    margin-top: 43px;
+
+    background: #1e1e1e;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 16px;
+    box-sizing: border-box;
+
 `
 
 export const PostBody = styled.div`
     display: flex;
     flex-direction: row;
+    box-sizing: border-box;
 
-    width: 611px;
+    /* width: 611px; */
 
-    margin-top: 43px;
+    /* margin-top: 43px; */
 
     background: #171717;
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
@@ -175,3 +185,19 @@ export const customStyles = {
         'borderRadius': '30px'
     },
 };
+
+export const ShareHeader = styled.div`
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 5px 0 5px 15px;
+    font-family: 'Lato', sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 13px;
+    line-height: 13px;
+    color: #FFFFFF;
+    svg {
+        font-size: 30px;
+    }
+`;

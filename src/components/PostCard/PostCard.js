@@ -1,9 +1,9 @@
-import { Link, useNavigate, useRouteLoaderData } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import LinkPreview from "../LinkPreview/LinkPreview";
 import {
     PostBody, PostInfo, UserAvatar,
     SpacingMarging, Options, EditField,
-    ModalBox, customStyles, ModalButton, PostContainer
+    ModalBox, customStyles, ModalButton, PostContainer, ShareHeader
 } from "./style";
 import { TbTrashFilled } from "react-icons/tb";
 import { TiPencil } from "react-icons/ti";
@@ -17,6 +17,7 @@ import axios from "axios";
 import Modal from "react-modal";
 import Context from "../../contexts/auth.js";
 import ShareButton from "./ShareButton";
+import { BiRepost } from "react-icons/bi";
 
 export default function PostCard({ getPosts, currentUser, userPost }) {
 
@@ -29,6 +30,7 @@ export default function PostCard({ getPosts, currentUser, userPost }) {
     const [openComment, setOpenComment] = useState(false);
     const [commentCount, setCommentCount] = useState(0)
     const [countTrigger, setCountTrigger] = useState(0)
+    const [repostUserName, setRepostUserName] = useState('');
 
 
 
@@ -80,7 +82,6 @@ export default function PostCard({ getPosts, currentUser, userPost }) {
         if (isFromUser) {
             return (
                 <>
-
                     <TiPencil data-test="edit-btn" onClick={() => setEditing(!isEditing)} title="Editar Post" style={{ marginLeft: '-50px', marginTop: '23px' }} color='white' size='20px' />
                     <TbTrashFilled
                         data-test="delete-btn"
@@ -115,87 +116,108 @@ export default function PostCard({ getPosts, currentUser, userPost }) {
 
     useEffect(() => {
         axios.get(`${process.env.REACT_APP_API_URL}/get-comments/${userPost.id}`)
-        .then((res) => {
-            setCommentCount(res.data.length)
-        ;
-        })
-        .catch((err) => {
-            // console.log(err);
-        });
-    }, [countTrigger]);
+            .then((res) => {
+                setCommentCount(res.data.length)
+                    ;
+            })
+            .catch((err) => {
+                console.log('get-comments retornou ' + err.message);
+            });
+        getShareName(userPost.repostUserId)
+    }, []);
 
 
-    function toggleCommentZone(){
-        if(user.token){
+    function toggleCommentZone() {
+        if (user.token) {
             setOpenComment(!openComment)
-        }else{
+        } else {
             alert("Faça login para acessar os comentários.")
-        }        
+        }
+    }
+
+    function getShareName(id) {
+        if (userPost.repostUserId === user.id) {
+            setRepostUserName('you');
+        } else {
+            axios.get(`${process.env.REACT_APP_API_URL}/share/username/${id}`)
+                .then((r) => {
+                    setRepostUserName(r.data);
+                })
+                .catch((err) => {
+                    console.log('function getShareName ' + err.message);
+                });
+        }
     }
 
 
     return (
         <PostContainer>
-        <PostBody data-test="post">
-            <UserAvatar>
-                <img
-                    title={userPost.username}
-                    src={userPost.pictureUrl}
-                    alt="user-avatar" />
-                    
-                <LikeButton postId={userPost.id} />
+            {(userPost.repostUserId) ?
+                <ShareHeader>
+                    <BiRepost /> Re-posted by {repostUserName}
+                </ShareHeader>
+                : ""
+            }
+            <PostBody data-test="post">
+                <UserAvatar>
+                    <img
+                        title={userPost.username}
+                        src={userPost.pictureUrl}
+                        alt="user-avatar" />
 
-                <div onClick={toggleCommentZone}> 
-                 <CommentButton commentCount={commentCount} setCommentCount={setCommentCount}/>
-                </div>
+                    <LikeButton postId={userPost.id} />
 
-                <ShareButton postId={userPost.id} />
-            </UserAvatar>
-            <PostInfo>
-                <Options>
-                    <h6 data-test="username">{userPost.username}</h6>
-                    <>{renderPostOptions()}</>
-                </Options>
-                {isEditing ?
-                    <EditField
-                        data-test="edit-input"
-                        disabled={pressed}
-                        ref={inputRef}
-                        onKeyDown={handleKeyDown}
-                    /> :
-                    <p data-test="description">{renderedText}</p>
-                }
-                <Link data-test="link" to={userPost.link} style={{ textDecoration: 'none' }}>
-                    <LinkPreview link={userPost} />
-                </Link>
-                <SpacingMarging />
-            </PostInfo>
-            <Modal
-                isOpen={deleteModal}
-                style={customStyles}
-                contentLabel="Example Modal"
-            >
-                <ModalBox>
-                    <h2>Are you sure you want
-                        <br /> to delete this post?</h2>
-                    <div>
-                        <ModalButton
-                            type="cancel"
-                            data-test="cancel"
-                            onClick={handleDeleteModal}>
-                            No, go back
-                        </ModalButton>
-                        <ModalButton
-                            type="confirm"
-                            data-test="confirm"
-                            onClick={deletePost}>
-                            Yes, delete it
-                        </ModalButton>
+                    <div onClick={toggleCommentZone}>
+                        <CommentButton commentCount={commentCount} setCommentCount={setCommentCount} />
                     </div>
-                </ModalBox>
-            </Modal>
-        </PostBody>
-        {openComment ?  <CommentZone postId={userPost.id} countTrigger={countTrigger} setCountTrigger={setCountTrigger}/> : ""}
+
+                    <ShareButton postId={userPost.id} />
+                </UserAvatar>
+                <PostInfo>
+                    <Options>
+                        <h6 data-test="username">{userPost.username}</h6>
+                        <>{renderPostOptions()}</>
+                    </Options>
+                    {isEditing ?
+                        <EditField
+                            data-test="edit-input"
+                            disabled={pressed}
+                            ref={inputRef}
+                            onKeyDown={handleKeyDown}
+                        /> :
+                        <p data-test="description">{renderedText}</p>
+                    }
+                    <Link data-test="link" to={userPost.link} style={{ textDecoration: 'none' }}>
+                        <LinkPreview link={userPost} />
+                    </Link>
+                    <SpacingMarging />
+                </PostInfo>
+                <Modal
+                    isOpen={deleteModal}
+                    style={customStyles}
+                    contentLabel="Example Modal"
+                >
+                    <ModalBox>
+                        <h2>Are you sure you want
+                            <br /> to delete this post?</h2>
+                        <div>
+                            <ModalButton
+                                type="cancel"
+                                data-test="cancel"
+                                onClick={handleDeleteModal}>
+                                No, go back
+                            </ModalButton>
+                            <ModalButton
+                                type="confirm"
+                                data-test="confirm"
+                                onClick={deletePost}>
+                                Yes, delete it
+                            </ModalButton>
+                        </div>
+                    </ModalBox>
+                </Modal>
+            </PostBody>
+            {openComment ? <CommentZone postId={userPost.id} countTrigger={countTrigger} setCountTrigger={setCountTrigger} /> : ""}
         </PostContainer>
     );
 }

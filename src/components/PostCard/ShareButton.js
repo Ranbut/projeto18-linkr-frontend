@@ -22,12 +22,12 @@ export default function ShareButton(props) {
         })
         .catch((err) => {
             console.log(err)
-        })
+        });
     }
 
     useEffect(() => {
         ShareVerify()
-    }, [])
+    }, []);
 
     function share() {
 
