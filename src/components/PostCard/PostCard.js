@@ -16,6 +16,7 @@ import CommentZone from "../CommentZone/CommentZone";
 import axios from "axios";
 import Modal from "react-modal";
 import Context from "../../contexts/auth.js";
+import ShareButton from "./ShareButton";
 
 export default function PostCard({ getPosts, currentUser, userPost }) {
 
@@ -119,7 +120,7 @@ export default function PostCard({ getPosts, currentUser, userPost }) {
         ;
         })
         .catch((err) => {
-            console.log(err);
+            // console.log(err);
         });
     }, [countTrigger]);
 
@@ -141,12 +142,14 @@ export default function PostCard({ getPosts, currentUser, userPost }) {
                     title={userPost.username}
                     src={userPost.pictureUrl}
                     alt="user-avatar" />
+                    
                 <LikeButton postId={userPost.id} />
 
                 <div onClick={toggleCommentZone}> 
                  <CommentButton commentCount={commentCount} setCommentCount={setCommentCount}/>
                 </div>
 
+                <ShareButton postId={userPost.id} />
             </UserAvatar>
             <PostInfo>
                 <Options>
