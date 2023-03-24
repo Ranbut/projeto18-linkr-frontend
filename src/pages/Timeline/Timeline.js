@@ -28,7 +28,7 @@ export default function Timeline() {
             return;
         }
     }
-
+    
     useInterval(() => {
         checkNewPosts();
       }, 15000);

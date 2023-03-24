@@ -23,12 +23,12 @@ const Container = styled.div`
     align-items: center;
     justify-content: center;
     flex-direction: column;
-    margin: 15px 0 15px 0;
+    /* margin: 15px 0 15px 0; */
+    cursor: pointer;
 
     .commentButton{
         font-size: 30px;
         color: #FFFFFF;
     }
-    
 
 `

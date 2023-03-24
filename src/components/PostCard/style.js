@@ -63,17 +63,18 @@ export const PostInfo = styled.div`
 export const UserAvatar = styled.div`
     display: flex;
     flex-direction: column;
+    gap: 10px;
 
     img{
-        margin: 18px 16px;
-
+        margin: 18px 0 0 16px;
         width: 50px;
         height: 50px;
         border-radius: 26.5px;
     }
 
     p{
-        margin-top: 4.01px;
+        cursor: default;
+        /* margin-top: 4.01px; */
         font-family: 'Lato';
         font-style: normal;
         font-weight: 400;

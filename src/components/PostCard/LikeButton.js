@@ -93,12 +93,12 @@ export default function LikeButton(props) {
                     <AiOutlineHeart />}
             </LikeDiv>
             <div>
-                <a
+                <p
                     data-test="counter"
                     id={`like-box ${props.postId}`}
                 >
                     {listLikes.length} likes
-                </a>
+                </p>
                 <Tooltip
                     data-test="tooltip"
                     anchorId={`like-box ${props.postId}`}
@@ -118,9 +118,6 @@ const LikeDiv = styled.div`
     }
     p{
         font-family: 'Lato', sans-serif;
-        font-size: 11px;
-        line-height: 13px;
-        color: white;
         -webkit-touch-callout: none;  
         -webkit-user-select: none;    
         -khtml-user-select: none;     
@@ -138,11 +135,8 @@ const Content = styled.div`
     align-items: center;
     width: 100px;
 
-    a{
+    p{
         font-family: 'Lato', sans-serif;
-        font-size: 11px;
-        line-height: 13px;
-        color: #FFFFFF; 
         -webkit-touch-callout: none;  
         -webkit-user-select: none;    
         -khtml-user-select: none;     
