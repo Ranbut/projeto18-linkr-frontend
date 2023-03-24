@@ -18,6 +18,7 @@ export default function InputBox(props) {
         }
     };
 
+
     function handleComment() {
         axios
             .post(`${process.env.REACT_APP_API_URL}/post-comment`, {
@@ -25,7 +26,6 @@ export default function InputBox(props) {
                 message: comment
             } , config)
             .then((res) => {
-                alert("Comentário postado")
                 setComment("");
                 setCountTrigger(countTrigger+1)
             })
