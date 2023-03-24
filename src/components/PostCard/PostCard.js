@@ -178,7 +178,8 @@ export default function PostCard({ getPosts, currentUser, userPost }) {
                 <Modal
                     isOpen={deleteModal}
                     style={customStyles}
-                    contentLabel="Example Modal"
+                    contentLabel="Delete Modal"
+                    ariaHideApp={false}
                 >
                     <ModalBox>
                         <h2>Are you sure you want

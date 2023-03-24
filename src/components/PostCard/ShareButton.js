@@ -3,11 +3,18 @@ import styled from 'styled-components';
 import axios from 'axios';
 import Context from "../../contexts/auth.js";
 import { BiRepost } from "react-icons/bi";
+import { ModalBox, ModalButton, customStyles } from './style.js';
+import Modal from 'react-modal';
 
 export default function ShareButton(props) {
     const [shared, isShared] = useState(false);
     const [listShares, setListShares] = useState([]);
     const { user } = useContext(Context);
+    const [shareModal, setShareModal] = useState(false);
+
+    function handleShareModal() {
+        setShareModal(!shareModal);
+    }
 
     function ShareVerify() {
         axios.get(`${process.env.REACT_APP_API_URL}/share/${props.postId}`,
@@ -16,13 +23,13 @@ export default function ShareButton(props) {
                     "Authorization": `Bearer ${user.token}`
                 }
             })
-        .then((r) => {
-            isShared(r.data.userSharedThisPost)
-            setListShares(r.data.shares)
-        })
-        .catch((err) => {
-            console.log(err)
-        });
+            .then((r) => {
+                isShared(r.data.userSharedThisPost)
+                setListShares(r.data.shares)
+            })
+            .catch((err) => {
+                console.log(err)
+            });
     }
 
     useEffect(() => {
@@ -30,16 +37,19 @@ export default function ShareButton(props) {
     }, []);
 
     function share() {
-
-        axios.post(`${process.env.REACT_APP_API_URL}/share/${props.postId}`,{
+        axios.post(`${process.env.REACT_APP_API_URL}/share/${props.postId}`, {}, {
             headers: {
                 Authorization: `Bearer ${user.token}`
             }
         })
-        .then(() => {
-            ShareVerify();
-        })
-        .catch((err) => console.log(err));
+            .then(() => {
+                ShareVerify();
+                handleShareModal();
+            })
+            .catch((err) => {
+                alert(err.message);
+                handleShareModal();
+            });
 
     };
 
@@ -47,13 +57,13 @@ export default function ShareButton(props) {
         <Content>
             <ShareDiv
                 data-test="repost-btn"
-                onClick={() => share()} 
+                onClick={handleShareModal}
                 shared={shared}>
                 {shared
                     ?
                     <BiRepost color='green' />
                     :
-                    <BiRepost color='white'/>}
+                    <BiRepost color='white' />}
             </ShareDiv>
             <div>
                 <p
@@ -64,6 +74,31 @@ export default function ShareButton(props) {
                 </p>
 
             </div>
+            <Modal
+                isOpen={shareModal}
+                style={customStyles}
+                contentLabel="Share Modal"
+                ariaHideApp={false}
+            >
+                <ModalBox>
+                    <h2>Do you want to re-post
+                        <br /> this link? </h2>
+                    <div>
+                        <ModalButton
+                            type="cancel"
+                            data-test="cancel"
+                            onClick={handleShareModal}>
+                            No, cancel
+                        </ModalButton>
+                        <ModalButton
+                            type="confirm"
+                            data-test="confirm"
+                            onClick={() => share()}>
+                            Yes, share!
+                        </ModalButton>
+                    </div>
+                </ModalBox>
+            </Modal>
         </Content>
     )
 }
