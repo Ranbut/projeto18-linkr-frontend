@@ -60,6 +60,7 @@ const Container = styled.div`
             letter-spacing: 0.05em;
             color: #FFFFFF;
             cursor: pointer;
+            z-index: 2;
         }
 
 `;

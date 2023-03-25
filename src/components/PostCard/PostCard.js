@@ -35,7 +35,8 @@ export default function PostCard({ getPosts, currentUser, userPost }) {
         <ReactTagify
             tagStyle={{
                 color: "#FFFFFF",
-                cursor: "pointer"
+                cursor: "pointer",
+                fontWeight: 700
             }}
             tagClicked={(tag) => navigate(`/hashtag/${tag.replace("#", "")}`)}
         >
@@ -142,7 +143,9 @@ export default function PostCard({ getPosts, currentUser, userPost }) {
                     <img
                         title={userPost.username}
                         src={userPost.pictureUrl}
-                        alt="user-avatar" />
+                        alt="user-avatar"
+                        onClick={() => navigate(`/user/${userPost.userId}`)}
+                    />
 
                     <LikeButton postId={userPost.id} />
 
@@ -154,7 +157,10 @@ export default function PostCard({ getPosts, currentUser, userPost }) {
                 </UserAvatar>
                 <PostInfo>
                     <Options>
-                        <h6 data-test="username">{userPost.username}</h6>
+                        <h6
+                            data-test="username"
+                            onClick={() => navigate(`/user/${userPost.userId}`)}
+                        >{userPost.username}</h6>
                         <div>{renderPostOptions()}</div>
                     </Options>
                     {isEditing ?

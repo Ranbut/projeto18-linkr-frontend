@@ -22,7 +22,13 @@ export default function HashtagSearch() {
                 <>
                     {posts.map(
                         (postProp) => <PostCard
-                            getPosts={posts} currentUser={user.id} userPost={postProp} key={postProp.id} />
+                            getPosts={() => setLoad(!load)}
+                            currentUser={user.id}
+                            userPost={postProp}
+                            key={((postProp.repostUserName) ?
+                                "Repost" + postProp.repostUserName + postProp.id
+                                : postProp.id)}
+                        />
                     )}
                 </>
             );
@@ -57,6 +63,7 @@ export default function HashtagSearch() {
             <PageBody>
                 <div>
                     <h4 data-test="hashtag-title">{`#${hashtag}`}</h4>
+                    <h5 name="mobile">{`#${hashtag}`}</h5>
                     {load ? (<Loading>Loading...</Loading>) : renderTimeline()}
                 </div>
                 <TrendingBox data-test="trending">
