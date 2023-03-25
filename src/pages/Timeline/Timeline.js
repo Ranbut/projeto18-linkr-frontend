@@ -71,7 +71,6 @@ export default function Timeline() {
     }
 
     async function checkOldPosts(){
-        console.log("Cheking")
         const getPostRes = await getPostOldAPI(Math.min(...userPosts.map(o => o.id)));
         if (getPostRes.success) {
             const oldPosts = getPostRes.postsRetrived;
