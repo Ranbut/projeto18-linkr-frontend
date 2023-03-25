@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import axios from 'axios';
 import Context from "../../contexts/auth.js";
 import { BiRepost } from "react-icons/bi";
-import { ModalBox, ModalButton, customStyles } from './style.js';
+import { ModalBox, ModalButton, customStyles } from './styled.js';
 import Modal from 'react-modal';
 
 export default function ShareButton(props) {

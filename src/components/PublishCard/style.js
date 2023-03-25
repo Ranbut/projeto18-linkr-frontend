@@ -13,12 +13,15 @@ export const PublicationCard = styled.div`
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
     border-radius: 16px;
 
-    @media (max-width: 428px) {
-    width: 430px;
-    height: 164px;
-    border-radius: 0px;
-    padding: 0px;
-  }
+    @media (max-width: 610px) {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 100vw;
+        height: 200px;
+        border-radius: 0px;
+        padding: 0px;
+    }
 `;
 
 export const UserAvatar = styled.div`
@@ -29,7 +32,7 @@ export const UserAvatar = styled.div`
         height: 50px;
         border-radius: 26.5px;
     }
-    @media (max-width: 428px) {
+    @media (max-width: 610px) {
         display: none;
     }
 `;
@@ -48,14 +51,14 @@ export const FormBody = styled.div`
         line-height: 24px;
         color: #707070;
     }
-    @media (max-width: 428px) {
-        h6{
-            margin-left: 9%;
-        }
-  }
-  @media (max-width: 370px) {
-        h6{
-            margin-left: 15%;
+    @media (max-width: 610px) {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        h6 {
+            width: 90%;
         }
     }
 `;
@@ -64,9 +67,16 @@ export const FormBody = styled.div`
 export const Form = styled.form`
     display: flex;
     flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    width: 90%;
 `;
 
 export const Inputs = styled.div`
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 2px;
 
     input{
         margin-top: 5px;
@@ -80,10 +90,12 @@ export const Inputs = styled.div`
         padding-inline: 13px;
     }
 
+    input:nth-child(2) {
+        height: 55px;
+    }
+
     button{
         margin-top: 5px;
-        margin-left: 74%;
-
         width: 112px;
         height: 31px;
 
@@ -100,12 +112,12 @@ export const Inputs = styled.div`
         color: #FFFFFF;
     }
 
-    @media (max-width: 428px) {
-
+    @media (max-width: 610px) {
+        width: 100%;
         input{
-            width: 345px;
+            width: 100%;
             height: 30px;
-            margin-left: 3%;
+            margin-left: 0;
         }
 
         button{
@@ -116,17 +128,7 @@ export const Inputs = styled.div`
             color: #FFFFFF;
             width: 112px;
             height: 22px;
-            margin-left: 55%;
+            margin-top: 10px;
         }
   }
-
-  @media (max-width: 370px) {
-        input{
-            margin-left: 9.5%;
-        }
-
-        button{
-            margin-left: 62%;
-        }
-    }
 `;

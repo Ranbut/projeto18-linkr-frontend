@@ -1,9 +1,6 @@
 import styled from "styled-components";
 
 export const HeaderBody = styled.header`
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
     width: 100%;
     height: 72px;
     background: #151515;
@@ -43,13 +40,12 @@ export const HeaderBody = styled.header`
 
 export const SectionSearch = styled.div`
     max-width: 560px;
-    width: 50%;
-    min-width: 350px;
+    width: 100%;
     border-radius: 8px;
     background-color:#E7E7E7;
     height: 45px;
 
-    @media (max-width: 650px) {
+    @media (max-width: 610px) {
         display: none;
     }
 `;

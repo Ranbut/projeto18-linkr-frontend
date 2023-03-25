@@ -1,23 +1,23 @@
+import axios from "axios";
+import { useState, useRef, useEffect, useContext } from "react";
+import Modal from "react-modal";
+import { ReactTagify } from "react-tagify";
 import { Link, useNavigate } from "react-router-dom";
-import LinkPreview from "../LinkPreview/LinkPreview";
+import { TbTrashFilled } from "react-icons/tb";
+import { BiRepost } from "react-icons/bi";
+import { TiPencil } from "react-icons/ti";
+import { putPostEditAPI } from "../../api/putPostEditAPI";
+import LikeButton from "./LikeButton.js";
+import CommentButton from "./CommentButton.js";
+import CommentZone from "../CommentZone/CommentZone.js";
+import Context from "../../contexts/auth.js";
+import ShareButton from "./ShareButton.js";
+import LinkPreview from "../LinkPreview/LinkPreview.js";
 import {
     PostBody, PostInfo, UserAvatar,
-    SpacingMarging, Options, EditField,
+    Options, EditField,
     ModalBox, customStyles, ModalButton, PostContainer, ShareHeader
-} from "./style";
-import { TbTrashFilled } from "react-icons/tb";
-import { TiPencil } from "react-icons/ti";
-import { useState, useRef, useEffect, useContext } from "react";
-import { putPostEditAPI } from "../../api/putPostEditAPI";
-import { ReactTagify } from "react-tagify";
-import LikeButton from "./LikeButton";
-import CommentButton from "./CommentButton";
-import CommentZone from "../CommentZone/CommentZone";
-import axios from "axios";
-import Modal from "react-modal";
-import Context from "../../contexts/auth.js";
-import ShareButton from "./ShareButton";
-import { BiRepost } from "react-icons/bi";
+} from "./styled.js";
 
 export default function PostCard({ getPosts, currentUser, userPost }) {
 
@@ -28,25 +28,9 @@ export default function PostCard({ getPosts, currentUser, userPost }) {
     const navigate = useNavigate();
     const [deleteModal, setDeleteModal] = useState(false);
     const [openComment, setOpenComment] = useState(false);
-    const [commentCount, setCommentCount] = useState(0)
-    const [countTrigger, setCountTrigger] = useState(commentCount)
-
-
-    function handleDeleteModal() {
-        setDeleteModal(!deleteModal);
-    }
-
-    function deletePost() {
-        axios.delete(`${process.env.REACT_APP_API_URL}/posts/delete/${userPost.id}`)
-            .then(() => {
-                handleDeleteModal()
-                getPosts()
-            })
-            .catch((err) => {
-                alert(err.response.data);
-            })
-    }
-
+    const [commentCount, setCommentCount] = useState(0);;
+    const [countTrigger, setCountTrigger] = useState(commentCount);
+    const inputRef = useRef(null);
     const renderedText =
         <ReactTagify
             tagStyle={{
@@ -56,7 +40,50 @@ export default function PostCard({ getPosts, currentUser, userPost }) {
             tagClicked={(tag) => navigate(`/hashtag/${tag.replace("#", "")}`)}
         >
             {message}
-        </ReactTagify>
+        </ReactTagify>;
+
+
+    const handleKeyDown = (event) => {
+        if (event.key === 'Enter') {
+            setPressed(true);
+            edit(event.target.value);
+        }
+        if (event.key === 'Escape')
+            setEditing(false);
+    };
+
+    useEffect(() => {
+        if (isEditing) {
+            inputRef.current.focus();
+        }
+
+    }, [isEditing]);
+
+    useEffect(() => {
+        axios.get(`${process.env.REACT_APP_API_URL}/get-comments/${userPost.id}`)
+            .then((res) => {
+                setCommentCount(res.data.length)
+                    ;
+            })
+            .catch((err) => {
+                console.log('get-comments retornou ' + err.message);
+            });
+    }, [countTrigger]);
+
+    function handleDeleteModal() {
+        setDeleteModal(!deleteModal);
+    }
+
+    function deletePost() {
+        axios.delete(`${process.env.REACT_APP_API_URL}/posts/delete/${userPost.id}`)
+            .then(() => {
+                handleDeleteModal();
+                getPosts();
+            })
+            .catch((err) => {
+                alert(err.response.data);
+            });
+    }
 
     async function edit(messageData) {
         const pushPostRes = await putPostEditAPI(user.token, messageData, userPost.id);
@@ -94,48 +121,17 @@ export default function PostCard({ getPosts, currentUser, userPost }) {
         }
     }
 
-    const handleKeyDown = (event) => {
-        if (event.key === 'Enter') {
-            setPressed(true);
-            edit(event.target.value);
-        }
-        if (event.key === 'Escape')
-            setEditing(false);
-    };
-
-    const inputRef = useRef(null);
-
-    useEffect(() => {
-        if (isEditing) {
-            inputRef.current.focus();
-        }
-
-    }, [isEditing]);
-
-    useEffect(() => {
-        axios.get(`${process.env.REACT_APP_API_URL}/get-comments/${userPost.id}`)
-            .then((res) => {
-                setCommentCount(res.data.length)
-                    ;
-            })
-            .catch((err) => {
-                console.log('get-comments retornou ' + err.message);
-            });
-    }, [countTrigger]);
-
-
     function toggleCommentZone() {
         if (user.token) {
-            setOpenComment(!openComment)
+            setOpenComment(!openComment);
         } else {
-            alert("Faça login para acessar os comentários.")
+            alert("Faça login para acessar os comentários.");
         }
     }
 
-
     return (
         <PostContainer>
-            {(userPost.repostUserId) ?
+            {(userPost.repostUserName) ?
                 <ShareHeader>
                     <BiRepost /> Re-posted by {userPost.repostUserName}
                 </ShareHeader>
@@ -159,7 +155,7 @@ export default function PostCard({ getPosts, currentUser, userPost }) {
                 <PostInfo>
                     <Options>
                         <h6 data-test="username">{userPost.username}</h6>
-                        <>{renderPostOptions()}</>
+                        <div>{renderPostOptions()}</div>
                     </Options>
                     {isEditing ?
                         <EditField
@@ -173,34 +169,33 @@ export default function PostCard({ getPosts, currentUser, userPost }) {
                     <Link data-test="link" to={userPost.link} style={{ textDecoration: 'none' }}>
                         <LinkPreview link={userPost} />
                     </Link>
-                    <SpacingMarging />
                 </PostInfo>
-                <Modal
-                    isOpen={deleteModal}
-                    style={customStyles}
-                    contentLabel="Delete Modal"
-                    ariaHideApp={false}
-                >
-                    <ModalBox>
-                        <h2>Are you sure you want
-                            <br /> to delete this post?</h2>
-                        <div>
-                            <ModalButton
-                                type="cancel"
-                                data-test="cancel"
-                                onClick={handleDeleteModal}>
-                                No, go back
-                            </ModalButton>
-                            <ModalButton
-                                type="confirm"
-                                data-test="confirm"
-                                onClick={deletePost}>
-                                Yes, delete it
-                            </ModalButton>
-                        </div>
-                    </ModalBox>
-                </Modal>
             </PostBody>
+            <Modal
+                isOpen={deleteModal}
+                style={customStyles}
+                contentLabel="Delete Modal"
+                ariaHideApp={false}
+            >
+                <ModalBox>
+                    <h2>Are you sure you want
+                        <br /> to delete this post?</h2>
+                    <div>
+                        <ModalButton
+                            type="cancel"
+                            data-test="cancel"
+                            onClick={handleDeleteModal}>
+                            No, go back
+                        </ModalButton>
+                        <ModalButton
+                            type="confirm"
+                            data-test="confirm"
+                            onClick={deletePost}>
+                            Yes, delete it
+                        </ModalButton>
+                    </div>
+                </ModalBox>
+            </Modal>
             {openComment ? <CommentZone postId={userPost.id} countTrigger={countTrigger} setCountTrigger={setCountTrigger} /> : ""}
         </PostContainer>
     );
