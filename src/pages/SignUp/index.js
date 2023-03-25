@@ -116,9 +116,14 @@ const Container = styled.div`
   width: 100vw;
   height: 900px;
 
-  @media (max-width: 375px) {
+
+  @media (max-width: 860px) {
     flex-direction: column;
     height:667px;
+    
+    div{
+      text-align: center;
+    }
   }
 
 `;
@@ -150,7 +155,7 @@ const SidebarSty = styled.div`
     width: 442px;
   }
 
-  @media (max-width: 375px) {
+  @media (max-width: 860px) {
       width: 100%;
       height: 25%;
 
@@ -236,7 +241,13 @@ const SignInSty = styled.div`
     color: #FFFFFF;
   }
 
-  @media (max-width: 375px) {
+  /* @media (max-width: 860px) and (min-width: 376px) {
+  input{
+    background-color: red;
+  }
+} */
+
+  @media (max-width: 860px) {
     width: 100%;
     height:75%;
 

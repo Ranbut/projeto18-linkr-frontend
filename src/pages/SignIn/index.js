@@ -78,9 +78,13 @@ const Container = styled.div`
   display: flex;
   width: 100vw;
 
-  @media (max-width: 375px) {
+  @media (max-width: 860px) {
     flex-direction: column;
     height:667px;
+
+    div{
+      text-align: center;
+    }
   }
 `;
 
@@ -112,7 +116,7 @@ const SidebarSty = styled.div`
     width: 442px;
   }
 
-    @media (max-width: 375px) {
+    @media (max-width: 860px) {
       width: 100%;
       height: 25%;
 
@@ -199,7 +203,7 @@ const SignInSty = styled.div`
   }
 
 
-  @media (max-width: 375px) {
+  @media (max-width: 860px) {
     width: 100%;
     height:75%;
 
