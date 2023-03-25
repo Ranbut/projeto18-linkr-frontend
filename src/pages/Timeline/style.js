@@ -4,39 +4,19 @@ export const PageBody = styled.div`
     display: flex;
     justify-content: center;
     gap: 50px;
-    padding: 20px 30%;
-
-    h4{
-    width: 145px;
-    height: 64px;
-
-    font-family: 'Oswald';
-    font-style: normal;
-    font-weight: 700;
-    font-size: 43px;
-    line-height: 64px;
-
-    color: #FFFFFF;
-    }
+    box-sizing: border-box;
     
-    @media (max-width: 1024px) {
-        padding: 20px 20%;
-    }
+    h4{
+        width: 145px;
+        height: 64px;
 
-    @media (max-width: 810px) {
-        padding: 20px 13%;
-    }
+        font-family: 'Oswald';
+        font-style: normal;
+        font-weight: 700;
+        font-size: 43px;
+        line-height: 64px;
 
-    @media (max-width: 764px) {
-        padding: 20px 10%;
-    }
-
-    @media (max-width: 640px) {
-        padding: 20px 2%;
-    }
-
-    @media (max-width: 428px) {
-    padding: 0px;
+        color: #FFFFFF;
     }
 
     h4{
@@ -46,8 +26,10 @@ export const PageBody = styled.div`
         margin-left: 17px;
     }
 
-    @media (max-width: 370px) {
-            h4{
+    @media (max-width: 1000px) {
+        max-width: unset;
+        width: 100vw;
+        h4{
             display: position;
             position: relative;
             top: 19px;
@@ -81,6 +63,7 @@ export const TrendingBox = styled.div`
 
     background: #171717;
     border-radius: 16px;
+    margin-top: 40px;
 
     @media (max-width: 1000px) {
         display: none;   
@@ -118,7 +101,8 @@ export const Hashtag = styled.p`
 export const LoadPost = styled.div`
     display: flex;  
     margin-top: 40px;
-    width: 611px;
+    max-width: 611px;
+    width: 100%;
     height: 61px;
 
     background: #1877F2;
