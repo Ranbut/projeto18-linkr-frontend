@@ -28,6 +28,7 @@ export const getPostRecentsAPI = async (id) => {
 
 export const getPostUserAPI = async (id) => {
   try {
+    console.log(id, typeof id,"Get Id ")
     const { data: postsRetrived } = await axios.get(`${process.env.REACT_APP_API_URL}/posts/${id}`);
 
     return { success: true, error: undefined, postsRetrived };

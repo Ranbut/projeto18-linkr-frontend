@@ -1,6 +1,6 @@
 import {
     HeaderBody, SectionSearch, ContainerInput,
-    ReturnSearch, UsernameBox, IconImage
+    ReturnSearch, UsernameBox, IconImage, Follow
 } from "./styled.js";
 import OutBtn from "./OutBtn";
 import axios from 'axios';
@@ -34,6 +34,7 @@ export default function SearchBar() {
                             "Authorization": `Bearer ${user.token}`
                         }
                     });
+                    console.log(requisition,"retorno do back")
                     setResult(requisition.data);
                     setEr("");
                     console.log(requisition.data, "req");
@@ -51,12 +52,19 @@ export default function SearchBar() {
         getUsernameSearch();
     }, [search]);
 
-    function RenderUsernameResults({ user_id, picture_url, username }) {
+
+    console.log(result,"resultado")
+    function RenderUsernameResults({ user_id, picture_url, username, follow
+    } )
+    {
+        console.log(follow, "teste seguir")
+        console.log(user_id, "id", typeof user_id,"tipo")
         return (
             <UsernameBox data-test="user-search" key={user_id}>
                 <Link key={user_id} to={`/user/${user_id}`} onClick={() => setSearch([])}>
                     <IconImage data-test="avatar" src={picture_url} alt={`picture of ${username}`}></IconImage>
                     <span className='username'>{username}</span>
+                   {follow? <Follow>follow</Follow>:<></>}
                 </Link>
             </UsernameBox>
         );
@@ -83,15 +91,16 @@ export default function SearchBar() {
                             <UsernameBox>
                                 <span>{"Person was not found!"}</span>
                             </UsernameBox>
-                            :
+                            : result.length <= 0 ? <></>:
                             result.map(value => {
-                                const { id, pictureUrl, username } = value
+                                const { id, pictureUrl, username, isFollowing} = value
 
                                 return (
                                     <RenderUsernameResults key={id}
                                         user_id={id}
                                         picture_url={pictureUrl}
                                         username={username}
+                                        follow ={isFollowing}
                                     />)
                             })}
                     </ReturnSearch>

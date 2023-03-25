@@ -123,3 +123,13 @@ export const Logo = styled.p`
     font-size: 26px;
     color: white;
 `;
+
+
+export const Follow =styled.span`
+color: #C5C5C5;
+font-family: 'Lato';
+font-style: normal;
+font-weight: 400;
+font-size: 19px;
+line-height: 23px;
+`;
