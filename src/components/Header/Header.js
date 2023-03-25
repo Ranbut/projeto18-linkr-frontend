@@ -1,17 +1,14 @@
 import {
     HeaderBody, SectionSearch, ContainerInput,
-    ReturnSearch, UsernameBox, IconImage, Logo
-} from "./style.js";
+    ReturnSearch, UsernameBox, IconImage
+} from "./styled.js";
 import OutBtn from "./OutBtn";
 import axios from 'axios';
 import { useContext, useEffect, useState } from 'react';
 import { DebounceInput } from 'react-debounce-input';
 import { Link } from 'react-router-dom';
-import { BsSearch } from 'react-icons/bs';
-import { BsChevronDown } from 'react-icons/bs';
-import { BsChevronUp } from 'react-icons/bs';
+import { BsSearch, BsChevronDown, BsChevronUp } from 'react-icons/bs';
 import Context from "../../contexts/auth.js";
-
 
 export default function SearchBar() {
 
@@ -19,12 +16,12 @@ export default function SearchBar() {
     const [search, setSearch] = useState("");
     const [result, setResult] = useState([]);
     const [er, setEr] = useState("");
-    const [isVisible, setIsVisible] = useState(false)
-    const [chevronSide, setChevronSide] = useState(true)
+    const [isVisible, setIsVisible] = useState(false);
+    const [chevronSide, setChevronSide] = useState(true);
 
     function handleChevron() {
-        setIsVisible(!isVisible)
-        setChevronSide(!chevronSide)
+        setIsVisible(!isVisible);
+        setChevronSide(!chevronSide);
     }
 
 
@@ -38,12 +35,12 @@ export default function SearchBar() {
                         }
                     });
                     setResult(requisition.data);
-                    setEr("")
+                    setEr("");
                     console.log(requisition.data, "req");
                 } catch (error) {
                     if (error.response.status === 404) {
                         setEr(error.response.data);
-                        setResult([])
+                        setResult([]);
                     }
                 };
             }
@@ -62,7 +59,7 @@ export default function SearchBar() {
                     <span className='username'>{username}</span>
                 </Link>
             </UsernameBox>
-        )
+        );
     }
 
     return (
@@ -113,6 +110,5 @@ export default function SearchBar() {
             </HeaderBody>
             {isVisible ? <OutBtn token={user.token} setToken={setUser} /> : ""}
         </>
-    )
-
+    );
 }
