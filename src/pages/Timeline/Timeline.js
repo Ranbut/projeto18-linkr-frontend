@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import Header from "../../components/Header/Header.js";
-import { getPostAPI, getPostRecentsAPI } from "../../api/getPostAPI.js";
+import { getPostAPI, getPostOldAPI, getPostRecentsAPI } from "../../api/getPostAPI.js";
 import { PageBody, Loading, TrendingBox, TrendingTitle, Hashtag, LoadPost } from "./style.js";
 import PostCard from "../../components/PostCard/PostCard.js";
 import PublishCard from "../../components/PublishCard/PublishCard.js";
@@ -11,6 +11,7 @@ import { useNavigate } from "react-router";
 import { GoSync } from "react-icons/go";
 import useInterval from "use-interval";
 import SectionSearchInput from "../../components/SearchNameInput/SectionSearch.js";
+import InfiniteScroll from "react-infinite-scroller";
 
 export default function Timeline() {
 
@@ -35,23 +36,60 @@ export default function Timeline() {
     }, 15000);
 
     async function checkNewPosts() {
-        const getPostRes = await getPostRecentsAPI(Math.max(...userPosts.map(o => o.id)));
-        if (getPostRes.success) {
-            const newPosts = getPostRes.postsRetrived;
 
-            setUserNewPosts(newPosts);
-            return;
+        if(userPosts.length === 0)
+        {
+            const getPostRes = await getPostRecentsAPI(0);
+            if (getPostRes.success) {
+                const newPosts = getPostRes.postsRetrived;
+    
+                setUserNewPosts(newPosts);
+                return;
+            }
+        }
+        else{
+            const getPostRes = await getPostRecentsAPI(Math.max(...userPosts.map(o => o.id)));
+            if (getPostRes.success) {
+                const newPosts = getPostRes.postsRetrived;
+    
+                setUserNewPosts(newPosts);
+                return;
+            }
         }
     }
 
     function addNewPosts() {
-        setUserPosts(...userNewPosts, ...userPosts);
+        if(userPosts.length === 0)
+        {
+            setUserPosts(userNewPosts);
+            return;
+        }
+        else{
+            setUserPosts(...userNewPosts, ...userPosts);
+            return;
+        }
+    }
+
+    async function checkOldPosts(){
+        const getPostRes = await getPostOldAPI(Math.min(...userPosts.map(o => o.id)));
+        if (getPostRes.success) {
+            const oldPosts = getPostRes.postsRetrived;
+
+            setUserPosts(userPosts.concat(oldPosts));
+            return;
+        }
     }
 
     function renderTimeline() {
         if (userPosts.length > 0) {
             return (
-                <>
+                <InfiniteScroll 
+                pageStart={0}
+                loadMore={checkOldPosts}
+                hasMore={true || false}
+                loader={<Loading>Cheking for more posts...</Loading>}
+                useWindow={false}
+                >
                     {userPosts.map(
                         (postProp) => <PostCard
                             getPosts={getPosts}
@@ -62,7 +100,7 @@ export default function Timeline() {
                                 : postProp.id)}
                         />
                     )}
-                </>
+                </InfiniteScroll>
             );
         }
         else {
