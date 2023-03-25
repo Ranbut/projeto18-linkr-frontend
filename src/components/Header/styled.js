@@ -9,7 +9,7 @@ export const HeaderBody = styled.header`
     align-items: center;
 
     h4{
-        padding-left: 28px;
+        margin-left: 28px;
         width: 108px;
         height: 54px;
         font-family: 'Passion One';
@@ -19,6 +19,7 @@ export const HeaderBody = styled.header`
         line-height: 54px;
         letter-spacing: 0.05em;
         color: #FFFFFF;
+        cursor: pointer;
     }
 
     .right{
@@ -27,7 +28,8 @@ export const HeaderBody = styled.header`
         color: #FFFFFF;
         margin-right:18px;
         font-size:26px;
-        
+        width:108px;
+        cursor: pointer;
         img{
             height: 52px;
             width: 52px;
