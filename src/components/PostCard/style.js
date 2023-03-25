@@ -118,6 +118,10 @@ export const EditField = styled.textarea`
     border-radius: 5px;
     border: none;
     resize: none;
+    :focus{
+        outline: none;
+        background-color: none;
+    }
 `;
 
 export const MessageText = styled.span`

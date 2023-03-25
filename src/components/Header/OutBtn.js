@@ -7,8 +7,6 @@ export default function OutBtn({ token, setToken }) {
 
     const navigate = useNavigate();
 
-    const URLPOST = "http://localhost:5000/"
-
     const config = {
         headers: {
             Authorization: `Bearer ${token}`,
@@ -18,8 +16,8 @@ export default function OutBtn({ token, setToken }) {
 
     function logOut() {
         axios
-            .delete(`${URLPOST}logout`, config)
-            .then((res) => {
+            .delete(`${process.env.REACT_APP_API_URL}/logout`, config)
+            .then(() => {
                 localStorage.removeItem("user");
                 setToken("");
                 navigate("/");
@@ -30,7 +28,6 @@ export default function OutBtn({ token, setToken }) {
     }
 
     return (
-
         <Container data-test="menu" >
             <div data-test="logout" onClick={logOut}>
                 Logout
@@ -65,4 +62,4 @@ const Container = styled.div`
             cursor: pointer;
         }
 
-`
+`;
