@@ -10,6 +10,7 @@ import axios from "axios";
 import { useNavigate } from "react-router";
 import { GoSync } from "react-icons/go";
 import useInterval from "use-interval";
+import SectionSearchInput from "../../components/SearchNameInput/SectionSearch.js";
 
 export default function Timeline() {
 
@@ -84,14 +85,15 @@ export default function Timeline() {
         <>
             <Header userImage={user.pictureUrl} />
             <PageBody>
+                <SectionSearchInput display="mobile" />
                 <div>
-
+                    <h4>timeline</h4>
                     <PublishCard
                         userImage={user.pictureUrl}
                         userPosts={userPosts}
                         getPosts={getPosts}
                     />
-
+                    <h5 name="mobile">timeline</h5>
                     {userNewPosts.length !== 0 ?
                         <LoadPost onClick={addNewPosts} data-test="load-btn">
                             <div>

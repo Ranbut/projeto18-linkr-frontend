@@ -13,6 +13,7 @@ export const PostContainer = styled.div`
 
     @media (max-width: 610px) {
         max-width: 100vw;
+        border-radius: unset;
     }
 `
 
@@ -41,6 +42,7 @@ export const PostInfo = styled.div`
         font-size: 19px;
         line-height: 23px;
         color: #FFFFFF;
+        cursor: pointer;
     }
 
     p{
@@ -66,6 +68,7 @@ export const UserAvatar = styled.div`
         width: 50px;
         height: 50px;
         border-radius: 50%;
+        cursor: pointer;
     }
 
     p{

@@ -9,7 +9,7 @@ export const PageBody = styled.div`
     h4{
         width: 145px;
         height: 64px;
-
+        margin-top: 20px;
         font-family: 'Oswald';
         font-style: normal;
         font-weight: 700;
@@ -17,24 +17,31 @@ export const PageBody = styled.div`
         line-height: 64px;
 
         color: #FFFFFF;
-    }
 
-    h4{
-        display: position;
-        position: relative;
-        top: 19px;
-        margin-left: 17px;
-    }
-
-    @media (max-width: 1000px) {
-        max-width: unset;
-        width: 100vw;
-        h4{
-            display: position;
-            position: relative;
-            top: 19px;
-            margin-left: 50px;
+        @media (max-width: 610px) {
+            display: none;
         }
+    }
+    h5{
+        display: none;
+        @media (max-width: 610px) {
+            display: block;
+            width: 145px;
+            height: 64px;
+            margin: 20px 0 0 20px;
+            font-family: 'Oswald';
+            font-style: normal;
+            font-weight: 700;
+            font-size: 43px;
+            line-height: 64px;
+            color: #FFFFFF;
+        }
+    }
+
+    @media (max-width: 610px) {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
     }
 `;
 
