@@ -15,9 +15,13 @@ export const getPostAPI = async (user) => {
   }
 };
 
-export const getPostRecentsAPI = async (id) => {
+export const getPostRecentsAPI = async (user, createdAt) => {
   try {
-    const { data: postsRetrived } = await axios.get(`${process.env.REACT_APP_API_URL}/posts/recents/${id}`);
+    const { data: postsRetrived } = await axios.get(`${process.env.REACT_APP_API_URL}/posts/recents/${createdAt}`, {
+      headers: {
+        Authorization: `Bearer ${user.token}`
+      }
+    });
 
     return { success: true, error: undefined, postsRetrived };
 
@@ -26,9 +30,13 @@ export const getPostRecentsAPI = async (id) => {
   }
 };
 
-export const getPostOldAPI = async (id) => {
+export const getPostOldAPI = async (user, createdAt) => {
   try {
-    const { data: postsRetrived } = await axios.get(`${process.env.REACT_APP_API_URL}/posts/old/${id}`);
+    const { data: postsRetrived } = await axios.get(`${process.env.REACT_APP_API_URL}/posts/old/${createdAt}`, {
+      headers: {
+        Authorization: `Bearer ${user.token}`
+      }
+    });
 
     return { success: true, error: undefined, postsRetrived };
 
