@@ -2,7 +2,8 @@ import { useEffect, useState, useContext } from "react";
 import Header from "../../components/Header/Header.js";
 import {
     PageBody, Loading, TrendingBox,
-    TrendingTitle, Hashtag, UserInfo
+    TrendingTitle, Hashtag, UserInfo,
+    FollowButton
 } from "../Timeline/style.js";
 import PostCard from "../../components/PostCard/PostCard.js";
 import axios from "axios";
@@ -99,21 +100,33 @@ export default function UserPage() {
     return (
         <>
             <Header />
-            <button
-                data-test="follow-btn"
-                onClick={toggleFollow}
-                disabled={update}
-            > {
-                    follow.some(e => e.followId === Number(id)) ?
-                        "UnFollow"
-                        :
-                        "Follow"}
-            </button>
             <PageBody>
                 <div>
                     <UserInfo>
-                        <img src={userPosts[0]?.pictureUrl} alt="user-avatar" />
-                        <h4>{userPosts[0]?.username}</h4>
+                        <div>
+                            <img src={userPosts[0]?.pictureUrl} alt="user-avatar" />
+                            <h4>{`${userPosts[0]?.username} posts`}</h4>
+                        </div>
+                        {follow.some(e => e.followId === Number(id)) ?
+                            <FollowButton
+                                data-test="follow-btn"
+                                onClick={toggleFollow}
+                                disabled={update}
+                                color="unfollow"
+                                display={Number(id) === user.id}
+                            >
+                                UnFollow
+                            </FollowButton>
+                            :
+                            <FollowButton
+                                data-test="follow-btn"
+                                onClick={toggleFollow}
+                                disabled={update}
+                                color="follow"
+                                display={Number(id) === user.id}
+                            >
+                                Follow
+                            </FollowButton>}
                     </UserInfo>
                     {load ? (<Loading>Loading...</Loading>) : renderTimeline()}
                 </div>
