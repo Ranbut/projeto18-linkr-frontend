@@ -56,7 +56,6 @@ const SectionSearchInput = ({ display }) => {
         return (
             <UsernameBox
                 data-test="user-search"
-                onClick={() => navigate(`/user/${user_id}`)}
                 key={user_id}>
                 <Link
                     key={user_id}
@@ -69,7 +68,7 @@ const SectionSearchInput = ({ display }) => {
                         alt={`picture of ${username}`}
                     />
                     <span className='username'>{username}</span>
-                    {follow ? <Follow>follow</Follow> : <></>}
+                    {follow ? <Follow>following</Follow> : <></>}
                 </Link>
             </UsernameBox>
         );

@@ -8,16 +8,17 @@ import PostCard from "../../components/PostCard/PostCard.js";
 import axios from "axios";
 import Context from "../../contexts/auth.js";
 import { useNavigate, useParams } from "react-router";
+import LoadPage from "../../components/LoadPage/LoadPage.js";
 
 export default function UserPage() {
     const { id } = useParams();
-
     const { user } = useContext(Context);
     const [load, setLoad] = useState(true);
     const [userPosts, setUserPosts] = useState([]);
     const [trending, setTrending] = useState([]);
     const navigate = useNavigate();
-    const [follow, setFollow] = useState([])
+    const [follow, setFollow] = useState([]);
+    const [update, setUpdate] = useState(false);
 
     function getPosts() {
         axios.get(`${process.env.REACT_APP_API_URL}/posts/${id}`)
@@ -54,13 +55,14 @@ export default function UserPage() {
     }
 
     function toggleFollow() {
+        setUpdate(true);
         axios.post(`${process.env.REACT_APP_API_URL}/follow/${id}`, {}, {
             headers: {
                 "Authorization": `Bearer ${user.token}`
             }
         })
-            .then((res) => {
-                console.log(res);
+            .then(() => {
+                setUpdate(false);
             })
             .catch((err) => {
                 console.log(err.message);
@@ -85,21 +87,27 @@ export default function UserPage() {
             }
         }).then((res) => {
             setFollow(res.data)
-            console.log(res.data);
         }).catch((err) => {
             console.log(err.message);
         })
-    }, []);
+    }, [update]);
+
+    if (userPosts.length === 0) {
+        return <LoadPage />
+    }
 
     return (
         <>
             <Header />
-            <button data-test="follow-btn" onClick={toggleFollow}> {
-                follow.includes(+id) ? "UnFollow"
-                    :
-                    "Follow"}
-
-
+            <button
+                data-test="follow-btn"
+                onClick={toggleFollow}
+                disabled={update}
+            > {
+                    follow.some(e => e.followId === Number(id)) ?
+                        "UnFollow"
+                        :
+                        "Follow"}
             </button>
             <PageBody>
                 <div>
