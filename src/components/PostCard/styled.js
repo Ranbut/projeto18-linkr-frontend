@@ -7,12 +7,14 @@ export const PostContainer = styled.div`
     flex-direction: column;
     margin: 20px 0;
     max-width: 610px;
-    width: 100%;
+    width: 610px;
     background: #1e1e1e;
     border-radius: 16px;
+    height: 300px;
 
     @media (max-width: 610px) {
         max-width: 100vw;
+        /* width: 100px; */
         border-radius: unset;
     }
 `
@@ -26,13 +28,14 @@ export const PostBody = styled.div`
     border-radius: 16px;
     font-family: 'Lato';
     width: 100%;
-    padding: 0 0 3% 0;
+    height: 300px;
+    padding: 3% 0 3% 0;
 `;
 
 export const PostInfo = styled.div`
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 15px;
     width: 100%;
     h6{
         margin-top: 19px;

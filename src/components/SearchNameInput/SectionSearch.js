@@ -26,8 +26,14 @@ const SectionSearchInput = ({ display }) => {
                             "Authorization": `Bearer ${user.token}`
                         }
                     });
-                    setResult(requisition.data);
-                    setEr("");
+
+                    if (requisition.data === []) {
+                        setEr(true);
+                        setResult([]);
+                    } else {
+                        setResult(requisition.data);
+                        setEr("");
+                    }
                 } catch (error) {
                     if (error.response.status === 404) {
                         setEr(error.response.data);

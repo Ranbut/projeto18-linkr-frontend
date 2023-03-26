@@ -51,6 +51,7 @@ export const ReturnSearch = styled.div`
     background-color: ${(props) => props.size === 0 ? 'unset' : '#E7E7E7'};
     border-radius: 8px;
     width: 40%;
+    max-width: 560px;
     top: 45px;
     display: flex;
     padding: 20px 0 10px 0;
