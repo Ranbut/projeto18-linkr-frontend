@@ -1,7 +1,9 @@
 import { useEffect, useState, useContext } from "react";
 import Header from "../../components/Header/Header.js";
-import { getPostUserAPI } from "../../api/getPostAPI.js";
-import { PageBody, Loading, TrendingBox, TrendingTitle, Hashtag, UserInfo } from "./style.js";
+import {
+    PageBody, Loading, TrendingBox,
+    TrendingTitle, Hashtag, UserInfo
+} from "../Timeline/style.js";
 import PostCard from "../../components/PostCard/PostCard.js";
 import axios from "axios";
 import Context from "../../contexts/auth.js";
@@ -10,7 +12,7 @@ import { useNavigate, useParams } from "react-router";
 export default function UserPage() {
     const { id } = useParams();
 
-    const { user, } = useContext(Context);
+    const { user } = useContext(Context);
     const [load, setLoad] = useState(true);
     const [userPosts, setUserPosts] = useState([]);
     const [trending, setTrending] = useState([]);
@@ -18,17 +20,13 @@ export default function UserPage() {
     const [follow, setFollow] = useState([])
 
     function getPosts() {
-        //console.log(id,"chamar",typeof id)
-
         axios.get(`${process.env.REACT_APP_API_URL}/posts/${id}`)
-
             .then((res) => {
                 setUserPosts(res.data);
                 setLoad(false);
-
             })
             .catch((err) => {
-                console.log(err.response.data);
+                console.log(err.message, 'getPosts');
             })
     }
 
@@ -38,19 +36,24 @@ export default function UserPage() {
             return (
                 <>
                     {userPosts.map(
-                        (postProp) => <PostCard currentUser={0} userPost={postProp} key={postProp.id} />
+                        (postProp) => <PostCard
+                            currentUser={0}
+                            userPost={postProp}
+                            key={postProp.id} />
                     )}
                 </>
             );
         }
         else {
-            return (<Loading data-test="message">You don't follow anyone yet. Search for new friends!</Loading>);
+            return (
+                <Loading data-test="message">
+                    You don't follow anyone yet. Search for new friends!
+                </Loading>
+            );
         }
     }
 
     function toggleFollow() {
-
-
         axios.post(`${process.env.REACT_APP_API_URL}/follow/${id}`, {}, {
             headers: {
                 "Authorization": `Bearer ${user.token}`
@@ -58,28 +61,20 @@ export default function UserPage() {
         })
             .then((res) => {
                 console.log(res);
-
             })
             .catch((err) => {
-                console.log(err.response.data);
+                console.log(err.message);
             })
     }
 
-
     useEffect(() => {
         getPosts();
-        axios.get(`${process.env.REACT_APP_API_URL}/user/${id}/post`, {
-            headers: {
-                "Authorization": `Bearer ${user.token}`
-            }
-        })
-
         axios.get(`${process.env.REACT_APP_API_URL}/trending`)
             .then((res) => {
                 setTrending(res.data);
             })
             .catch((err) => {
-                console.log(err.response.data);
+                console.log(err.message);
             })
     }, [id]);
 
@@ -89,12 +84,12 @@ export default function UserPage() {
                 "Authorization": `Bearer ${user.token}`
             }
         }).then((res) => {
-          setFollow(res.data)
-          console.log(res.data);
+            setFollow(res.data)
+            console.log(res.data);
         }).catch((err) => {
-            console.log(err.response.data);
+            console.log(err.message);
         })
-    }, [follow]);
+    }, []);
 
     return (
         <>
@@ -108,10 +103,9 @@ export default function UserPage() {
             </button>
             <PageBody>
                 <div>
-
                     <UserInfo>
-                        <img src={user.pictureUrl} alt="user-avatar" />
-                        <h4>{user.username}</h4>
+                        <img src={userPosts[0]?.pictureUrl} alt="user-avatar" />
+                        <h4>{userPosts[0]?.username}</h4>
                     </UserInfo>
                     {load ? (<Loading>Loading...</Loading>) : renderTimeline()}
                 </div>

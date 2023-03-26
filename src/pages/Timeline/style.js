@@ -133,3 +133,25 @@ export const LoadPost = styled.div`
         cursor: pointer;
     }
 `;
+
+export const UserInfo = styled.div`
+
+    display: flex;
+    gap: 20px;
+
+    h4 {
+        display: unset;
+    }
+    
+    img{
+        margin-top: 30px;
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        object-fit: cover;
+    }
+
+    @media (max-width: 610px) {
+        margin-left: 20px;
+    }
+`;
