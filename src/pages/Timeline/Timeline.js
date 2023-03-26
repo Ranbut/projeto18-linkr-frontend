@@ -79,15 +79,13 @@ export default function Timeline() {
     async function checkOldPosts() {
         const dates = userPosts.map(o => new Date(Date.parse(o.createdAt)));
 
-        const mostRecentDate = new Date(Math.min(...dates));
+        const mostOldDate = new Date(Math.min(...dates));
 
-        const mostRecentTimestamp = mostRecentDate.toISOString();
+        const mostOldTimestamp = mostOldDate.toISOString();
 
-        const getPostRes = await getPostOldAPI(user, mostRecentTimestamp);
+        const getPostRes = await getPostOldAPI(user, mostOldTimestamp);
         if (getPostRes.success) {
             const oldPosts = getPostRes.postsRetrived;
-
-            oldPosts.shift();
 
             if (oldPosts.length === 0) {
                 setHasMoreOldPosts(false);
