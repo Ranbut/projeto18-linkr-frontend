@@ -126,7 +126,7 @@ export default function Timeline() {
                 <Loading data-test="message">
                     {!follow?.length > 0 ? 
                      <p>You don't follow anyone yet. <br />Search for new friends!</p> :
-                     <p>No posts found from your friends!</p>
+                     <p>No posts found from your friends</p>
                      }
                 </Loading>
             );
