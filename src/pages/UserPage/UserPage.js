@@ -9,7 +9,6 @@ import PostCard from "../../components/PostCard/PostCard.js";
 import axios from "axios";
 import Context from "../../contexts/auth.js";
 import { useNavigate, useParams } from "react-router";
-import LoadPage from "../../components/LoadPage/LoadPage.js";
 
 export default function UserPage() {
     const { id } = useParams();
@@ -20,6 +19,7 @@ export default function UserPage() {
     const navigate = useNavigate();
     const [follow, setFollow] = useState([]);
     const [update, setUpdate] = useState(false);
+    const [pageUser, setPageUser] = useState([]);
 
     function getPosts() {
         axios.get(`${process.env.REACT_APP_API_URL}/posts/${id}`)
@@ -72,6 +72,13 @@ export default function UserPage() {
 
     useEffect(() => {
         getPosts();
+        axios.get(`${process.env.REACT_APP_API_URL}/get-user/${id}`)
+            .then((res) => {
+                setPageUser(res.data);
+            })
+            .catch((err) => {
+                console.log(err.message);
+            });
         axios.get(`${process.env.REACT_APP_API_URL}/trending`)
             .then((res) => {
                 setTrending(res.data);
@@ -91,11 +98,16 @@ export default function UserPage() {
         }).catch((err) => {
             console.log(err.message);
         })
+        axios.get(`${process.env.REACT_APP_API_URL}/user`, {
+            headers: {
+                "Authorization": `Bearer ${user.token}`
+            }
+        }).then((res) => {
+            setFollow(res.data)
+        }).catch((err) => {
+            console.log(err.message);
+        })
     }, [update]);
-
-    if (userPosts.length === 0) {
-        return <LoadPage />
-    }
 
     return (
         <>
@@ -104,8 +116,8 @@ export default function UserPage() {
                 <div>
                     <UserInfo>
                         <div>
-                            <img src={userPosts[0]?.pictureUrl} alt="user-avatar" />
-                            <h4>{`${userPosts[0]?.username} posts`}</h4>
+                            <img src={pageUser?.pictureUrl} alt="user-avatar" />
+                            <h4>{`${pageUser?.username} posts`}</h4>
                         </div>
                         {follow.some(e => e.followId === Number(id)) ?
                             <FollowButton

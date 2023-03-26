@@ -12,7 +12,6 @@ import { GoSync } from "react-icons/go";
 import useInterval from "use-interval";
 import SectionSearchInput from "../../components/SearchNameInput/SectionSearch.js";
 import InfiniteScroll from "react-infinite-scroller";
-import LoadPage from "../../components/LoadPage/LoadPage.js";
 
 export default function Timeline() {
 
@@ -136,10 +135,6 @@ export default function Timeline() {
                 console.log(err.response.data);
             })
     }, []);
-
-    if (load) {
-        return <LoadPage />
-    }
 
     return (
         <>
