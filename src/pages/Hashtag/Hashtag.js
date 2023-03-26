@@ -6,7 +6,6 @@ import { useContext } from "react";
 import axios from "axios";
 import { useNavigate, useParams } from "react-router";
 import Context from "../../contexts/auth.js";
-import LoadPage from "../../components/LoadPage/LoadPage.js";
 
 export default function HashtagSearch() {
 
@@ -57,10 +56,6 @@ export default function HashtagSearch() {
                 console.log(err.response.data);
             })
     }, [hashtag]);
-
-    if (load) {
-        return <LoadPage />
-    }
 
     return (
         <>
