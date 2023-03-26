@@ -8,22 +8,30 @@ import Context from "../../contexts/auth.js";
 import { useNavigate, useParams } from "react-router";
 
 export default function UserPage() {
-
     const { id } = useParams();
+
     const { user, } = useContext(Context);
     const [load, setLoad] = useState(true);
     const [userPosts, setUserPosts] = useState([]);
     const [trending, setTrending] = useState([]);
     const navigate = useNavigate();
+    const [follow, setFollow] = useState([])
 
-    async function getPosts() {
-        const getPostRes = await getPostUserAPI(id);
-        if (getPostRes.success) {
-            setUserPosts(getPostRes.postsRetrived);
-            setLoad(false);
-            return;
-        }
+    function getPosts() {
+        //console.log(id,"chamar",typeof id)
+
+        axios.get(`${process.env.REACT_APP_API_URL}/posts/${id}`)
+
+            .then((res) => {
+                setUserPosts(res.data);
+                setLoad(false);
+
+            })
+            .catch((err) => {
+                console.log(err.response.data);
+            })
     }
+
 
     function renderTimeline() {
         if (userPosts.length > 0) {
@@ -40,6 +48,24 @@ export default function UserPage() {
         }
     }
 
+    function toggleFollow() {
+
+
+        axios.post(`${process.env.REACT_APP_API_URL}/follow/${id}`, {}, {
+            headers: {
+                "Authorization": `Bearer ${user.token}`
+            }
+        })
+            .then((res) => {
+                console.log(res);
+
+            })
+            .catch((err) => {
+                console.log(err.response.data);
+            })
+    }
+
+
     useEffect(() => {
         getPosts();
         axios.get(`${process.env.REACT_APP_API_URL}/user/${id}/post`, {
@@ -47,6 +73,7 @@ export default function UserPage() {
                 "Authorization": `Bearer ${user.token}`
             }
         })
+
         axios.get(`${process.env.REACT_APP_API_URL}/trending`)
             .then((res) => {
                 setTrending(res.data);
@@ -54,13 +81,34 @@ export default function UserPage() {
             .catch((err) => {
                 console.log(err.response.data);
             })
-    }, []);
+    }, [id]);
+
+    useEffect(() => {
+        axios.get(`${process.env.REACT_APP_API_URL}/followers`, {
+            headers: {
+                "Authorization": `Bearer ${user.token}`
+            }
+        }).then((res) => {
+          setFollow(res.data)
+          console.log(res.data);
+        }).catch((err) => {
+            console.log(err.response.data);
+        })
+    }, [follow]);
 
     return (
         <>
             <Header />
+            <button data-test="follow-btn" onClick={toggleFollow}> {
+                follow.includes(+id) ? "UnFollow"
+                    :
+                    "Follow"}
+
+
+            </button>
             <PageBody>
                 <div>
+
                     <UserInfo>
                         <img src={user.pictureUrl} alt="user-avatar" />
                         <h4>{user.username}</h4>
@@ -80,6 +128,7 @@ export default function UserPage() {
                             </Hashtag>
                         )}
                     </div>
+
                 </TrendingBox>
             </PageBody>
         </>
