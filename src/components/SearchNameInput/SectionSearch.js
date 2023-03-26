@@ -1,6 +1,7 @@
 import {
     SectionSearch, ContainerInput,
-    ReturnSearch, UsernameBox, IconImage
+    ReturnSearch, UsernameBox, IconImage,
+    Follow
 } from "./styled.js";
 import axios from 'axios';
 import { DebounceInput } from 'react-debounce-input';
@@ -8,6 +9,7 @@ import { Link } from 'react-router-dom';
 import { BsSearch } from 'react-icons/bs';
 import Context from "../../contexts/auth.js";
 import { useContext, useEffect, useState } from 'react';
+import { useNavigate } from "react-router-dom";
 
 const SectionSearchInput = ({ display }) => {
 
@@ -15,7 +17,7 @@ const SectionSearchInput = ({ display }) => {
     const [result, setResult] = useState([]);
     const [er, setEr] = useState("");
     const { user } = useContext(Context);
-
+    const navigate = useNavigate();
 
     useEffect(() => {
         async function getUsernameSearch() {
@@ -42,9 +44,14 @@ const SectionSearchInput = ({ display }) => {
         getUsernameSearch();
     }, [search]);
 
-    function RenderUsernameResults({ user_id, picture_url, username }) {
+    function RenderUsernameResults({
+        user_id, picture_url, username, follow
+    }) {
         return (
-            <UsernameBox data-test="user-search" key={user_id}>
+            <UsernameBox
+                data-test="user-search"
+                onClick={() => navigate(`/user/${user_id}`)}
+                key={user_id}>
                 <Link
                     key={user_id}
                     to={`/user/${user_id}`}
@@ -53,8 +60,10 @@ const SectionSearchInput = ({ display }) => {
                     <IconImage
                         data-test="avatar"
                         src={picture_url}
-                        alt={`picture of ${username}`} />
+                        alt={`picture of ${username}`}
+                    />
                     <span className='username'>{username}</span>
+                    {follow ? <Follow>follow</Follow> : <></>}
                 </Link>
             </UsernameBox>
         );
@@ -80,12 +89,14 @@ const SectionSearchInput = ({ display }) => {
                     </UsernameBox>
                     :
                     result.map(value => {
-                        const { id, pictureUrl, username } = value
+                        const { id, pictureUrl, username, isFollowing } = value
                         return (
-                            <RenderUsernameResults key={id}
+                            <RenderUsernameResults
+                                key={id}
                                 user_id={id}
                                 picture_url={pictureUrl}
                                 username={username}
+                                follow={isFollowing}
                             />)
                     })}
             </ReturnSearch>
