@@ -7,7 +7,6 @@ export const PageBody = styled.div`
     box-sizing: border-box;
     
     h4{
-        width: 145px;
         height: 64px;
         margin-top: 20px;
         font-family: 'Oswald';
@@ -135,23 +134,45 @@ export const LoadPost = styled.div`
 `;
 
 export const UserInfo = styled.div`
-
     display: flex;
-    gap: 20px;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 30px;
+
+    div {
+        display: flex;
+        align-items: center;
+        gap: 20px;
+    }
 
     h4 {
         display: unset;
+        margin: 0;
     }
     
     img{
-        margin-top: 30px;
         width: 50px;
         height: 50px;
         border-radius: 50%;
         object-fit: cover;
     }
-
+    
     @media (max-width: 610px) {
         margin-left: 20px;
     }
+`;
+
+export const FollowButton = styled.button`
+    display: ${props => props.display ? "none" : "block"};
+    width: 90px;
+    height: 30px;
+    background-color: ${props => props.color === "follow" ? "#1877F2" : "#FFFFFF"};
+    color: ${props => props.color === "follow" ? "#FFFFFF" : "#1877F2"};;
+    font-family: 'Lato';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 14px;
+    line-height: 17px;
+    border: none;
+    border-radius: 5px;
 `;

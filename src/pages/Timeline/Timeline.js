@@ -12,6 +12,7 @@ import { GoSync } from "react-icons/go";
 import useInterval from "use-interval";
 import SectionSearchInput from "../../components/SearchNameInput/SectionSearch.js";
 import InfiniteScroll from "react-infinite-scroller";
+import LoadPage from "../../components/LoadPage/LoadPage.js";
 
 export default function Timeline() {
 
@@ -38,8 +39,7 @@ export default function Timeline() {
 
     async function checkNewPosts() {
 
-        if(userPosts.length === 0)
-        {
+        if (userPosts.length === 0) {
             const getPostRes = await getPostRecentsAPI(user, "2000-01-1 10:11:06.588596");
             if (getPostRes.success) {
                 const newPosts = getPostRes.postsRetrived;
@@ -48,7 +48,7 @@ export default function Timeline() {
                 return;
             }
         }
-        else{
+        else {
             const dates = userPosts.map(o => new Date(Date.parse(o.createdAt)));
 
             const mostRecentDate = new Date(Math.max(...dates));
@@ -58,7 +58,7 @@ export default function Timeline() {
             const getPostRes = await getPostRecentsAPI(user, mostRecentTimestamp);
             if (getPostRes.success) {
                 const newPosts = getPostRes.postsRetrived;
-    
+
                 setUserNewPosts(newPosts);
                 return;
             }
@@ -66,18 +66,17 @@ export default function Timeline() {
     }
 
     function addNewPosts() {
-        if(userPosts.length === 0)
-        {
+        if (userPosts.length === 0) {
             setUserPosts(userNewPosts);
             return;
         }
-        else{
+        else {
             setUserPosts(...userNewPosts, ...userPosts);
             return;
         }
     }
 
-    async function checkOldPosts(){
+    async function checkOldPosts() {
         const dates = userPosts.map(o => new Date(Date.parse(o.createdAt)));
 
         const mostRecentDate = new Date(Math.min(...dates));
@@ -90,8 +89,7 @@ export default function Timeline() {
 
             oldPosts.shift();
 
-            if(oldPosts.length === 0)
-            {
+            if (oldPosts.length === 0) {
                 setHasMoreOldPosts(false);
                 return;
             }
@@ -104,11 +102,11 @@ export default function Timeline() {
     function renderTimeline() {
         if (userPosts.length > 0) {
             return (
-                <InfiniteScroll 
-                pageStart={0}
-                loadMore={checkOldPosts}
-                hasMore={hasMoreOldPosts}
-                loader={<Loading>Cheking for more posts...</Loading>}
+                <InfiniteScroll
+                    pageStart={0}
+                    loadMore={checkOldPosts}
+                    hasMore={hasMoreOldPosts}
+                    loader={<Loading>Cheking for more posts...</Loading>}
                 >
                     {userPosts.map(
                         (postProp) => <PostCard
@@ -138,6 +136,10 @@ export default function Timeline() {
                 console.log(err.response.data);
             })
     }, []);
+
+    if (load) {
+        return <LoadPage />
+    }
 
     return (
         <>
