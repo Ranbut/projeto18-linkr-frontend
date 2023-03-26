@@ -22,6 +22,7 @@ export default function Timeline() {
     const [hasMoreOldPosts, setHasMoreOldPosts] = useState(true)
     const [trending, setTrending] = useState([]);
     const navigate = useNavigate();
+    const [follow, setFollow] = useState([]);
 
     async function getPosts() {
         const getPostRes = await getPostAPI(user);
@@ -121,12 +122,30 @@ export default function Timeline() {
             );
         }
         else {
-            return (<Loading data-test="message">You don't follow anyone yet. Search for new friends!"</Loading>);
+            return (
+                <Loading data-test="message">
+                    {!follow?.length > 0 ? 
+                     <p>You don't follow anyone yet. <br />Search for new friends!</p> :
+                     <p>No posts found from your friends!</p>
+                     }
+                </Loading>
+            );
         }
     }
 
     useEffect(() => {
         getPosts();
+
+        axios.get(`${process.env.REACT_APP_API_URL}/followers`, {
+            headers: {
+                "Authorization": `Bearer ${user.token}`
+            }
+        }).then((res) => {
+            setFollow(res.data)
+        }).catch((err) => {
+            console.log(err.message);
+        })
+
         axios.get(`${process.env.REACT_APP_API_URL}/trending`)
             .then((res) => {
                 setTrending(res.data);
