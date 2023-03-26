@@ -19,6 +19,7 @@ export default function Timeline() {
     const [load, setLoad] = useState(true);
     const [userPosts, setUserPosts] = useState([]);
     const [userNewPosts, setUserNewPosts] = useState([]);
+    const [hasMoreOldPosts, setHasMoreOldPosts] = useState(true)
     const [trending, setTrending] = useState([]);
     const navigate = useNavigate();
 
@@ -39,16 +40,22 @@ export default function Timeline() {
 
         if(userPosts.length === 0)
         {
-            const getPostRes = await getPostRecentsAPI(0);
+            const getPostRes = await getPostRecentsAPI(user, "2000-01-1 10:11:06.588596");
             if (getPostRes.success) {
                 const newPosts = getPostRes.postsRetrived;
-    
+
                 setUserNewPosts(newPosts);
                 return;
             }
         }
         else{
-            const getPostRes = await getPostRecentsAPI(Math.max(...userPosts.map(o => o.id)));
+            const dates = userPosts.map(o => new Date(Date.parse(o.createdAt)));
+
+            const mostRecentDate = new Date(Math.max(...dates));
+
+            const mostRecentTimestamp = mostRecentDate.toISOString();
+
+            const getPostRes = await getPostRecentsAPI(user, mostRecentTimestamp);
             if (getPostRes.success) {
                 const newPosts = getPostRes.postsRetrived;
     
@@ -71,9 +78,23 @@ export default function Timeline() {
     }
 
     async function checkOldPosts(){
-        const getPostRes = await getPostOldAPI(Math.min(...userPosts.map(o => o.id)));
+        const dates = userPosts.map(o => new Date(Date.parse(o.createdAt)));
+
+        const mostRecentDate = new Date(Math.min(...dates));
+
+        const mostRecentTimestamp = mostRecentDate.toISOString();
+
+        const getPostRes = await getPostOldAPI(user, mostRecentTimestamp);
         if (getPostRes.success) {
             const oldPosts = getPostRes.postsRetrived;
+
+            oldPosts.shift();
+
+            if(oldPosts.length === 0)
+            {
+                setHasMoreOldPosts(false);
+                return;
+            }
 
             setUserPosts(userPosts.concat(oldPosts));
             return;
@@ -86,9 +107,8 @@ export default function Timeline() {
                 <InfiniteScroll 
                 pageStart={0}
                 loadMore={checkOldPosts}
-                hasMore={true || false}
+                hasMore={hasMoreOldPosts}
                 loader={<Loading>Cheking for more posts...</Loading>}
-                useWindow={false}
                 >
                     {userPosts.map(
                         (postProp) => <PostCard
