@@ -5,51 +5,49 @@ import { useContext, useEffect, useState } from "react";
 import Context from "../../contexts/auth.js";
 
 
-export default function Comment(props){
+export default function Comment(props) {
     const { user } = useContext(Context);
-    const {postOwnerId, userId, username, message, pictureUrl} = props
+    const { postOwnerId, userId, username, message, pictureUrl } = props
     const [followStatus, setFollowStatus] = useState("")
 
     const navigate = useNavigate()
 
-   useEffect(()=>{
-    axios.get(`${process.env.REACT_APP_API_URL}/followers`, {
-        headers: {
-            "Authorization": `Bearer ${user.token}`
-        }
-    }).then((res) => {
-        console.log(res.data)
-        if(res.data[0].followId && userId===res.data[0].followId){
-            setFollowStatus("• following")
-        }
-     
-    }).catch((err) => {
-        console.log(err.message);
-    })
-   },[])
+    useEffect(() => {
+        axios.get(`${process.env.REACT_APP_API_URL}/followers`, {
+            headers: {
+                "Authorization": `Bearer ${user.token}`
+            }
+        }).then((res) => {
+            if (res.data[0].followId && userId === res.data[0].followId) {
+                setFollowStatus("• following")
+            }
+        }).catch((err) => {
+            console.log(err.message);
+        })
+    }, [])
 
-   
-    function handleUserClick(comUserId){ 
-       navigate(`/user/${comUserId}`, {replace: true})
+
+    function handleUserClick(comUserId) {
+        navigate(`/user/${comUserId}`, { replace: true })
     }
 
-    return(
+    return (
         <Container data-test="comment" >
 
-            <img alt='userPicture' src={pictureUrl} onClick={()=> handleUserClick(userId)}/>
+            <img alt='userPicture' src={pictureUrl} onClick={() => handleUserClick(userId)} />
 
             <div className='right'>
 
                 <div className='top'>
                     <h1 onClick={() => handleUserClick(userId)}> {username} </h1>
-                    <h2> {postOwnerId===userId ? "• post’s author" : followStatus}</h2>
+                    <h2> {postOwnerId === userId ? "• post’s author" : followStatus}</h2>
                 </div>
 
-            <h3>{message}</h3>
+                <h3>{message}</h3>
             </div>
 
         </Container>
-        
+
     )
 }
 

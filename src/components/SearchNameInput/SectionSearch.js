@@ -67,9 +67,6 @@ const SectionSearchInput = ({ display }) => {
         );
     }
 
-    console.log(search.length, 'search')
-    console.log(result.length, 'result')
-
     return (
         <SectionSearch display={display}>
             <ContainerInput>

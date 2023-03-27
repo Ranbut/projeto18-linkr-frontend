@@ -27,9 +27,9 @@ export default function CommentZone(props){
         ;
         })
         .catch((err) => {
-            console.log(err);
+            console.log(err.message);
         });
-    },[comments, countTrigger])
+    },[comments, countTrigger]);
 
     return(
         <Container data-test="comment-box">
