@@ -48,12 +48,12 @@ export const ContainerInput = styled.div`
 
 export const ReturnSearch = styled.div`
     position: absolute;
-    background-color: ${(props) => props.size === 0 ? 'unset' : '#E7E7E7'};
+    background-color: #E7E7E7;
     border-radius: 8px;
     width: 40%;
     max-width: 560px;
     top: 45px;
-    display: flex;
+    display: ${(props) => props.size === 0 ? 'none' : 'flex'};
     padding: 20px 0 10px 0;
     display: flex;
     flex-direction: column;

@@ -14,12 +14,11 @@ const SectionSearchInput = ({ display }) => {
 
     const [search, setSearch] = useState("");
     const [result, setResult] = useState([]);
-    const [er, setEr] = useState("");
     const { user } = useContext(Context);
 
     useEffect(() => {
         async function getUsernameSearch() {
-            if (search && search.length >= 3) {
+            if (search.length >= 3) {
                 try {
                     const requisition = await axios.get(`${process.env.REACT_APP_API_URL}/user/${search}`, {
                         headers: {
@@ -28,20 +27,16 @@ const SectionSearchInput = ({ display }) => {
                     });
 
                     if (requisition.data === []) {
-                        setEr(true);
                         setResult([]);
                     } else {
                         setResult(requisition.data);
-                        setEr("");
                     }
                 } catch (error) {
                     if (error.response.status === 404) {
-                        setEr(error.response.data);
                         setResult([]);
                     }
                 };
-            }
-            else {
+            } else {
                 setResult([]);
             }
         }
@@ -72,6 +67,9 @@ const SectionSearchInput = ({ display }) => {
         );
     }
 
+    console.log(search.length, 'search')
+    console.log(result.length, 'result')
+
     return (
         <SectionSearch display={display}>
             <ContainerInput>
@@ -85,24 +83,31 @@ const SectionSearchInput = ({ display }) => {
                 />
                 <BsSearch />
             </ContainerInput>
-            <ReturnSearch size={result.length}>
-                {er ?
-                    <UsernameBox>
-                        <span>{"Person was not found!"}</span>
-                    </UsernameBox>
+            {
+                search.length > 2 && result.length === 0 ?
+                    <ReturnSearch size={result.length}>
+                        <UsernameBox>
+                            <span>Person was not found!</span>
+                        </UsernameBox>
+                    </ReturnSearch>
                     :
-                    result.map(value => {
-                        const { id, pictureUrl, username, isFollowing } = value
-                        return (
-                            <RenderUsernameResults
-                                key={id}
-                                user_id={id}
-                                picture_url={pictureUrl}
-                                username={username}
-                                follow={isFollowing}
-                            />)
-                    })}
-            </ReturnSearch>
+                    search.length > 2 ?
+                        <ReturnSearch size={result.length}>
+                            {result.map(value => {
+                                const { id, pictureUrl, username, isFollowing } = value
+                                return (
+                                    <RenderUsernameResults
+                                        key={id}
+                                        user_id={id}
+                                        picture_url={pictureUrl}
+                                        username={username}
+                                        follow={isFollowing}
+                                    />)
+                            })}
+                        </ReturnSearch>
+                        :
+                        <></>
+            }
         </SectionSearch>
     );
 }
