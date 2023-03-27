@@ -77,13 +77,9 @@ export default function Timeline() {
     }
 
     async function checkOldPosts() {
-        const dates = userPosts.map(o => new Date(Date.parse(o.createdAt)));
+        const lastDate = (userPosts[userPosts.length - 1].createdAt);
 
-        const mostOldDate = new Date(Math.min(...dates));
-
-        const mostOldTimestamp = mostOldDate.toISOString();
-
-        const getPostRes = await getPostOldAPI(user, mostOldTimestamp);
+        const getPostRes = await getPostOldAPI(user, lastDate);
         if (getPostRes.success) {
             const oldPosts = getPostRes.postsRetrived;
 
@@ -122,10 +118,10 @@ export default function Timeline() {
         else {
             return (
                 <Loading data-test="message">
-                    {!follow?.length > 0 ? 
-                     <p>You don't follow anyone yet. <br />Search for new friends!</p> :
-                     <p>No posts found from your friends</p>
-                     }
+                    {!follow?.length > 0 ?
+                        <p>You don't follow anyone yet. <br />Search for new friends!</p> :
+                        <p>No posts found from your friends</p>
+                    }
                 </Loading>
             );
         }
