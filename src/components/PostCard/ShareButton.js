@@ -24,11 +24,11 @@ export default function ShareButton(props) {
                 }
             })
             .then((r) => {
-                isShared(r.data.userSharedThisPost)
-                setListShares(r.data.shares)
+                isShared(r.data.userSharedThisPost);
+                setListShares(r.data.shares);
             })
             .catch((err) => {
-                console.log(err)
+                console.log(err.message);
             });
     }
 
