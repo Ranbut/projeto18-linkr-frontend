@@ -38,8 +38,6 @@ export default function Timeline() {
     }, 15000);
 
     async function checkNewPosts() {
-        console.log("rodei")
-
         if (userPosts.length === 0) {
             const getPostRes = await getPostRecentsAPI(user, "2000-01-1 10:11:06.588596");
             if (getPostRes.success) {
@@ -49,7 +47,6 @@ export default function Timeline() {
             }
         }
         else {
-            console.log(userPosts[0].createdAt)
             const getPostRes = await getPostRecentsAPI(user, userPosts[0].createdAt);
             if (getPostRes.success) {
                 const newPosts = getPostRes.postsRetrived;
@@ -72,13 +69,13 @@ export default function Timeline() {
         }
     }
 
+
     async function checkOldPosts() {
         const lastDate = (userPosts[userPosts.length - 1].createdAt);
 
         const getPostRes = await getPostOldAPI(user, lastDate);
         if (getPostRes.success) {
             const oldPosts = getPostRes.postsRetrived;
-
             if (oldPosts.length === 0) {
                 setHasMoreOldPosts(false);
                 return;

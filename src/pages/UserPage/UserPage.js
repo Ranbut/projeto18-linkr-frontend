@@ -9,6 +9,9 @@ import PostCard from "../../components/PostCard/PostCard.js";
 import axios from "axios";
 import Context from "../../contexts/auth.js";
 import { useNavigate, useParams } from "react-router";
+import { getUserPostOldAPI } from "../../api/getPostAPI.js";
+import InfiniteScroll from "react-infinite-scroller";
+
 
 export default function UserPage() {
     const { id } = useParams();
@@ -20,6 +23,8 @@ export default function UserPage() {
     const [follow, setFollow] = useState([]);
     const [update, setUpdate] = useState(false);
     const [pageUser, setPageUser] = useState([]);
+    const [hasMoreOldPosts, setHasMoreOldPosts] = useState(true)
+
 
     function getPosts() {
         axios.get(`${process.env.REACT_APP_API_URL}/posts/${id}`)
@@ -36,20 +41,29 @@ export default function UserPage() {
     function renderTimeline() {
         if (userPosts.length > 0) {
             return (
-                <>
+                <InfiniteScroll
+                    pageStart={0}
+                    loadMore={checkOldPosts}
+                    hasMore={hasMoreOldPosts}
+                    loader={<Loading>Cheking for more posts...</Loading>}
+                >
                     {userPosts.map(
                         (postProp) => <PostCard
-                            currentUser={0}
+                            getPosts={getPosts}
+                            currentUser={user.id}
                             userPost={postProp}
-                            key={postProp.id} />
+                            key={((postProp.repostUserName) ?
+                                "Repost" + postProp.repostUserName + postProp.id
+                                : postProp.id)}
+                        />
                     )}
-                </>
+                </InfiniteScroll>
             );
         }
         else {
             return (
                 <Loading data-test="message">
-                    You don't follow anyone yet. Search for new friends!
+                    <p>No posts found from your friends</p>
                 </Loading>
             );
         }
@@ -68,6 +82,23 @@ export default function UserPage() {
             .catch((err) => {
                 console.log(err.message);
             })
+    }
+
+
+    async function checkOldPosts() {
+        const lastDate = (userPosts[userPosts.length - 1].createdAt);
+
+        const getPostRes = await getUserPostOldAPI(Number(id), lastDate);
+        if (getPostRes.success) {
+            const oldPosts = getPostRes.postsRetrived;
+            if (oldPosts.length === 0) {
+                setHasMoreOldPosts(false);
+                return;
+            }
+
+            setUserPosts(userPosts.concat(oldPosts));
+            return;
+        }
     }
 
     useEffect(() => {
@@ -98,15 +129,17 @@ export default function UserPage() {
         }).catch((err) => {
             console.log(err.message);
         })
-        axios.get(`${process.env.REACT_APP_API_URL}/user`, {
-            headers: {
-                "Authorization": `Bearer ${user.token}`
-            }
-        }).then((res) => {
-            setFollow(res.data)
-        }).catch((err) => {
-            console.log(err.message);
-        })
+        if (Number(id) !== user.id) {
+            axios.get(`${process.env.REACT_APP_API_URL}/user`, {
+                headers: {
+                    "Authorization": `Bearer ${user.token}`
+                }
+            }).then((res) => {
+                setFollow(res.data)
+            }).catch((err) => {
+                console.log(err.message);
+            })
+        }
     }, [update]);
 
     return (
@@ -140,7 +173,9 @@ export default function UserPage() {
                                 Follow
                             </FollowButton>}
                     </UserInfo>
+
                     {load ? (<Loading>Loading...</Loading>) : renderTimeline()}
+
                 </div>
                 <TrendingBox>
                     <TrendingTitle data-test="trending">trending</TrendingTitle>

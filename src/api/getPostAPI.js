@@ -47,8 +47,32 @@ export const getPostOldAPI = async (user, createdAt) => {
 
 export const getPostUserAPI = async (id) => {
   try {
-    console.log(id, typeof id,"Get Id ")
     const { data: postsRetrived } = await axios.get(`${process.env.REACT_APP_API_URL}/posts/${id}`);
+
+    return { success: true, error: undefined, postsRetrived };
+
+  } catch (error) {
+    return { success: false, error: error.response.data, postsRetrived: undefined };
+  }
+};
+
+export const getUserPostOldAPI = async (id, createdAt) => {
+  try {
+    const { data: postsRetrived } = await axios.get(`
+      ${process.env.REACT_APP_API_URL}/posts/${id}/old/${createdAt}`);
+
+    return { success: true, error: undefined, postsRetrived };
+
+  } catch (error) {
+    return { success: false, error: error.response.data, postsRetrived: undefined };
+  }
+};
+
+export const getHashtagPostOldAPI = async (hashtag, createdAt) => {
+  console.log(hashtag, createdAt)
+  try {
+    const { data: postsRetrived } = await axios.get(`
+      ${process.env.REACT_APP_API_URL}/posts/${hashtag}/old/hashtag/${createdAt}`);
 
     return { success: true, error: undefined, postsRetrived };
 
