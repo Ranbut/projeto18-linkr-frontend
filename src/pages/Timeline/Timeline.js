@@ -38,27 +38,21 @@ export default function Timeline() {
     }, 15000);
 
     async function checkNewPosts() {
+        console.log("rodei")
 
         if (userPosts.length === 0) {
             const getPostRes = await getPostRecentsAPI(user, "2000-01-1 10:11:06.588596");
             if (getPostRes.success) {
                 const newPosts = getPostRes.postsRetrived;
-
                 setUserNewPosts(newPosts);
                 return;
             }
         }
         else {
-            const dates = userPosts.map(o => new Date(Date.parse(o.createdAt)));
-
-            const mostRecentDate = new Date(Math.max(...dates));
-
-            const mostRecentTimestamp = mostRecentDate.toISOString();
-
-            const getPostRes = await getPostRecentsAPI(user, mostRecentTimestamp);
+            console.log(userPosts[0].createdAt)
+            const getPostRes = await getPostRecentsAPI(user, userPosts[0].createdAt);
             if (getPostRes.success) {
                 const newPosts = getPostRes.postsRetrived;
-
                 setUserNewPosts(newPosts);
                 return;
             }
@@ -67,11 +61,13 @@ export default function Timeline() {
 
     function addNewPosts() {
         if (userPosts.length === 0) {
-            setUserPosts(userNewPosts);
+            setUserPosts([...userNewPosts]);
+            setUserNewPosts([]);
             return;
         }
         else {
-            setUserPosts(...userNewPosts, ...userPosts);
+            setUserPosts([...userNewPosts, ...userPosts]);
+            setUserNewPosts([]);
             return;
         }
     }
