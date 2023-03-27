@@ -12,7 +12,7 @@ export default function CommentZone(props){
     const {postId, countTrigger, setCountTrigger} = props
 
     const [comments, setComments] = useState([])
-    //const [commentCount, setCommentCount] = useState(comments.length)
+
 
     const config = {
         headers: {
@@ -49,11 +49,7 @@ export default function CommentZone(props){
                 message={c.message}
                 />
 
-            )
-        
-        
-        
-        
+            )     
         }
 
         

@@ -1,14 +1,16 @@
 import styled from 'styled-components';
 import axios from 'axios';
-
+import { useNavigate } from 'react-router-dom';
 import { useContext, useEffect, useState } from "react";
 import Context from "../../contexts/auth.js";
 
 
 export default function Comment(props){
     const { user } = useContext(Context);
-    const {postId, postOwnerId, commentId, userId, username, message, pictureUrl} = props
+    const {postOwnerId, userId, username, message, pictureUrl} = props
     const [followStatus, setFollowStatus] = useState("")
+
+    const navigate = useNavigate()
 
    useEffect(()=>{
     axios.get(`${process.env.REACT_APP_API_URL}/followers`, {
@@ -17,27 +19,29 @@ export default function Comment(props){
         }
     }).then((res) => {
         console.log(res.data)
-        if(userId===res.data[0].followId){
+        if(res.data[0].followId && userId===res.data[0].followId){
             setFollowStatus("• following")
         }
-       
+     
     }).catch((err) => {
         console.log(err.message);
     })
    },[])
 
    
-
+    function handleUserClick(comUserId){ 
+       navigate(`/user/${comUserId}`, {replace: true})
+    }
 
     return(
         <Container data-test="comment" >
 
-            <img alt='userPicture' src={pictureUrl} />
+            <img alt='userPicture' src={pictureUrl} onClick={()=> handleUserClick(userId)}/>
 
             <div className='right'>
 
                 <div className='top'>
-                    <h1> {username} </h1>
+                    <h1 onClick={() => handleUserClick(userId)}> {username} </h1>
                     <h2> {postOwnerId===userId ? "• post’s author" : followStatus}</h2>
                 </div>
 
@@ -62,6 +66,7 @@ const Container = styled.div`
         width: 45px;
         border-radius: 304px;
         margin-right:22px;
+        cursor: pointer;
     }
 
     .right{
@@ -80,6 +85,7 @@ const Container = styled.div`
                 line-height: 17px;
                 color: #F3F3F3;
                 margin-right: 6px;
+                cursor: pointer;
             }
 
             h2{
