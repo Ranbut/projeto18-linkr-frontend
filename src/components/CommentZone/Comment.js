@@ -1,13 +1,30 @@
 import styled from 'styled-components';
+import axios from 'axios';
 
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import Context from "../../contexts/auth.js";
 
 
 export default function Comment(props){
     const { user } = useContext(Context);
     const {postId, postOwnerId, commentId, userId, username, message, pictureUrl} = props
+    const [followStatus, setFollowStatus] = useState("")
 
+   useEffect(()=>{
+    axios.get(`${process.env.REACT_APP_API_URL}/followers`, {
+        headers: {
+            "Authorization": `Bearer ${user.token}`
+        }
+    }).then((res) => {
+        console.log(res.data)
+        if(userId===res.data[0].followId){
+            setFollowStatus("• following")
+        }
+       
+    }).catch((err) => {
+        console.log(err.message);
+    })
+   },[])
 
    
 
@@ -21,7 +38,7 @@ export default function Comment(props){
 
                 <div className='top'>
                     <h1> {username} </h1>
-                    <h2> {postOwnerId===userId ? "• post’s author" : "• follows?"}</h2>
+                    <h2> {postOwnerId===userId ? "• post’s author" : followStatus}</h2>
                 </div>
 
             <h3>{message}</h3>
