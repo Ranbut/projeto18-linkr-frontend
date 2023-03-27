@@ -150,33 +150,30 @@ export default function UserPage() {
                 <div>
                     <UserInfo>
                         {load ? <PageLoad /> :
-                            <>
-                                <div>
-                                    <img src={pageUser?.pictureUrl} alt="user-avatar" />
-                                    <h4>{`${pageUser?.username} posts`}</h4>
-                                </div>
-                                {follow.some(e => e.followId === Number(id)) ?
-                                    <FollowButton
-                                        data-test="follow-btn"
-                                        onClick={toggleFollow}
-                                        disabled={update}
-                                        color="unfollow"
-                                        display={Number(id) === user.id}
-                                    >
-                                        UnFollow
-                                    </FollowButton>
-                                    :
-                                    <FollowButton
-                                        data-test="follow-btn"
-                                        onClick={toggleFollow}
-                                        disabled={update}
-                                        color="follow"
-                                        display={Number(id) === user.id}
-                                    >
-                                        Follow
-                                    </FollowButton>
-                                }
-                            </>
+                            <div>
+                                <img src={pageUser?.pictureUrl} alt="user-avatar" />
+                                <h4>{`${pageUser?.username} posts`}</h4>
+                            </div>}
+                        {follow.some(e => e.followId === Number(id)) ?
+                            <FollowButton
+                                data-test="follow-btn"
+                                onClick={toggleFollow}
+                                disabled={update}
+                                color="unfollow"
+                                display={Number(id) === user.id}
+                            >
+                                UnFollow
+                            </FollowButton>
+                            :
+                            <FollowButton
+                                data-test="follow-btn"
+                                onClick={toggleFollow}
+                                disabled={update}
+                                color="follow"
+                                display={Number(id) === user.id}
+                            >
+                                Follow
+                            </FollowButton>
                         }
                     </UserInfo>
                     {load ? (<PageLoad />) : renderTimeline()}
