@@ -6,6 +6,8 @@ import { useContext } from "react";
 import axios from "axios";
 import { useNavigate, useParams } from "react-router";
 import Context from "../../contexts/auth.js";
+import InfiniteScroll from "react-infinite-scroller";
+import { getHashtagPostOldAPI } from "../../api/getPostAPI.js";
 
 export default function HashtagSearch() {
 
@@ -15,11 +17,18 @@ export default function HashtagSearch() {
     const [trending, setTrending] = useState([]);
     const { hashtag } = useParams();
     const navigate = useNavigate();
+    const [hasMoreOldPosts, setHasMoreOldPosts] = useState(true)
+
 
     function renderTimeline() {
         if (posts.length > 0) {
             return (
-                <>
+                <InfiniteScroll
+                    pageStart={0}
+                    loadMore={checkOldPosts}
+                    hasMore={hasMoreOldPosts}
+                    loader={<Loading>Cheking for more posts...</Loading>}
+                >
                     {posts.map(
                         (postProp) => <PostCard
                             getPosts={() => setLoad(false)}
@@ -30,11 +39,24 @@ export default function HashtagSearch() {
                                 : postProp.id)}
                         />
                     )}
-                </>
+                </InfiniteScroll>
             );
         }
-        else {
-            return (<Loading data-test="message">There are no posts yet</Loading>);
+    }
+
+    async function checkOldPosts() {
+        const lastDate = (posts[posts.length - 1].createdAt);
+
+        const getPostRes = await getHashtagPostOldAPI(hashtag, lastDate);
+        if (getPostRes.success) {
+            const oldPosts = getPostRes.postsRetrived;
+            if (oldPosts.length === 0) {
+                setHasMoreOldPosts(false);
+                return;
+            }
+
+            setPosts(posts.concat(oldPosts));
+            return;
         }
     }
 
