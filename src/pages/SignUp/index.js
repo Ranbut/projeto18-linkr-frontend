@@ -2,6 +2,7 @@ import styled from "styled-components";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import PageLoad from "../../components/Load/Load.js";
 
 export default function SignUp() {
   const URLPOST = `${process.env.REACT_APP_API_URL}/`;
@@ -99,8 +100,9 @@ export default function SignUp() {
             type="submit"
             data-test="sign-up-btn"
             disabled={isDisabled}
-            >
-            Sign Up</button>
+          >
+            {isDisabled ? <PageLoad /> : "Sign Up"}
+          </button>
         </form>
         <p data-test="login-link" onClick={() => navigate("/")} >
           Switch back to log in
