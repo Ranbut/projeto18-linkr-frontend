@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import Header from "../../components/Header/Header.js";
-import { PageBody, Loading, TrendingBox, TrendingTitle, Hashtag } from "../Timeline/style.js";
+import { PageBody, TrendingBox, TrendingTitle, Hashtag } from "../Timeline/style.js";
 import PostCard from "../../components/PostCard/PostCard.js";
 import { useContext } from "react";
 import axios from "axios";
@@ -8,6 +8,8 @@ import { useNavigate, useParams } from "react-router";
 import Context from "../../contexts/auth.js";
 import InfiniteScroll from "react-infinite-scroller";
 import { getHashtagPostOldAPI } from "../../api/getPostAPI.js";
+import PageLoad from "../../components/Load/Load.js";
+
 
 export default function HashtagSearch() {
 
@@ -27,7 +29,7 @@ export default function HashtagSearch() {
                     pageStart={0}
                     loadMore={checkOldPosts}
                     hasMore={hasMoreOldPosts}
-                    loader={<Loading>Cheking for more posts...</Loading>}
+                    loader={<PageLoad />}
                 >
                     {posts.map(
                         (postProp) => <PostCard
@@ -87,7 +89,7 @@ export default function HashtagSearch() {
                 <div>
                     <h4 data-test="hashtag-title">{`#${hashtag}`}</h4>
                     <h5 name="mobile">{`#${hashtag}`}</h5>
-                    {load ? (<Loading>Loading...</Loading>) : renderTimeline()}
+                    {load ? <PageLoad /> : renderTimeline()}
                 </div>
                 <TrendingBox data-test="trending">
                     <TrendingTitle>trending</TrendingTitle>
