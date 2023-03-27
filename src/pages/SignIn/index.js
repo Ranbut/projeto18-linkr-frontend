@@ -3,6 +3,7 @@ import { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Context from "../../contexts/auth.js";
 import axios from "axios";
+import PageLoad from "../../components/Load/Load.js";
 
 export default function SignIn() {
   const URLPOST = `${process.env.REACT_APP_API_URL}/`;
@@ -63,7 +64,9 @@ export default function SignIn() {
             value={loginUser.password}
             data-test="password"
           />
-          <button type="submit" data-test="login-btn" disabled={isDisabled}>Log in</button>
+          <button type="submit" data-test="login-btn" disabled={isDisabled}>
+            {isDisabled ? <PageLoad /> : "Log in"}
+          </button>
         </form>
         <p data-test="sign-up-link" onClick={() => navigate("/sign-up")}>
           First time? Create an account!

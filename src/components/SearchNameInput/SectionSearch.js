@@ -9,7 +9,6 @@ import { Link } from 'react-router-dom';
 import { BsSearch } from 'react-icons/bs';
 import Context from "../../contexts/auth.js";
 import { useContext, useEffect, useState } from 'react';
-import { useNavigate } from "react-router-dom";
 
 const SectionSearchInput = ({ display }) => {
 
@@ -17,7 +16,6 @@ const SectionSearchInput = ({ display }) => {
     const [result, setResult] = useState([]);
     const [er, setEr] = useState("");
     const { user } = useContext(Context);
-    const navigate = useNavigate();
 
     useEffect(() => {
         async function getUsernameSearch() {

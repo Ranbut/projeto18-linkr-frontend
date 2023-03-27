@@ -12,6 +12,7 @@ import { GoSync } from "react-icons/go";
 import useInterval from "use-interval";
 import SectionSearchInput from "../../components/SearchNameInput/SectionSearch.js";
 import InfiniteScroll from "react-infinite-scroller";
+import PageLoad from "../../components/Load/Load.js";
 
 export default function Timeline() {
 
@@ -93,7 +94,7 @@ export default function Timeline() {
                     pageStart={0}
                     loadMore={checkOldPosts}
                     hasMore={hasMoreOldPosts}
-                    loader={<Loading>Cheking for more posts...</Loading>}
+                    loader={<PageLoad />}
                 >
                     {userPosts.map(
                         (postProp) => <PostCard
@@ -165,7 +166,7 @@ export default function Timeline() {
                         :
                         <></>
                     }
-                    {load ? (<Loading>Loading...</Loading>) : renderTimeline()}
+                    {load ? (<PageLoad />) : renderTimeline()}
                 </div>
                 <TrendingBox data-test="trending">
                     <TrendingTitle>trending</TrendingTitle>

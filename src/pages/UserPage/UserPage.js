@@ -11,6 +11,7 @@ import Context from "../../contexts/auth.js";
 import { useNavigate, useParams } from "react-router";
 import { getUserPostOldAPI } from "../../api/getPostAPI.js";
 import InfiniteScroll from "react-infinite-scroller";
+import PageLoad from "../../components/Load/Load.js";
 
 
 export default function UserPage() {
@@ -45,7 +46,7 @@ export default function UserPage() {
                     pageStart={0}
                     loadMore={checkOldPosts}
                     hasMore={hasMoreOldPosts}
-                    loader={<Loading>Cheking for more posts...</Loading>}
+                    loader={<PageLoad />}
                 >
                     {userPosts.map(
                         (postProp) => <PostCard
@@ -63,7 +64,7 @@ export default function UserPage() {
         else {
             return (
                 <Loading data-test="message">
-                    <p>No posts found from your friends</p>
+                    <p>No posts found from {pageUser?.username}</p>
                 </Loading>
             );
         }
@@ -148,34 +149,37 @@ export default function UserPage() {
             <PageBody>
                 <div>
                     <UserInfo>
-                        <div>
-                            <img src={pageUser?.pictureUrl} alt="user-avatar" />
-                            <h4>{`${pageUser?.username} posts`}</h4>
-                        </div>
-                        {follow.some(e => e.followId === Number(id)) ?
-                            <FollowButton
-                                data-test="follow-btn"
-                                onClick={toggleFollow}
-                                disabled={update}
-                                color="unfollow"
-                                display={Number(id) === user.id}
-                            >
-                                UnFollow
-                            </FollowButton>
-                            :
-                            <FollowButton
-                                data-test="follow-btn"
-                                onClick={toggleFollow}
-                                disabled={update}
-                                color="follow"
-                                display={Number(id) === user.id}
-                            >
-                                Follow
-                            </FollowButton>}
+                        {load ? <PageLoad /> :
+                            <>
+                                <div>
+                                    <img src={pageUser?.pictureUrl} alt="user-avatar" />
+                                    <h4>{`${pageUser?.username} posts`}</h4>
+                                </div>
+                                {follow.some(e => e.followId === Number(id)) ?
+                                    <FollowButton
+                                        data-test="follow-btn"
+                                        onClick={toggleFollow}
+                                        disabled={update}
+                                        color="unfollow"
+                                        display={Number(id) === user.id}
+                                    >
+                                        UnFollow
+                                    </FollowButton>
+                                    :
+                                    <FollowButton
+                                        data-test="follow-btn"
+                                        onClick={toggleFollow}
+                                        disabled={update}
+                                        color="follow"
+                                        display={Number(id) === user.id}
+                                    >
+                                        Follow
+                                    </FollowButton>
+                                }
+                            </>
+                        }
                     </UserInfo>
-
-                    {load ? (<Loading>Loading...</Loading>) : renderTimeline()}
-
+                    {load ? (<PageLoad />) : renderTimeline()}
                 </div>
                 <TrendingBox>
                     <TrendingTitle data-test="trending">trending</TrendingTitle>
@@ -190,7 +194,6 @@ export default function UserPage() {
                             </Hashtag>
                         )}
                     </div>
-
                 </TrendingBox>
             </PageBody>
         </>

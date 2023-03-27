@@ -69,7 +69,6 @@ export const getUserPostOldAPI = async (id, createdAt) => {
 };
 
 export const getHashtagPostOldAPI = async (hashtag, createdAt) => {
-  console.log(hashtag, createdAt)
   try {
     const { data: postsRetrived } = await axios.get(`
       ${process.env.REACT_APP_API_URL}/posts/${hashtag}/old/hashtag/${createdAt}`);
